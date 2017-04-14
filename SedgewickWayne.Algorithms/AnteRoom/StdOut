@@ -1,0 +1,200 @@
+
+
+public sealed class StdOut
+{
+	private const string charsetName = "UTF-8";
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Locale US_LOCALE;
+	private static PrintWriter @out;
+	
+	
+	
+	
+	public static void printf(string str, params object[] objarr)
+	{
+		StdOut.@out.printf(StdOut.US_LOCALE, str, objarr);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(object obj)
+	{
+		StdOut.@out.print(obj);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void println()
+	{
+		StdOut.@out.println();
+	}
+	
+	
+	public static void println(object obj)
+	{
+		StdOut.@out.println(obj);
+	}
+	
+	
+	public static void print(int i)
+	{
+		StdOut.@out.print(i);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void println(int i)
+	{
+		StdOut.@out.println(i);
+	}
+	
+	
+	public static void println(bool b)
+	{
+		StdOut.@out.println(b);
+	}
+	
+	
+	public static void println(double d)
+	{
+		StdOut.@out.println(d);
+	}
+	
+	
+	private StdOut()
+	{
+	}
+	
+	
+	public static void close()
+	{
+		StdOut.@out.close();
+	}
+	
+	
+	public static void println(char ch)
+	{
+		StdOut.@out.println(ch);
+	}
+	
+	
+	public static void println(float f)
+	{
+		StdOut.@out.println(f);
+	}
+	
+	
+	public static void println(long l)
+	{
+		StdOut.@out.println(l);
+	}
+	
+	
+	public static void println(short s)
+	{
+		StdOut.@out.println((int)s);
+	}
+	
+	
+	public static void println(byte b)
+	{
+		int x = (int)((sbyte)b);
+		StdOut.@out.println(x);
+	}
+	
+	
+	public static void print()
+	{
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(bool b)
+	{
+		StdOut.@out.print(b);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(char ch)
+	{
+		StdOut.@out.print(ch);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(double d)
+	{
+		StdOut.@out.print(d);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(float f)
+	{
+		StdOut.@out.print(f);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(long l)
+	{
+		StdOut.@out.print(l);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(short s)
+	{
+		StdOut.@out.print((int)s);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void print(byte b)
+	{
+		int i = (int)((sbyte)b);
+		StdOut.@out.print(i);
+		StdOut.@out.flush();
+	}
+	
+	
+	public static void printf(Locale l, string str, params object[] objarr)
+	{
+		StdOut.@out.printf(l, str, objarr);
+		StdOut.@out.flush();
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		StdOut.println("Test");
+		StdOut.println(17);
+		StdOut.println(true);
+		StdOut.printf("%.6f\n", new object[]
+		{
+			java.lang.Double.valueOf(0.14285714285714285)
+		});
+	}
+	
+	static StdOut()
+	{
+		StdOut.US_LOCALE = new Locale("en", "US");
+		UnsupportedEncodingException ex;
+		try
+		{
+			StdOut.@out = new PrintWriter(new OutputStreamWriter(System.@out, "UTF-8"), true);
+		}
+		catch (UnsupportedEncodingException arg_33_0)
+		{
+			ex = ByteCodeHelper.MapException<UnsupportedEncodingException>(arg_33_0, ByteCodeHelper.MapFlags.NoRemapping);
+			goto IL_3D;
+		}
+		return;
+		IL_3D:
+		UnsupportedEncodingException x = ex;
+		System.@out.println(x);
+	}
+}
+
+

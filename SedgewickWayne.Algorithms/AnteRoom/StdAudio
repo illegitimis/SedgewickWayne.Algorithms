@@ -1,0 +1,307 @@
+using java.applet;
+
+
+
+using javax.sound.sampled;
+
+
+public sealed class StdAudio
+{
+	public const int SAMPLE_RATE = 44100;
+	private const int BYTES_PER_SAMPLE = 2;
+	private const int BITS_PER_SAMPLE = 16;
+	private const double MAX_16_BIT = 32767.0;
+	private const int SAMPLE_BUFFER_SIZE = 4096;
+	private static SourceDataLine line;
+	private static byte[] buffer;
+	private static int bufferSize;
+	
+	
+	
+	
+	public static void play(double d)
+	{
+		if (d < -1.0)
+		{
+			d = -1.0;
+		}
+		if (d > (double)1f)
+		{
+			d = (double)1f;
+		}
+		int num = (int)((short)ByteCodeHelper.d2i(32767.0 * d));
+		StdAudio.buffer[StdAudio.bufferSize++] = (byte)((sbyte)num);
+		StdAudio.buffer[StdAudio.bufferSize++] = (byte)((sbyte)(num >> 8));
+		if (StdAudio.bufferSize >= StdAudio.buffer.Length)
+		{
+			StdAudio.line.write(StdAudio.buffer, 0, StdAudio.buffer.Length);
+			StdAudio.bufferSize = 0;
+		}
+	}
+	
+	
+	private static byte[] readByte(string text)
+	{
+		byte[] array;
+		java.lang.Exception ex;
+		try
+		{
+			File file = new File(text);
+			if (file.exists())
+			{
+				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+				array = new byte[audioInputStream.available()];
+				audioInputStream.read(array);
+			}
+			else
+			{
+				URL resource = ClassLiteral<StdAudio>.Value.getResource(text);
+				AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(resource);
+				array = new byte[audioInputStream.available()];
+				audioInputStream.read(array);
+			}
+		}
+		catch (System.Exception arg_5C_0)
+		{
+			java.lang.Exception expr_61 = ByteCodeHelper.MapException<java.lang.Exception>(arg_5C_0, ByteCodeHelper.MapFlags.None);
+			if (expr_61 == null)
+			{
+				throw;
+			}
+			ex = expr_61;
+			goto IL_6C;
+		}
+		return array;
+		IL_6C:
+		java.lang.Exception @this = ex;
+		System.@out.println(Throwable.instancehelper_getMessage(@this));
+		string arg_A4_0 = new StringBuilder().append("Could not read ").append(text).toString();
+		
+		throw new RuntimeException(arg_A4_0);
+	}
+	
+	
+	private static double[] note(double num, double num2, double num3)
+	{
+		int num4 = ByteCodeHelper.d2i(44100.0 * num2);
+		double[] array = new double[num4 + 1];
+		for (int i = 0; i <= num4; i++)
+		{
+			array[i] = num3 * java.lang.Math.sin(6.2831853071795862 * (double)i * num / 44100.0);
+		}
+		return array;
+	}
+	
+	
+	public static void play(double[] darr)
+	{
+		for (int i = 0; i < darr.Length; i++)
+		{
+			StdAudio.play(darr[i]);
+		}
+	}
+	
+	
+	public static void close()
+	{
+		StdAudio.line.drain();
+		StdAudio.line.stop();
+	}
+	
+	
+	private static void init()
+	{
+		java.lang.Exception ex;
+		try
+		{
+			AudioFormat audioFormat = new AudioFormat(44100f, 16, 1, true, false);
+			DataLine.Info info = new DataLine.Info(ClassLiteral<SourceDataLine>.Value, audioFormat);
+			StdAudio.line = (SourceDataLine)AudioSystem.getLine(info);
+			StdAudio.line.open(audioFormat, 8192);
+			StdAudio.buffer = new byte[2730];
+		}
+		catch (System.Exception arg_50_0)
+		{
+			java.lang.Exception expr_55 = ByteCodeHelper.MapException<java.lang.Exception>(arg_50_0, ByteCodeHelper.MapFlags.None);
+			if (expr_55 == null)
+			{
+				throw;
+			}
+			ex = expr_55;
+			goto IL_5F;
+		}
+		goto IL_7B;
+		IL_5F:
+		java.lang.Exception @this = ex;
+		System.@out.println(Throwable.instancehelper_getMessage(@this));
+		System.exit(1);
+		IL_7B:
+		StdAudio.line.start();
+	}
+	
+	
+	private StdAudio()
+	{
+	}
+	
+	
+	public static double[] read(string str)
+	{
+		byte[] array = StdAudio.readByte(str);
+		int num = array.Length;
+		double[] array2 = new double[num / 2];
+		for (int i = 0; i < num / 2; i++)
+		{
+			array2[i] = (double)((short)(((int)array[2 * i + 1] << 8) + (int)array[2 * i])) / 32767.0;
+		}
+		return array2;
+	}
+	
+	
+	public static void play(string str)
+	{
+		URL uRL = null;
+		MalformedURLException ex;
+		try
+		{
+			File file = new File(str);
+			if (file.canRead())
+			{
+				uRL = file.toURI().toURL();
+			}
+		}
+		catch (MalformedURLException arg_22_0)
+		{
+			ex = ByteCodeHelper.MapException<MalformedURLException>(arg_22_0, ByteCodeHelper.MapFlags.NoRemapping);
+			goto IL_2C;
+		}
+		goto IL_38;
+		IL_2C:
+		MalformedURLException @this = ex;
+		Throwable.instancehelper_printStackTrace(@this);
+		IL_38:
+		if (uRL == null)
+		{
+			string arg_64_0 = new StringBuilder().append("audio ").append(str).append(" not found").toString();
+			
+			throw new RuntimeException(arg_64_0);
+		}
+		AudioClip audioClip = Applet.newAudioClip(uRL);
+		audioClip.play();
+	}
+	
+	
+	public static void loop(string str)
+	{
+		URL uRL = null;
+		MalformedURLException ex;
+		try
+		{
+			File file = new File(str);
+			if (file.canRead())
+			{
+				uRL = file.toURI().toURL();
+			}
+		}
+		catch (MalformedURLException arg_22_0)
+		{
+			ex = ByteCodeHelper.MapException<MalformedURLException>(arg_22_0, ByteCodeHelper.MapFlags.NoRemapping);
+			goto IL_2C;
+		}
+		goto IL_38;
+		IL_2C:
+		MalformedURLException @this = ex;
+		Throwable.instancehelper_printStackTrace(@this);
+		IL_38:
+		if (uRL == null)
+		{
+			string arg_64_0 = new StringBuilder().append("audio ").append(str).append(" not found").toString();
+			
+			throw new RuntimeException(arg_64_0);
+		}
+		AudioClip audioClip = Applet.newAudioClip(uRL);
+		audioClip.loop();
+	}
+	
+	
+	public static void save(string str, double[] darr)
+	{
+		AudioFormat format = new AudioFormat(44100f, 16, 1, true, false);
+		byte[] array = new byte[2 * darr.Length];
+		for (int i = 0; i < darr.Length; i++)
+		{
+			int num = (int)((short)ByteCodeHelper.d2i(darr[i] * 32767.0));
+			array[2 * i + 0] = (byte)((sbyte)num);
+			array[2 * i + 1] = (byte)((sbyte)(num >> 8));
+		}
+		java.lang.Exception ex;
+		try
+		{
+			ByteArrayInputStream stream = new ByteArrayInputStream(array);
+			AudioInputStream stream2 = new AudioInputStream(stream, format, (long)darr.Length);
+			if (java.lang.String.instancehelper_endsWith(str, ".wav") || java.lang.String.instancehelper_endsWith(str, ".WAV"))
+			{
+				AudioSystem.write(stream2, AudioFileFormat.Type.WAVE, new File(str));
+			}
+			else
+			{
+				if (!java.lang.String.instancehelper_endsWith(str, ".au") && !java.lang.String.instancehelper_endsWith(str, ".AU"))
+				{
+					string arg_E1_0 = new StringBuilder().append("File format not supported: ").append(str).toString();
+					
+					throw new RuntimeException(arg_E1_0);
+				}
+				AudioSystem.write(stream2, AudioFileFormat.Type.AU, new File(str));
+			}
+		}
+		catch (System.Exception arg_EA_0)
+		{
+			java.lang.Exception expr_EF = ByteCodeHelper.MapException<java.lang.Exception>(arg_EA_0, ByteCodeHelper.MapFlags.None);
+			if (expr_EF == null)
+			{
+				throw;
+			}
+			ex = expr_EF;
+			goto IL_FA;
+		}
+		return;
+		IL_FA:
+		java.lang.Exception x = ex;
+		System.@out.println(x);
+		System.exit(1);
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		double num = 440.0;
+		for (int i = 0; i <= 44100; i++)
+		{
+			StdAudio.play(0.5 * java.lang.Math.sin(6.2831853071795862 * num * (double)i / 44100.0));
+		}
+		int[] array = new int[]
+		{
+			0,
+			2,
+			4,
+			5,
+			7,
+			9,
+			11,
+			12
+		};
+		for (int j = 0; j < array.Length; j++)
+		{
+			double num2 = 440.0 * java.lang.Math.pow(2.0, (double)array[j] / 12.0);
+			StdAudio.play(StdAudio.note(num2, (double)1f, 0.5));
+		}
+		StdAudio.close();
+		System.exit(0);
+	}
+	
+	static StdAudio()
+	{
+		StdAudio.bufferSize = 0;
+		StdAudio.init();
+	}
+}

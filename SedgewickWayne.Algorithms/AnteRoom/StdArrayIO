@@ -1,0 +1,238 @@
+
+public class StdArrayIO
+{
+	
+	
+	public static double[] readDouble1D()
+	{
+		int num = StdIn.readInt();
+		double[] array = new double[num];
+		for (int i = 0; i < num; i++)
+		{
+			array[i] = StdIn.readDouble();
+		}
+		return array;
+	}
+	
+	
+	public static void print(double[] darr)
+	{
+		int num = darr.Length;
+		StdOut.println(num);
+		for (int i = 0; i < num; i++)
+		{
+			StdOut.printf("%9.5f ", new object[]
+			{
+				java.lang.Double.valueOf(darr[i])
+			});
+		}
+		StdOut.println();
+	}
+	
+	
+	public static double[][] readDouble2D()
+	{
+		int num = StdIn.readInt();
+		int num2 = StdIn.readInt();
+		int arg_1A_0 = num;
+		int arg_15_0 = num2;
+		int[] array = new int[2];
+		int num3 = arg_15_0;
+		array[1] = num3;
+		num3 = arg_1A_0;
+		array[0] = num3;
+		double[][] array2 = (double[][])ByteCodeHelper.multianewarray(typeof(double[][]).TypeHandle, array);
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < num2; j++)
+			{
+				array2[i][j] = StdIn.readDouble();
+			}
+		}
+		return array2;
+	}
+	
+	
+	public static void print(double[][] darr)
+	{
+		int num = darr.Length;
+		int num2 = darr[0].Length;
+		StdOut.println(new StringBuilder().append(num).append(" ").append(num2).toString());
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < num2; j++)
+			{
+				StdOut.printf("%9.5f ", new object[]
+				{
+					java.lang.Double.valueOf(darr[i][j])
+				});
+			}
+			StdOut.println();
+		}
+	}
+	
+	
+	public static bool[][] readBoolean2D()
+	{
+		int num = StdIn.readInt();
+		int num2 = StdIn.readInt();
+		int arg_1A_0 = num;
+		int arg_15_0 = num2;
+		int[] array = new int[2];
+		int num3 = arg_15_0;
+		array[1] = num3;
+		num3 = arg_1A_0;
+		array[0] = num3;
+		bool[][] array2 = (bool[][])ByteCodeHelper.multianewarray(typeof(bool[][]).TypeHandle, array);
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < num2; j++)
+			{
+				array2[i][j] = StdIn.readBoolean();
+			}
+		}
+		return array2;
+	}
+	
+	
+	public static void print(bool[][] barr)
+	{
+		int num = barr.Length;
+		int num2 = barr[0].Length;
+		StdOut.println(new StringBuilder().append(num).append(" ").append(num2).toString());
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < num2; j++)
+			{
+				if (barr[i][j])
+				{
+					StdOut.print("1 ");
+				}
+				else
+				{
+					StdOut.print("0 ");
+				}
+			}
+			StdOut.println();
+		}
+	}
+	
+	
+	private StdArrayIO()
+	{
+	}
+	
+	
+	public static int[] readInt1D()
+	{
+		int num = StdIn.readInt();
+		int[] array = new int[num];
+		for (int i = 0; i < num; i++)
+		{
+			array[i] = StdIn.readInt();
+		}
+		return array;
+	}
+	
+	
+	public static void print(int[] iarr)
+	{
+		int num = iarr.Length;
+		StdOut.println(num);
+		for (int i = 0; i < num; i++)
+		{
+			StdOut.printf("%9d ", new object[]
+			{
+				Integer.valueOf(iarr[i])
+			});
+		}
+		StdOut.println();
+	}
+	
+	
+	public static int[][] readInt2D()
+	{
+		int num = StdIn.readInt();
+		int num2 = StdIn.readInt();
+		int arg_1A_0 = num;
+		int arg_15_0 = num2;
+		int[] array = new int[2];
+		int num3 = arg_15_0;
+		array[1] = num3;
+		num3 = arg_1A_0;
+		array[0] = num3;
+		int[][] array2 = (int[][])ByteCodeHelper.multianewarray(typeof(int[][]).TypeHandle, array);
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < num2; j++)
+			{
+				array2[i][j] = StdIn.readInt();
+			}
+		}
+		return array2;
+	}
+	
+	
+	public static void print(int[][] iarr)
+	{
+		int num = iarr.Length;
+		int num2 = iarr[0].Length;
+		StdOut.println(new StringBuilder().append(num).append(" ").append(num2).toString());
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < num2; j++)
+			{
+				StdOut.printf("%9d ", new object[]
+				{
+					Integer.valueOf(iarr[i][j])
+				});
+			}
+			StdOut.println();
+		}
+	}
+	
+	
+	public static bool[] readBoolean1D()
+	{
+		int num = StdIn.readInt();
+		bool[] array = new bool[num];
+		for (int i = 0; i < num; i++)
+		{
+			array[i] = StdIn.readBoolean();
+		}
+		return array;
+	}
+	
+	
+	public static void print(bool[] barr)
+	{
+		int num = barr.Length;
+		StdOut.println(num);
+		for (int i = 0; i < num; i++)
+		{
+			if (barr[i])
+			{
+				StdOut.print("1 ");
+			}
+			else
+			{
+				StdOut.print("0 ");
+			}
+		}
+		StdOut.println();
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		double[] darr = StdArrayIO.readDouble1D();
+		StdArrayIO.print(darr);
+		StdOut.println();
+		double[][] darr2 = StdArrayIO.readDouble2D();
+		StdArrayIO.print(darr2);
+		StdOut.println();
+		bool[][] barr = StdArrayIO.readBoolean2D();
+		StdArrayIO.print(barr);
+		StdOut.println();
+	}
+}

@@ -1,0 +1,257 @@
+
+public class SuffixArray
+{
+	/*[EnclosingMethod("SuffixArray", null, null), InnerClass(null, Modifiers.Static | Modifiers.Synthetic), Modifiers(Modifiers.Super | Modifiers.Synthetic), SourceFile("SuffixArray.java")]*/
+	
+	/*[Implements(new string[]
+	{
+		"java.lang.Comparable"
+	}), InnerClass(null, Modifiers.Private | Modifiers.Static), Modifiers(Modifiers.Super), Signature("Ljava/lang/Object;Ljava/lang/Comparable<LSuffixArray$Suffix;>;"), SourceFile("SuffixArray.java")]*/
+	internal sealed class Suffix, Comparable
+	{
+//[Modifiers(Modifiers.Private | Modifiers.Final)]
+		private string text;
+//[Modifiers(Modifiers.Private | Modifiers.Final)]
+		private int index;
+/*		[LineNumberTable(70), Modifiers(Modifiers.Synthetic)]*/
+		
+		internal Suffix(string text, int num, SuffixArray.1) : this(text, num)
+		{
+		}
+/*		[LineNumberTable(70), Modifiers(Modifiers.Static | Modifiers.Synthetic)]*/
+		internal static int access_100(SuffixArray.Suffix suffix)
+		{
+			return suffix.index;
+		}
+/*		[LineNumberTable(70), Modifiers(Modifiers.Static | Modifiers.Synthetic)]*/
+		
+		internal static int access_200(SuffixArray.Suffix suffix)
+		{
+			return suffix.Length();
+		}
+/*		[LineNumberTable(70), Modifiers(Modifiers.Static | Modifiers.Synthetic)]*/
+		
+		internal static char access_300(SuffixArray.Suffix suffix, int num)
+		{
+			return suffix.charAt(num);
+		}
+		
+		
+		public override string ToString()
+		{
+			return java.lang.String.instancehelper_substring(this.text, this.index);
+		}
+		
+		
+		private char charAt(int num)
+		{
+			return java.lang.String.instancehelper_charAt(this.text, this.index + num);
+		}
+		
+		
+		private int length()
+		{
+			return java.lang.String.instancehelper_length(this.text) - this.index;
+		}
+		
+		
+		private Suffix(string text, int num)
+		{
+			this.text = text;
+			this.index = num;
+		}
+		
+		
+		public virtual int compareTo(SuffixArray.Suffix suffix)
+		{
+			if (this == suffix)
+			{
+				return 0;
+			}
+			int num = java.lang.Math.min(this.Length(), suffix.Length());
+			for (int i = 0; i < num; i++)
+			{
+				if (this.charAt(i) < suffix.charAt(i))
+				{
+					return -1;
+				}
+				if (this.charAt(i) > suffix.charAt(i))
+				{
+					return 1;
+				}
+			}
+			return this.Length() - suffix.Length();
+		}
+/*		[LineNumberTable(70), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic)]*/
+		
+		public virtual int compareTo(object obj)
+		{
+			return this.CompareTo((SuffixArray.Suffix)obj);
+		}
+		
+		int IComparable.Object;)IcompareTo(object obj)
+		{
+			return this.CompareTo(obj);
+		}
+	}
+	private SuffixArray.Suffix[] suffixes;
+//[Modifiers(Modifiers.Static | Modifiers.Final | Modifiers.Synthetic)]
+	internal static bool s_assertionsDisabled;
+	
+	
+	
+	
+	public SuffixArray(string str)
+	{
+		int num = java.lang.String.instancehelper_length(str);
+		this.suffixes = new SuffixArray.Suffix[num];
+		for (int i = 0; i < num; i++)
+		{
+			this.suffixes[i] = new SuffixArray.Suffix(str, i, null);
+		}
+		Arrays.sort(this.suffixes);
+	}
+	
+	
+	public virtual int rank(string str)
+	{
+		int i = 0;
+		int num = this.suffixes.Length - 1;
+		while (i <= num)
+		{
+			int num2 = i + (num - i) / 2;
+			int num3 = SuffixArray.compare(str, this.suffixes[num2]);
+			if (num3 < 0)
+			{
+				num = num2 - 1;
+			}
+			else
+			{
+				if (num3 <= 0)
+				{
+					return num2;
+				}
+				i = num2 + 1;
+			}
+		}
+		return i;
+	}
+	
+	
+	public virtual int index(int i)
+	{
+		if (i < 0 || i >= this.suffixes.Length)
+		{
+			
+			throw new IndexOutOfRangeException();
+		}
+		return SuffixArray.Suffix.access_100(this.suffixes[i]);
+	}
+	
+	
+	public virtual int lcp(int i)
+	{
+		if (i < 1 || i >= this.suffixes.Length)
+		{
+			
+			throw new IndexOutOfRangeException();
+		}
+		return SuffixArray.lcp(this.suffixes[i], this.suffixes[i - 1]);
+	}
+	
+	public virtual int length()
+	{
+		return this.suffixes.Length;
+	}
+	
+	
+	private static int lcp(SuffixArray.Suffix suffix, SuffixArray.Suffix suffix2)
+	{
+		int num = java.lang.Math.min(SuffixArray.Suffix.access_200(suffix), SuffixArray.Suffix.access_200(suffix2));
+		for (int i = 0; i < num; i++)
+		{
+			if (SuffixArray.Suffix.access_300(suffix, i) != SuffixArray.Suffix.access_300(suffix2, i))
+			{
+				return i;
+			}
+		}
+		return num;
+	}
+	
+	
+	private static int compare(string @this, SuffixArray.Suffix suffix)
+	{
+		int num = java.lang.Math.min(java.lang.String.instancehelper_length(@this), SuffixArray.Suffix.access_200(suffix));
+		for (int i = 0; i < num; i++)
+		{
+			if (java.lang.String.instancehelper_charAt(@this, i) < SuffixArray.Suffix.access_300(suffix, i))
+			{
+				return -1;
+			}
+			if (java.lang.String.instancehelper_charAt(@this, i) > SuffixArray.Suffix.access_300(suffix, i))
+			{
+				return 1;
+			}
+		}
+		return java.lang.String.instancehelper_length(@this) - SuffixArray.Suffix.access_200(suffix);
+	}
+	
+	
+	public virtual string select(int i)
+	{
+		if (i < 0 || i >= this.suffixes.Length)
+		{
+			
+			throw new IndexOutOfRangeException();
+		}
+		return this.suffixes[i].toString();
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		string text = java.lang.String.instancehelper_trim(java.lang.String.instancehelper_replaceAll(StdIn.readAll(), "\\s+", " "));
+		SuffixArray suffixArray = new SuffixArray(text);
+		StdOut.println("  i ind lcp rnk select");
+		StdOut.println("---------------------------");
+		for (int i = 0; i < java.lang.String.instancehelper_length(text); i++)
+		{
+			int num = suffixArray.index(i);
+			string text2 = new StringBuilder().append("\"").append(java.lang.String.instancehelper_substring(text, num, java.lang.Math.min(num + 50, java.lang.String.instancehelper_length(text)))).append("\"").toString();
+			if (!SuffixArray.s_assertionsDisabled && !java.lang.String.instancehelper_equals(java.lang.String.instancehelper_substring(text, num), suffixArray.select(i)))
+			{
+				
+				throw new AssertionError();
+			}
+			int i2 = suffixArray.rank(java.lang.String.instancehelper_substring(text, num));
+			if (i == 0)
+			{
+				StdOut.printf("%3d %3d %3s %3d %s\n", new object[]
+				{
+					Integer.valueOf(i),
+					Integer.valueOf(num),
+					"-",
+					Integer.valueOf(i2),
+					text2
+				});
+			}
+			else
+			{
+				int i3 = suffixArray.lcp(i);
+				StdOut.printf("%3d %3d %3d %3d %s\n", new object[]
+				{
+					Integer.valueOf(i),
+					Integer.valueOf(num),
+					Integer.valueOf(i3),
+					Integer.valueOf(i2),
+					text2
+				});
+			}
+		}
+	}
+	
+	static SuffixArray()
+	{
+		SuffixArray.s_assertionsDisabled = !ClassLiteral<SuffixArray>.Value.desiredAssertionStatus();
+	}
+}

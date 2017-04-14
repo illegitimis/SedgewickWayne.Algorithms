@@ -1,0 +1,1274 @@
+
+
+using java.awt.@event;
+using java.awt.geom;
+using java.awt.image;
+
+
+
+
+using javax.imageio;
+using javax.swing;
+
+
+/*[Implements(new string[]
+{
+	"java.awt.event.ActionListener",
+	"java.awt.event.MouseListener",
+	"java.awt.event.MouseMotionListener",
+	"java.awt.event.KeyListener"
+})]*/
+public sealed class StdDraw, ActionListener, EventListener, MouseListener, MouseMotionListener, KeyListener
+{
+	internal static Color __BLACK;
+	internal static Color __BLUE;
+	internal static Color __CYAN;
+	internal static Color __DARK_GRAY;
+	internal static Color __GRAY;
+	internal static Color __GREEN;
+	internal static Color __LIGHT_GRAY;
+	internal static Color __MAGENTA;
+	internal static Color __ORANGE;
+	internal static Color __PINK;
+	internal static Color __RED;
+	internal static Color __WHITE;
+	internal static Color __YELLOW;
+	internal static Color __BOOK_BLUE;
+	internal static Color __BOOK_LIGHT_BLUE;
+	internal static Color __BOOK_RED;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Color DEFAULT_PEN_COLOR;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Color DEFAULT_CLEAR_COLOR;
+	private static Color penColor;
+	private const int DEFAULT_SIZE = 512;
+	private static int width;
+	private static int height;
+	private const double DEFAULT_PEN_RADIUS = 0.002;
+	private static double penRadius;
+	private static bool defer;
+	private const double BORDER = 0.05;
+	private const double DEFAULT_XMIN = 0.0;
+	private const double DEFAULT_XMAX = 1.0;
+	private const double DEFAULT_YMIN = 0.0;
+	private const double DEFAULT_YMAX = 1.0;
+	private static double xmin;
+	private static double ymin;
+	private static double xmax;
+	private static double ymax;
+	private static object mouseLock;
+	private static object keyLock;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Font DEFAULT_FONT;
+	private static Font font;
+	private static BufferedImage offscreenImage;
+	private static BufferedImage onscreenImage;
+	private static Graphics2D offscreen;
+	private static Graphics2D onscreen;
+	private static StdDraw std;
+	private static JFrame frame;
+	private static bool mousePressed;
+	private static double mouseX;
+	private static double mouseY;
+//[Signature("Ljava/util/LinkedList<Ljava/lang/Character;>;")]
+	private static LinkedList keysTyped;
+//[Signature("Ljava/util/TreeSet<Ljava/lang/Integer;>;")]
+	private static TreeSet keysDown;
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color BLACK
+	{
+		
+		get
+		{
+			return StdDraw.__BLACK;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color BLUE
+	{
+		
+		get
+		{
+			return StdDraw.__BLUE;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color CYAN
+	{
+		
+		get
+		{
+			return StdDraw.__CYAN;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color DARK_GRAY
+	{
+		
+		get
+		{
+			return StdDraw.__DARK_GRAY;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color GRAY
+	{
+		
+		get
+		{
+			return StdDraw.__GRAY;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color GREEN
+	{
+		
+		get
+		{
+			return StdDraw.__GREEN;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color LIGHT_GRAY
+	{
+		
+		get
+		{
+			return StdDraw.__LIGHT_GRAY;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color MAGENTA
+	{
+		
+		get
+		{
+			return StdDraw.__MAGENTA;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color ORANGE
+	{
+		
+		get
+		{
+			return StdDraw.__ORANGE;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color PINK
+	{
+		
+		get
+		{
+			return StdDraw.__PINK;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color RED
+	{
+		
+		get
+		{
+			return StdDraw.__RED;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color WHITE
+	{
+		
+		get
+		{
+			return StdDraw.__WHITE;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color YELLOW
+	{
+		
+		get
+		{
+			return StdDraw.__YELLOW;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color BOOK_BLUE
+	{
+		
+		get
+		{
+			return StdDraw.__BOOK_BLUE;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color BOOK_LIGHT_BLUE
+	{
+		
+		get
+		{
+			return StdDraw.__BOOK_LIGHT_BLUE;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Color BOOK_RED
+	{
+		
+		get
+		{
+			return StdDraw.__BOOK_RED;
+		}
+	}
+	
+	
+	
+	
+	public static void clear()
+	{
+		StdDraw.clear(StdDraw.DEFAULT_CLEAR_COLOR);
+	}
+	
+	
+	public static void show(int i)
+	{
+		StdDraw.defer = false;
+		StdDraw.draw();
+		try
+		{
+			Thread.sleep((long)i);
+		}
+		catch (InterruptedException arg_16_0)
+		{
+			goto IL_1A;
+		}
+		goto IL_2F;
+		IL_1A:
+		System.@out.println("Error sleeping");
+		IL_2F:
+		StdDraw.defer = true;
+	}
+	
+	public static void setXscale(double d1, double d2)
+	{
+		double num = d2 - d1;
+		lock (StdDraw.mouseLock)
+		{
+			StdDraw.xmin = d1 - 0.05 * num;
+			StdDraw.xmax = d2 + 0.05 * num;
+		}
+	}
+	
+	public static void setYscale(double d1, double d2)
+	{
+		double num = d2 - d1;
+		lock (StdDraw.mouseLock)
+		{
+			StdDraw.ymin = d1 - 0.05 * num;
+			StdDraw.ymax = d2 + 0.05 * num;
+		}
+	}
+	
+	
+	public static void rectangle(double d1, double d2, double d3, double d4)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "half width must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		if (d4 < (double)0f)
+		{
+			string arg_2C_0 = "half height must be nonnegative";
+			
+			throw new ArgumentException(arg_2C_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d4);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.draw(new Rectangle2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void setPenColor(Color c)
+	{
+		StdDraw.penColor = c;
+		StdDraw.offscreen.setColor(StdDraw.penColor);
+	}
+	
+	
+	public static void filledCircle(double d1, double d2, double d3)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "circle radius must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d3);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.fill(new Ellipse2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void point(double d1, double d2)
+	{
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.penRadius;
+		float num4 = (float)(num3 * 512.0);
+		if (num4 <= 1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.fill(new Ellipse2D.Double(num - (double)(num4 / 2f), num2 - (double)(num4 / 2f), (double)num4, (double)num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void line(double d1, double d2, double d3, double d4)
+	{
+		StdDraw.offscreen.draw(new Line2D.Double(StdDraw.scaleX(d1), StdDraw.scaleY(d2), StdDraw.scaleX(d3), StdDraw.scaleY(d4)));
+		StdDraw.draw();
+	}
+	
+	
+	public static void setCanvasSize(int i1, int i2)
+	{
+		if (i1 < 1 || i2 < 1)
+		{
+			string arg_12_0 = "width and height must be positive";
+			
+			throw new ArgumentException(arg_12_0);
+		}
+		StdDraw.width = i1;
+		StdDraw.height = i2;
+		StdDraw.init();
+	}
+	
+	
+	public static void setPenRadius(double d)
+	{
+		if (d < (double)0f)
+		{
+			string arg_13_0 = "pen radius must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		StdDraw.penRadius = d;
+		float num = (float)(d * 512.0);
+		BasicStroke stroke = new BasicStroke(num, 1, 1);
+		StdDraw.offscreen.setStroke(stroke);
+	}
+	
+	
+	public static void setPenRadius()
+	{
+		StdDraw.setPenRadius(0.002);
+	}
+	
+	
+	private static void init()
+	{
+		if (StdDraw.frame != null)
+		{
+			StdDraw.frame.setVisible(false);
+		}
+		StdDraw.frame = new JFrame();
+		BufferedImage.__<clinit>();
+		StdDraw.offscreenImage = new BufferedImage(StdDraw.width, StdDraw.height, 2);
+		BufferedImage.__<clinit>();
+		StdDraw.onscreenImage = new BufferedImage(StdDraw.width, StdDraw.height, 2);
+		StdDraw.offscreen = StdDraw.offscreenImage.createGraphics();
+		StdDraw.onscreen = StdDraw.onscreenImage.createGraphics();
+		StdDraw.setXscale();
+		StdDraw.setYscale();
+		StdDraw.offscreen.setColor(StdDraw.DEFAULT_CLEAR_COLOR);
+		StdDraw.offscreen.fillRect(0, 0, StdDraw.width, StdDraw.height);
+		StdDraw.setPenColor();
+		StdDraw.setPenRadius();
+		StdDraw.setFont();
+		StdDraw.clear();
+		RenderingHints.__<clinit>();
+		RenderingHints renderingHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		renderingHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		StdDraw.offscreen.addRenderingHints(renderingHints);
+		ImageIcon.__<clinit>();
+		ImageIcon image = new ImageIcon(StdDraw.onscreenImage);
+		JLabel jLabel = new JLabel(image);
+		jLabel.addMouseListener(StdDraw.std);
+		jLabel.addMouseMotionListener(StdDraw.std);
+		StdDraw.frame.setContentPane(jLabel);
+		StdDraw.frame.addKeyListener(StdDraw.std);
+		StdDraw.frame.setResizable(false);
+		StdDraw.frame.setDefaultCloseOperation(3);
+		StdDraw.frame.setTitle("Standard Draw");
+		StdDraw.frame.setJMenuBar(StdDraw.createMenuBar());
+		StdDraw.frame.pack();
+		StdDraw.frame.requestFocusInWindow();
+		StdDraw.frame.setVisible(true);
+	}
+	
+	
+	public static void setXscale()
+	{
+		StdDraw.setXscale((double)0f, (double)1f);
+	}
+	
+	
+	public static void setYscale()
+	{
+		StdDraw.setYscale((double)0f, (double)1f);
+	}
+	
+	
+	public static void setPenColor()
+	{
+		StdDraw.setPenColor(StdDraw.DEFAULT_PEN_COLOR);
+	}
+	
+	
+	public static void setFont()
+	{
+		StdDraw.setFont(StdDraw.DEFAULT_FONT);
+	}
+	
+	
+	private static JMenuBar createMenuBar()
+	{
+		JMenuBar jMenuBar = new JMenuBar();
+		JMenu jMenu = new JMenu("File");
+		jMenuBar.add(jMenu);
+		JMenuItem jMenuItem = new JMenuItem(" Save...   ");
+		jMenuItem.addActionListener(StdDraw.std);
+		jMenuItem.setAccelerator(KeyStroke.getKeyStroke(83, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		jMenu.add(jMenuItem);
+		return jMenuBar;
+	}
+	
+	
+	public static void clear(Color c)
+	{
+		StdDraw.offscreen.setColor(c);
+		StdDraw.offscreen.fillRect(0, 0, StdDraw.width, StdDraw.height);
+		StdDraw.offscreen.setColor(StdDraw.penColor);
+		StdDraw.draw();
+	}
+	
+	
+	private static void draw()
+	{
+		if (StdDraw.defer)
+		{
+			return;
+		}
+		StdDraw.onscreen.drawImage(StdDraw.offscreenImage, 0, 0, null);
+		StdDraw.frame.repaint();
+	}
+	public static void setFont(Font f)
+	{
+		StdDraw.font = f;
+	}
+	private static double scaleX(double num)
+	{
+		return (double)StdDraw.width * (num - StdDraw.xmin) / (StdDraw.xmax - StdDraw.xmin);
+	}
+	private static double scaleY(double num)
+	{
+		return (double)StdDraw.height * (StdDraw.ymax - num) / (StdDraw.ymax - StdDraw.ymin);
+	}
+	
+	
+	private static void pixel(double num, double num2)
+	{
+		StdDraw.offscreen.fillRect((int)java.lang.Math.round(StdDraw.scaleX(num)), (int)java.lang.Math.round(StdDraw.scaleY(num2)), 1, 1);
+	}
+	
+	
+	private static double factorX(double num)
+	{
+		return num * (double)StdDraw.width / java.lang.Math.abs(StdDraw.xmax - StdDraw.xmin);
+	}
+	
+	
+	private static double factorY(double num)
+	{
+		return num * (double)StdDraw.height / java.lang.Math.abs(StdDraw.ymax - StdDraw.ymin);
+	}
+	
+	
+	private static Image getImage(string text)
+	{
+		ImageIcon imageIcon = new ImageIcon(text);
+		if (imageIcon != null)
+		{
+			if (imageIcon.getImageLoadStatus() == 8)
+			{
+				goto IL_39;
+			}
+		}
+		try
+		{
+			URL uRL = new URL(text);
+			imageIcon = new ImageIcon(uRL);
+		}
+		catch (System.Exception arg_26_0)
+		{
+			if (ByteCodeHelper.MapException<java.lang.Exception>(arg_26_0, ByteCodeHelper.MapFlags.Unused) == null)
+			{
+				throw;
+			}
+		}
+		IL_39:
+		if (imageIcon == null || imageIcon.getImageLoadStatus() != 8)
+		{
+			URL uRL = ClassLiteral<StdDraw>.Value.getResource(text);
+			if (uRL == null)
+			{
+				string arg_7D_0 = new StringBuilder().append("image ").append(text).append(" not found").toString();
+				
+				throw new ArgumentException(arg_7D_0);
+			}
+			imageIcon = new ImageIcon(uRL);
+		}
+		return imageIcon.getImage();
+	}
+	
+	
+	public static void text(double d1, double d2, string str)
+	{
+		StdDraw.offscreen.setFont(StdDraw.font);
+		FontMetrics fontMetrics = StdDraw.offscreen.getFontMetrics();
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		int num3 = fontMetrics.stringWidth(str);
+		int descent = fontMetrics.getDescent();
+		StdDraw.offscreen.drawString(str, (float)(num - (double)num3 / 2.0), (float)(num2 + (double)descent));
+		StdDraw.draw();
+	}
+	
+	
+	public static void save(string str)
+	{
+		File output = new File(str);
+		string text = java.lang.String.instancehelper_substring(str, java.lang.String.instancehelper_lastIndexOf(str, 46) + 1);
+		if (java.lang.String.instancehelper_equals(java.lang.String.instancehelper_toLowerCase(text), "png"))
+		{
+			IOException ex;
+			try
+			{
+				ImageIO.write(StdDraw.onscreenImage, text, output);
+			}
+			catch (IOException arg_3C_0)
+			{
+				ex = ByteCodeHelper.MapException<IOException>(arg_3C_0, ByteCodeHelper.MapFlags.NoRemapping);
+				goto IL_46;
+			}
+			return;
+			IL_46:
+			IOException @this = ex;
+			Throwable.instancehelper_printStackTrace(@this);
+		}
+		else if (java.lang.String.instancehelper_equals(java.lang.String.instancehelper_toLowerCase(text), "jpg"))
+		{
+			WritableRaster raster = StdDraw.onscreenImage.getRaster();
+			WritableRaster raster2 = raster.createWritableChild(0, 0, StdDraw.width, StdDraw.height, 0, 0, new int[]
+			{
+				0,
+				1,
+				2
+			});
+			DirectColorModel directColorModel = (DirectColorModel)StdDraw.onscreenImage.getColorModel();
+			DirectColorModel.__<clinit>();
+			DirectColorModel cm = new DirectColorModel(directColorModel.getPixelSize(), directColorModel.getRedMask(), directColorModel.getGreenMask(), directColorModel.getBlueMask());
+			BufferedImage im = new BufferedImage(cm, raster2, false, null);
+			IOException ex2;
+			try
+			{
+				ImageIO.write(im, text, output);
+			}
+			catch (IOException arg_F9_0)
+			{
+				ex2 = ByteCodeHelper.MapException<IOException>(arg_F9_0, ByteCodeHelper.MapFlags.NoRemapping);
+				goto IL_104;
+			}
+			goto IL_113;
+			IL_104:
+			IOException this2 = ex2;
+			Throwable.instancehelper_printStackTrace(this2);
+			IL_113:;
+		}
+		else
+		{
+			System.@out.println(new StringBuilder().append("Invalid image file type: ").append(text).toString());
+		}
+	}
+	private static double userX(double num)
+	{
+		return StdDraw.xmin + num * (StdDraw.xmax - StdDraw.xmin) / (double)StdDraw.width;
+	}
+	private static double userY(double num)
+	{
+		return StdDraw.ymax - num * (StdDraw.ymax - StdDraw.ymin) / (double)StdDraw.height;
+	}
+	
+	
+	public static void square(double d1, double d2, double d3)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "square side length must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d3);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.draw(new Rectangle2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void filledSquare(double d1, double d2, double d3)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "square side length must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d3);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.fill(new Rectangle2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void circle(double d1, double d2, double d3)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "circle radius must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d3);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.draw(new Ellipse2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void arc(double d1, double d2, double d3, double d4, double d5)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "arc radius must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		while (d5 < d4)
+		{
+			d5 += 360.0;
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d3);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.draw(new Arc2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4, d4, d5 - d4, 0));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void filledPolygon(double[] darr1, double[] darr2)
+	{
+		int num = darr1.Length;
+		GeneralPath generalPath = new GeneralPath();
+		generalPath.moveTo((float)StdDraw.scaleX(darr1[0]), (float)StdDraw.scaleY(darr2[0]));
+		for (int i = 0; i < num; i++)
+		{
+			generalPath.lineTo((float)StdDraw.scaleX(darr1[i]), (float)StdDraw.scaleY(darr2[i]));
+		}
+		generalPath.closePath();
+		StdDraw.offscreen.fill(generalPath);
+		StdDraw.draw();
+	}
+	
+	
+	private StdDraw()
+	{
+	}
+	
+	
+	public static void setCanvasSize()
+	{
+		StdDraw.setCanvasSize(512, 512);
+	}
+	
+	public static void setScale(double d1, double d2)
+	{
+		double num = d2 - d1;
+		lock (StdDraw.mouseLock)
+		{
+			StdDraw.xmin = d1 - 0.05 * num;
+			StdDraw.xmax = d2 + 0.05 * num;
+			StdDraw.ymin = d1 - 0.05 * num;
+			StdDraw.ymax = d2 + 0.05 * num;
+		}
+	}
+	public static double getPenRadius()
+	{
+		return StdDraw.penRadius;
+	}
+	public static Color getPenColor()
+	{
+		return StdDraw.penColor;
+	}
+	
+	
+	public static void setPenColor(int i1, int i2, int i3)
+	{
+		if (i1 < 0 || i1 >= 256)
+		{
+			string arg_16_0 = "amount of red must be between 0 and 255";
+			
+			throw new ArgumentException(arg_16_0);
+		}
+		if (i2 < 0 || i2 >= 256)
+		{
+			string arg_32_0 = "amount of red must be between 0 and 255";
+			
+			throw new ArgumentException(arg_32_0);
+		}
+		if (i3 < 0 || i3 >= 256)
+		{
+			string arg_4E_0 = "amount of red must be between 0 and 255";
+			
+			throw new ArgumentException(arg_4E_0);
+		}
+		StdDraw.setPenColor(new Color(i1, i2, i3));
+	}
+	public static Font getFont()
+	{
+		return StdDraw.font;
+	}
+	
+	
+	public static void ellipse(double d1, double d2, double d3, double d4)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "ellipse semimajor axis must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		if (d4 < (double)0f)
+		{
+			string arg_2C_0 = "ellipse semiminor axis must be nonnegative";
+			
+			throw new ArgumentException(arg_2C_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d4);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.draw(new Ellipse2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void filledEllipse(double d1, double d2, double d3, double d4)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "ellipse semimajor axis must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		if (d4 < (double)0f)
+		{
+			string arg_2C_0 = "ellipse semiminor axis must be nonnegative";
+			
+			throw new ArgumentException(arg_2C_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d4);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.fill(new Ellipse2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void filledRectangle(double d1, double d2, double d3, double d4)
+	{
+		if (d3 < (double)0f)
+		{
+			string arg_13_0 = "half width must be nonnegative";
+			
+			throw new ArgumentException(arg_13_0);
+		}
+		if (d4 < (double)0f)
+		{
+			string arg_2C_0 = "half height must be nonnegative";
+			
+			throw new ArgumentException(arg_2C_0);
+		}
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(2.0 * d3);
+		double num4 = StdDraw.factorY(2.0 * d4);
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.fill(new Rectangle2D.Double(num - num3 / 2.0, num2 - num4 / 2.0, num3, num4));
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void polygon(double[] darr1, double[] darr2)
+	{
+		int num = darr1.Length;
+		GeneralPath generalPath = new GeneralPath();
+		generalPath.moveTo((float)StdDraw.scaleX(darr1[0]), (float)StdDraw.scaleY(darr2[0]));
+		for (int i = 0; i < num; i++)
+		{
+			generalPath.lineTo((float)StdDraw.scaleX(darr1[i]), (float)StdDraw.scaleY(darr2[i]));
+		}
+		generalPath.closePath();
+		StdDraw.offscreen.draw(generalPath);
+		StdDraw.draw();
+	}
+	
+	
+	public static void picture(double d1, double d2, string str)
+	{
+		Image image = StdDraw.getImage(str);
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		int num3 = image.getWidth(null);
+		int num4 = image.getHeight(null);
+		if (num3 < 0 || num4 < 0)
+		{
+			string arg_5C_0 = new StringBuilder().append("image ").append(str).append(" is corrupt").toString();
+			
+			throw new ArgumentException(arg_5C_0);
+		}
+		StdDraw.offscreen.drawImage(image, (int)java.lang.Math.round(num - (double)num3 / 2.0), (int)java.lang.Math.round(num2 - (double)num4 / 2.0), null);
+		StdDraw.draw();
+	}
+	
+	
+	public static void picture(double d1, double d2, string str, double d3)
+	{
+		Image image = StdDraw.getImage(str);
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		int num3 = image.getWidth(null);
+		int num4 = image.getHeight(null);
+		if (num3 < 0 || num4 < 0)
+		{
+			string arg_5C_0 = new StringBuilder().append("image ").append(str).append(" is corrupt").toString();
+			
+			throw new ArgumentException(arg_5C_0);
+		}
+		StdDraw.offscreen.rotate(java.lang.Math.toRadians(-d3), num, num2);
+		StdDraw.offscreen.drawImage(image, (int)java.lang.Math.round(num - (double)num3 / 2.0), (int)java.lang.Math.round(num2 - (double)num4 / 2.0), null);
+		StdDraw.offscreen.rotate(java.lang.Math.toRadians(d3), num, num2);
+		StdDraw.draw();
+	}
+	
+	
+	public static void picture(double d1, double d2, string str, double d3, double d4)
+	{
+		Image image = StdDraw.getImage(str);
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		if (d3 < (double)0f)
+		{
+			string arg_42_0 = new StringBuilder().append("width is negative: ").append(d3).toString();
+			
+			throw new ArgumentException(arg_42_0);
+		}
+		if (d4 < (double)0f)
+		{
+			string arg_73_0 = new StringBuilder().append("height is negative: ").append(d4).toString();
+			
+			throw new ArgumentException(arg_73_0);
+		}
+		double num3 = StdDraw.factorX(d3);
+		double num4 = StdDraw.factorY(d4);
+		if (num3 < (double)0f || num4 < (double)0f)
+		{
+			string arg_C7_0 = new StringBuilder().append("image ").append(str).append(" is corrupt").toString();
+			
+			throw new ArgumentException(arg_C7_0);
+		}
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		else
+		{
+			StdDraw.offscreen.drawImage(image, (int)java.lang.Math.round(num - num3 / 2.0), (int)java.lang.Math.round(num2 - num4 / 2.0), (int)java.lang.Math.round(num3), (int)java.lang.Math.round(num4), null);
+		}
+		StdDraw.draw();
+	}
+	
+	
+	public static void picture(double d1, double d2, string str, double d3, double d4, double d5)
+	{
+		Image image = StdDraw.getImage(str);
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		double num3 = StdDraw.factorX(d3);
+		double num4 = StdDraw.factorY(d4);
+		if (num3 < (double)0f || num4 < (double)0f)
+		{
+			string arg_67_0 = new StringBuilder().append("image ").append(str).append(" is corrupt").toString();
+			
+			throw new ArgumentException(arg_67_0);
+		}
+		if (num3 <= (double)1f && num4 <= (double)1f)
+		{
+			StdDraw.pixel(d1, d2);
+		}
+		StdDraw.offscreen.rotate(java.lang.Math.toRadians(-d5), num, num2);
+		StdDraw.offscreen.drawImage(image, (int)java.lang.Math.round(num - num3 / 2.0), (int)java.lang.Math.round(num2 - num4 / 2.0), (int)java.lang.Math.round(num3), (int)java.lang.Math.round(num4), null);
+		StdDraw.offscreen.rotate(java.lang.Math.toRadians(d5), num, num2);
+		StdDraw.draw();
+	}
+	
+	
+	public static void text(double d1, double d2, string str, double d3)
+	{
+		double d4 = StdDraw.scaleX(d1);
+		double d5 = StdDraw.scaleY(d2);
+		StdDraw.offscreen.rotate(java.lang.Math.toRadians(-d3), d4, d5);
+		StdDraw.text(d1, d2, str);
+		StdDraw.offscreen.rotate(java.lang.Math.toRadians(d3), d4, d5);
+	}
+	
+	
+	public static void textLeft(double d1, double d2, string str)
+	{
+		StdDraw.offscreen.setFont(StdDraw.font);
+		FontMetrics fontMetrics = StdDraw.offscreen.getFontMetrics();
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		int descent = fontMetrics.getDescent();
+		StdDraw.offscreen.drawString(str, (float)num, (float)(num2 + (double)descent));
+		StdDraw.draw();
+	}
+	
+	
+	public static void textRight(double d1, double d2, string str)
+	{
+		StdDraw.offscreen.setFont(StdDraw.font);
+		FontMetrics fontMetrics = StdDraw.offscreen.getFontMetrics();
+		double num = StdDraw.scaleX(d1);
+		double num2 = StdDraw.scaleY(d2);
+		int num3 = fontMetrics.stringWidth(str);
+		int descent = fontMetrics.getDescent();
+		StdDraw.offscreen.drawString(str, (float)(num - (double)num3), (float)(num2 + (double)descent));
+		StdDraw.draw();
+	}
+	
+	
+	public static void show()
+	{
+		StdDraw.defer = false;
+		StdDraw.draw();
+	}
+	
+	
+	public virtual void actionPerformed(ActionEvent ae)
+	{
+		FileDialog.__<clinit>();
+		FileDialog fileDialog = new FileDialog(StdDraw.frame, "Use a .png or .jpg extension", 1);
+		fileDialog.setVisible(true);
+		string file = fileDialog.getFile();
+		if (file != null)
+		{
+			StdDraw.save(new StringBuilder().append(fileDialog.getDirectory()).append(File.separator).append(fileDialog.getFile()).toString());
+		}
+	}
+	
+	public static bool mousePressed()
+	{
+		int result;
+		lock (StdDraw.mouseLock)
+		{
+			result = (StdDraw.mousePressed ? 1 : 0);
+		}
+		return result != 0;
+	}
+	
+	public static double mouseX()
+	{
+		double result;
+		lock (StdDraw.mouseLock)
+		{
+			result = StdDraw.mouseX;
+		}
+		return result;
+	}
+	
+	public static double mouseY()
+	{
+		double result;
+		lock (StdDraw.mouseLock)
+		{
+			result = StdDraw.mouseY;
+		}
+		return result;
+	}
+	public virtual void mouseClicked(MouseEvent me)
+	{
+	}
+	public virtual void mouseEntered(MouseEvent me)
+	{
+	}
+	public virtual void mouseExited(MouseEvent me)
+	{
+	}
+	
+	
+	public virtual void mousePressed(MouseEvent me)
+	{
+		lock (StdDraw.mouseLock)
+		{
+			StdDraw.mouseX = StdDraw.userX((double)me.getX());
+			StdDraw.mouseY = StdDraw.userY((double)me.getY());
+			StdDraw.mousePressed = true;
+		}
+	}
+	
+	public virtual void mouseReleased(MouseEvent me)
+	{
+		lock (StdDraw.mouseLock)
+		{
+			StdDraw.mousePressed = false;
+		}
+	}
+	
+	
+	public virtual void mouseDragged(MouseEvent me)
+	{
+		lock (StdDraw.mouseLock)
+		{
+			StdDraw.mouseX = StdDraw.userX((double)me.getX());
+			StdDraw.mouseY = StdDraw.userY((double)me.getY());
+		}
+	}
+	
+	
+	public virtual void mouseMoved(MouseEvent me)
+	{
+		lock (StdDraw.mouseLock)
+		{
+			StdDraw.mouseX = StdDraw.userX((double)me.getX());
+			StdDraw.mouseY = StdDraw.userY((double)me.getY());
+		}
+	}
+	
+	
+	public static bool hasNextKeyTyped()
+	{
+		int result;
+		lock (StdDraw.keyLock)
+		{
+			result = (StdDraw.keysTyped.IsEmpty ? 0 : 1);
+		}
+		return result != 0;
+	}
+	
+	
+	public static char nextKeyTyped()
+	{
+		int result;
+		lock (StdDraw.keyLock)
+		{
+			result = (int)((Character)StdDraw.keysTyped.removeLast()).charValue();
+		}
+		return (char)result;
+	}
+	
+	
+	public static bool isKeyPressed(int i)
+	{
+		int result;
+		lock (StdDraw.keyLock)
+		{
+			result = (StdDraw.keysDown.contains(Integer.valueOf(i)) ? 1 : 0);
+		}
+		return result != 0;
+	}
+	
+	
+	public virtual void keyTyped(KeyEvent ke)
+	{
+		lock (StdDraw.keyLock)
+		{
+			StdDraw.keysTyped.addFirst(Character.valueOf(ke.getKeyChar()));
+		}
+	}
+	
+	
+	public virtual void keyPressed(KeyEvent ke)
+	{
+		lock (StdDraw.keyLock)
+		{
+			StdDraw.keysDown.add(Integer.valueOf(ke.getKeyCode()));
+		}
+	}
+	
+	
+	public virtual void keyReleased(KeyEvent ke)
+	{
+		lock (StdDraw.keyLock)
+		{
+			StdDraw.keysDown.remove(Integer.valueOf(ke.getKeyCode()));
+		}
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		StdDraw.square(0.2, 0.8, 0.1);
+		StdDraw.filledSquare(0.8, 0.8, 0.2);
+		StdDraw.circle(0.8, 0.2, 0.2);
+		StdDraw.setPenColor(StdDraw.__BOOK_RED);
+		StdDraw.setPenRadius(0.02);
+		StdDraw.arc(0.8, 0.2, 0.1, 200.0, 45.0);
+		StdDraw.setPenRadius();
+		StdDraw.setPenColor(StdDraw.__BOOK_BLUE);
+		double[] darr = new double[]
+		{
+			0.1,
+			0.2,
+			0.3,
+			0.2
+		};
+		double[] darr2 = new double[]
+		{
+			0.2,
+			0.3,
+			0.2,
+			0.1
+		};
+		StdDraw.filledPolygon(darr, darr2);
+		StdDraw.setPenColor(StdDraw.__BLACK);
+		StdDraw.text(0.2, 0.5, "black text");
+		StdDraw.setPenColor(StdDraw.__WHITE);
+		StdDraw.text(0.8, 0.8, "white text");
+	}
+	
+	static StdDraw()
+	{
+		StdDraw.__BLACK = Color.BLACK;
+		StdDraw.__BLUE = Color.BLUE;
+		StdDraw.__CYAN = Color.CYAN;
+		StdDraw.__DARK_GRAY = Color.DARK_GRAY;
+		StdDraw.__GRAY = Color.GRAY;
+		StdDraw.__GREEN = Color.GREEN;
+		StdDraw.__LIGHT_GRAY = Color.LIGHT_GRAY;
+		StdDraw.__MAGENTA = Color.MAGENTA;
+		StdDraw.__ORANGE = Color.ORANGE;
+		StdDraw.__PINK = Color.PINK;
+		StdDraw.__RED = Color.RED;
+		StdDraw.__WHITE = Color.WHITE;
+		StdDraw.__YELLOW = Color.YELLOW;
+		StdDraw.__BOOK_BLUE = new Color(9, 90, 166);
+		StdDraw.__BOOK_LIGHT_BLUE = new Color(103, 198, 243);
+		StdDraw.__BOOK_RED = new Color(150, 35, 31);
+		StdDraw.DEFAULT_PEN_COLOR = StdDraw.__BLACK;
+		StdDraw.DEFAULT_CLEAR_COLOR = StdDraw.__WHITE;
+		StdDraw.width = 512;
+		StdDraw.height = 512;
+		StdDraw.defer = false;
+		StdDraw.mouseLock = new java.lang.Object();
+		StdDraw.keyLock = new java.lang.Object();
+		StdDraw.DEFAULT_FONT = new Font("SansSerif", 0, 16);
+		StdDraw.std = new StdDraw();
+		StdDraw.mousePressed = false;
+		StdDraw.mouseX = (double)0f;
+		StdDraw.mouseY = (double)0f;
+		StdDraw.keysTyped = new LinkedList();
+		StdDraw.keysDown = new TreeSet();
+		StdDraw.init();
+	}
+}
+

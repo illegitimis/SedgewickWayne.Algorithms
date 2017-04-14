@@ -1,0 +1,180 @@
+/*[Implements(new string[]
+{
+	"java.lang.Iterable"
+}), Signature("<Key::Ljava/lang/Comparable<TKey;>;Value:Ljava/lang/Object;>Ljava/lang/Object;Ljava/lang/Iterable<TKey;>;")]*/
+public class ST : IEnumerable
+{
+//[Signature("Ljava/util/TreeMap<TKey;TValue;>;")]
+	private TreeMap st;
+	
+	
+	public ST()
+	{
+		this.st = new TreeMap();
+	}
+/*	[Signature("(TKey;)Z")]*/
+	
+	public virtual bool contains(IComparable c)
+	{
+		if (c == null)
+		{
+			string arg_0D_0 = "called contains() with null key";
+			
+			throw new NullPointerException(arg_0D_0);
+		}
+		return this.st.containsKey(c);
+	}
+/*	[Signature("(TKey;TValue;)V")]*/
+	
+	public virtual void put(IComparable c, object obj)
+	{
+		if (c == null)
+		{
+			string arg_0D_0 = "called put() with null key";
+			
+			throw new NullPointerException(arg_0D_0);
+		}
+		if (obj == null)
+		{
+			this.st.remove(c);
+		}
+		else
+		{
+			this.st.put(c, obj);
+		}
+	}
+/*	[Signature("(TKey;)TValue;")]*/
+	
+	public virtual object get(IComparable c)
+	{
+		if (c == null)
+		{
+			string arg_0D_0 = "called get() with null key";
+			
+			throw new NullPointerException(arg_0D_0);
+		}
+		return this.st.get(c);
+	}
+/*	[LineNumberTable(130), Signature("()Ljava/lang/Iterable<TKey;>;")]*/
+	
+	public virtual Iterable keys()
+	{
+		return this.st.keySet();
+	}
+/*	[Signature("(TKey;)V")]*/
+	
+	public virtual void delete(IComparable c)
+	{
+		if (c == null)
+		{
+			string arg_0D_0 = "called delete() with null key";
+			
+			throw new NullPointerException(arg_0D_0);
+		}
+		this.st.remove(c);
+	}
+	
+	
+	public virtual int Size
+	{
+		return this.st.Size;
+	}
+	
+	
+	public virtual bool IsEmpty
+	{
+		return this.Size == 0;
+	}
+	[LineNumberTable(143), Signature("()Ljava/util/Iterator<TKey;>;"), Obsolete]
+	
+	public virtual Iterator iterator()
+	{
+		return this.st.keySet().iterator();
+	}
+/*	[Signature("()TKey;")]*/
+	
+	public virtual IComparable Min
+	{
+		if (this.IsEmpty)
+		{
+			string arg_12_0 = "called Min with empty symbol table";
+			
+			throw new InvalidOperationException(arg_12_0);
+		}
+		return (IComparable)this.st.firstKey();
+	}
+/*	[Signature("()TKey;")]*/
+	
+	public virtual IComparable Max
+	{
+		if (this.IsEmpty)
+		{
+			string arg_12_0 = "called Max with empty symbol table";
+			
+			throw new InvalidOperationException(arg_12_0);
+		}
+		return (IComparable)this.st.lastKey();
+	}
+/*	[Signature("(TKey;)TKey;")]*/
+	
+	public virtual IComparable ceiling(IComparable c)
+	{
+		if (c == null)
+		{
+			string arg_0D_0 = "called ceiling() with null key";
+			
+			throw new NullPointerException(arg_0D_0);
+		}
+		IComparable comparable = (IComparable)this.st.ceilingKey(c);
+		if (comparable == null)
+		{
+			string arg_47_0 = new StringBuilder().append("all keys are less than ").append(c).toString();
+			
+			throw new InvalidOperationException(arg_47_0);
+		}
+		return comparable;
+	}
+/*	[Signature("(TKey;)TKey;")]*/
+	
+	public virtual IComparable floor(IComparable c)
+	{
+		if (c == null)
+		{
+			string arg_0D_0 = "called floor() with null key";
+			
+			throw new NullPointerException(arg_0D_0);
+		}
+		IComparable comparable = (IComparable)this.st.floorKey(c);
+		if (comparable == null)
+		{
+			string arg_47_0 = new StringBuilder().append("all keys are greater than ").append(c).toString();
+			
+			throw new InvalidOperationException(arg_47_0);
+		}
+		return comparable;
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		ST sT = new ST();
+		int num = 0;
+		while (!StdIn.IsEmpty)
+		{
+			string text = StdIn.readString();
+			sT.put(text, Integer.valueOf(num));
+			num++;
+		}
+		Iterator iterator = sT.keys().iterator();
+		while (iterator.hasNext())
+		{
+			string text = (string)iterator.next();
+			StdOut.println(new StringBuilder().append(text).append(" ").append(sT.get(text)).toString());
+		}
+	}
+	
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return new IterableEnumerator(this);
+	}
+}

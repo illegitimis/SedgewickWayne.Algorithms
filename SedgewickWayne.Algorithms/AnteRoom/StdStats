@@ -1,0 +1,362 @@
+
+public sealed class StdStats
+{
+	
+	public static double sum(double[] darr)
+	{
+		double num = (double)0f;
+		for (int i = 0; i < darr.Length; i++)
+		{
+			num += darr[i];
+		}
+		return num;
+	}
+	
+	
+	public static double sum(double[] darr, int i1, int i2)
+	{
+		if (i1 < 0 || i2 >= darr.Length || i1 > i2)
+		{
+			string arg_17_0 = "Subarray indices out of bounds";
+			
+			throw new RuntimeException(arg_17_0);
+		}
+		double num = (double)0f;
+		for (int j = i1; j <= i2; j++)
+		{
+			num += darr[j];
+		}
+		return num;
+	}
+	
+	
+	public static double mean(double[] darr)
+	{
+		if (darr.Length == 0)
+		{
+			return double.NaN;
+		}
+		double num = StdStats.sum(darr);
+		return num / (double)darr.Length;
+	}
+	
+	
+	public static double mean(double[] darr, int i1, int i2)
+	{
+		int num = i2 - i1 + 1;
+		if (i1 < 0 || i2 >= darr.Length || i1 > i2)
+		{
+			string arg_1D_0 = "Subarray indices out of bounds";
+			
+			throw new RuntimeException(arg_1D_0);
+		}
+		if (num == 0)
+		{
+			return double.NaN;
+		}
+		double num2 = StdStats.sum(darr, i1, i2);
+		return num2 / (double)num;
+	}
+	
+	public static double mean(int[] iarr)
+	{
+		if (iarr.Length == 0)
+		{
+			return double.NaN;
+		}
+		double num = (double)0f;
+		for (int i = 0; i < iarr.Length; i++)
+		{
+			num += (double)iarr[i];
+		}
+		return num / (double)iarr.Length;
+	}
+	
+	
+	public static double var(double[] darr)
+	{
+		if (darr.Length == 0)
+		{
+			return double.NaN;
+		}
+		double num = StdStats.mean(darr);
+		double num2 = (double)0f;
+		for (int i = 0; i < darr.Length; i++)
+		{
+			num2 += (darr[i] - num) * (darr[i] - num);
+		}
+		return num2 / (double)(darr.Length - 1);
+	}
+	
+	
+	public static double var(double[] darr, int i1, int i2)
+	{
+		int num = i2 - i1 + 1;
+		if (i1 < 0 || i2 >= darr.Length || i1 > i2)
+		{
+			string arg_1D_0 = "Subarray indices out of bounds";
+			
+			throw new RuntimeException(arg_1D_0);
+		}
+		if (num == 0)
+		{
+			return double.NaN;
+		}
+		double num2 = StdStats.mean(darr, i1, i2);
+		double num3 = (double)0f;
+		for (int j = i1; j <= i2; j++)
+		{
+			num3 += (darr[j] - num2) * (darr[j] - num2);
+		}
+		return num3 / (double)(num - 1);
+	}
+	
+	
+	public static double var(int[] iarr)
+	{
+		if (iarr.Length == 0)
+		{
+			return double.NaN;
+		}
+		double num = StdStats.mean(iarr);
+		double num2 = (double)0f;
+		for (int i = 0; i < iarr.Length; i++)
+		{
+			num2 += ((double)iarr[i] - num) * ((double)iarr[i] - num);
+		}
+		return num2 / (double)(iarr.Length - 1);
+	}
+	
+	
+	public static double varp(double[] darr)
+	{
+		if (darr.Length == 0)
+		{
+			return double.NaN;
+		}
+		double num = StdStats.mean(darr);
+		double num2 = (double)0f;
+		for (int i = 0; i < darr.Length; i++)
+		{
+			num2 += (darr[i] - num) * (darr[i] - num);
+		}
+		return num2 / (double)darr.Length;
+	}
+	
+	
+	public static double varp(double[] darr, int i1, int i2)
+	{
+		int num = i2 - i1 + 1;
+		if (i1 < 0 || i2 >= darr.Length || i1 > i2)
+		{
+			string arg_1D_0 = "Subarray indices out of bounds";
+			
+			throw new RuntimeException(arg_1D_0);
+		}
+		if (num == 0)
+		{
+			return double.NaN;
+		}
+		double num2 = StdStats.mean(darr, i1, i2);
+		double num3 = (double)0f;
+		for (int j = i1; j <= i2; j++)
+		{
+			num3 += (darr[j] - num2) * (darr[j] - num2);
+		}
+		return num3 / (double)num;
+	}
+	
+	public static double min(double[] darr)
+	{
+		double num = double.PositiveInfinity;
+		for (int i = 0; i < darr.Length; i++)
+		{
+			if (darr[i] < num)
+			{
+				num = darr[i];
+			}
+		}
+		return num;
+	}
+	
+	public static double max(double[] darr)
+	{
+		double num = double.NegativeInfinity;
+		for (int i = 0; i < darr.Length; i++)
+		{
+			if (darr[i] > num)
+			{
+				num = darr[i];
+			}
+		}
+		return num;
+	}
+	
+	
+	public static double stddev(double[] darr)
+	{
+		return java.lang.Math.sqrt(StdStats.var(darr));
+	}
+	
+	
+	private StdStats()
+	{
+	}
+	
+	
+	public static double max(double[] darr, int i1, int i2)
+	{
+		if (i1 < 0 || i2 >= darr.Length || i1 > i2)
+		{
+			string arg_17_0 = "Subarray indices out of bounds";
+			
+			throw new RuntimeException(arg_17_0);
+		}
+		double num = double.NegativeInfinity;
+		for (int j = i1; j <= i2; j++)
+		{
+			if (darr[j] > num)
+			{
+				num = darr[j];
+			}
+		}
+		return num;
+	}
+	
+	public static int max(int[] iarr)
+	{
+		int num = -2147483648;
+		for (int i = 0; i < iarr.Length; i++)
+		{
+			if (iarr[i] > num)
+			{
+				num = iarr[i];
+			}
+		}
+		return num;
+	}
+	
+	
+	public static double min(double[] darr, int i1, int i2)
+	{
+		if (i1 < 0 || i2 >= darr.Length || i1 > i2)
+		{
+			string arg_17_0 = "Subarray indices out of bounds";
+			
+			throw new RuntimeException(arg_17_0);
+		}
+		double num = double.PositiveInfinity;
+		for (int j = i1; j <= i2; j++)
+		{
+			if (darr[j] < num)
+			{
+				num = darr[j];
+			}
+		}
+		return num;
+	}
+	
+	public static int min(int[] iarr)
+	{
+		int num = 2147483647;
+		for (int i = 0; i < iarr.Length; i++)
+		{
+			if (iarr[i] < num)
+			{
+				num = iarr[i];
+			}
+		}
+		return num;
+	}
+	
+	
+	public static double stddev(double[] darr, int i1, int i2)
+	{
+		return java.lang.Math.sqrt(StdStats.var(darr, i1, i2));
+	}
+	
+	
+	public static double stddev(int[] iarr)
+	{
+		return java.lang.Math.sqrt(StdStats.var(iarr));
+	}
+	
+	
+	public static double stddevp(double[] darr)
+	{
+		return java.lang.Math.sqrt(StdStats.varp(darr));
+	}
+	
+	
+	public static double stddevp(double[] darr, int i1, int i2)
+	{
+		return java.lang.Math.sqrt(StdStats.varp(darr, i1, i2));
+	}
+	
+	public static int sum(int[] iarr)
+	{
+		int num = 0;
+		for (int i = 0; i < iarr.Length; i++)
+		{
+			num += iarr[i];
+		}
+		return num;
+	}
+	
+	
+	public static void plotPoints(double[] darr)
+	{
+		int num = darr.Length;
+		StdDraw.setXscale((double)0f, (double)(num - 1));
+		StdDraw.setPenRadius((double)1f / (3.0 * (double)num));
+		for (int i = 0; i < num; i++)
+		{
+			StdDraw.point((double)i, darr[i]);
+		}
+	}
+	
+	
+	public static void plotLines(double[] darr)
+	{
+		int num = darr.Length;
+		StdDraw.setXscale((double)0f, (double)(num - 1));
+		StdDraw.setPenRadius();
+		for (int i = 1; i < num; i++)
+		{
+			StdDraw.line((double)(i - 1), darr[i - 1], (double)i, darr[i]);
+		}
+	}
+	
+	
+	public static void plotBars(double[] darr)
+	{
+		int num = darr.Length;
+		StdDraw.setXscale((double)0f, (double)(num - 1));
+		for (int i = 0; i < num; i++)
+		{
+			StdDraw.filledRectangle((double)i, darr[i] / 2.0, 0.25, darr[i] / 2.0);
+		}
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		double[] darr = StdArrayIO.readDouble1D();
+		StdOut.printf("       min %7.3f\n", new object[]
+		{
+			java.lang.Double.valueOf(StdStats.min(darr))
+		});
+		StdOut.printf("      mean %7.3f\n", new object[]
+		{
+			java.lang.Double.valueOf(StdStats.mean(darr))
+		});
+		StdOut.printf("       max %7.3f\n", new object[]
+		{
+			java.lang.Double.valueOf(StdStats.max(darr))
+		});
+		StdOut.printf("   std dev %7.3f\n", new object[]
+		{
+			java.lang.Double.valueOf(StdStats.stddev(darr))
+		});
+	}
+}

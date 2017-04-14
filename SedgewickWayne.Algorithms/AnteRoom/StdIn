@@ -1,0 +1,1339 @@
+
+
+using java.util.regex;
+
+
+public sealed class StdIn
+{
+	private static Scanner scanner;
+	private const string charsetName = "UTF-8";
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Locale usLocale;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Pattern WHITESPACE_PATTERN;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Pattern EMPTY_PATTERN;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Pattern EVERYTHING_PATTERN;
+//[Modifiers(Modifiers.Static | Modifiers.Final | Modifiers.Synthetic)]
+	internal static bool s_assertionsDisabled;
+	
+	
+	
+	
+	public static int readInt()
+	{
+		return StdIn.scanner.nextInt();
+	}
+	
+	
+	public static string readString()
+	{
+		return StdIn.scanner.next();
+	}
+	
+	
+	public static double readDouble()
+	{
+		return StdIn.scanner.nextDouble();
+	}
+	
+	
+	public static bool IsEmpty
+	{
+		return !StdIn.scanner.hasNext();
+	}
+	
+	
+	public static string readAll()
+	{
+		if (!StdIn.scanner.hasNextLine())
+		{
+			return "";
+		}
+		string result = StdIn.scanner.useDelimiter(StdIn.EVERYTHING_PATTERN).next();
+		StdIn.scanner.useDelimiter(StdIn.WHITESPACE_PATTERN);
+		return result;
+	}
+	
+	
+	public static string readLine()
+	{
+		string result;
+		try
+		{
+			result = StdIn.scanner.nextLine();
+		}
+		catch (System.Exception arg_10_0)
+		{
+			if (ByteCodeHelper.MapException<java.lang.Exception>(arg_10_0, ByteCodeHelper.MapFlags.Unused) == null)
+			{
+				throw;
+			}
+			goto IL_1D;
+		}
+		return result;
+		IL_1D:
+		result = null;
+		return result;
+	}
+	
+	
+	public static bool hasNextLine()
+	{
+		return StdIn.scanner.hasNextLine();
+	}
+	
+	
+	public static string[] readAllStrings()
+	{
+		Pattern arg_1A_0 = StdIn.WHITESPACE_PATTERN;
+		object _<ref> = StdIn.readAll();
+		CharSequence input;
+		input.__<ref> = _<ref>;
+		string[] array = arg_1A_0.split(input);
+		if (array.Length == 0 || java.lang.String.instancehelper_length(array[0]) > 0)
+		{
+			return array;
+		}
+		string[] array2 = new string[array.Length - 1];
+		for (int i = 0; i < array.Length - 1; i++)
+		{
+			array2[i] = array[i + 1];
+		}
+		return array2;
+	}
+	
+	
+	public static bool readBoolean()
+	{
+		string @this = StdIn.readString();
+		if (java.lang.String.instancehelper_equalsIgnoreCase(@this, "true"))
+		{
+			return true;
+		}
+		if (java.lang.String.instancehelper_equalsIgnoreCase(@this, "false"))
+		{
+			return false;
+		}
+		if (java.lang.String.instancehelper_equals(@this, "1"))
+		{
+			return true;
+		}
+		if (java.lang.String.instancehelper_equals(@this, "0"))
+		{
+			return false;
+		}
+		
+		throw new InputMismatchException();
+	}
+	
+	
+	private static void setScanner(Scanner scanner)
+	{
+		StdIn.scanner = scanner;
+		StdIn.scanner.useLocale(StdIn.usLocale);
+	}
+	
+	
+	public static int[] readAllInts()
+	{
+		string[] array = StdIn.readAllStrings();
+		int[] array2 = new int[array.Length];
+		for (int i = 0; i < array.Length; i++)
+		{
+			array2[i] = Integer.parseInt(array[i]);
+		}
+		return array2;
+	}
+	
+	
+	public static double[] readAllDoubles()
+	{
+		string[] array = StdIn.readAllStrings();
+		double[] array2 = new double[array.Length];
+		for (int i = 0; i < array.Length; i++)
+		{
+			array2[i] = java.lang.Double.parseDouble(array[i]);
+		}
+		return array2;
+	}
+	
+	
+	private static void resync()
+	{
+		Scanner.__<clinit>();
+		BufferedInputStream.__<clinit>();
+		StdIn.setScanner(new Scanner(new BufferedInputStream(System.@in), "UTF-8"));
+	}
+	
+	
+	private StdIn()
+	{
+	}
+	
+	
+	public static bool hasNextChar()
+	{
+		StdIn.scanner.useDelimiter(StdIn.EMPTY_PATTERN);
+		int result = StdIn.scanner.hasNext() ? 1 : 0;
+		StdIn.scanner.useDelimiter(StdIn.WHITESPACE_PATTERN);
+		return result != 0;
+	}
+	
+	
+	public static char readChar()
+	{
+		StdIn.scanner.useDelimiter(StdIn.EMPTY_PATTERN);
+		string @this = StdIn.scanner.next();
+		if (!StdIn.s_assertionsDisabled && java.lang.String.instancehelper_length(@this) != 1)
+		{
+			object arg_35_0 = "Internal (Std)In.readChar() error! Please contact the authors.";
+			
+			throw new AssertionError(arg_35_0);
+		}
+		StdIn.scanner.useDelimiter(StdIn.WHITESPACE_PATTERN);
+		return java.lang.String.instancehelper_charAt(@this, 0);
+	}
+	
+	
+	public static float readFloat()
+	{
+		return StdIn.scanner.nextFloat();
+	}
+	
+	
+	public static long readLong()
+	{
+		return StdIn.scanner.nextLong();
+	}
+	
+	
+	public static short readShort()
+	{
+		return StdIn.scanner.nextShort();
+	}
+	
+	
+	public static byte readByte()
+	{
+		return (byte)((sbyte)StdIn.scanner.nextByte());
+	}
+//[LineNumberTable(253), Obsolete]
+	
+	public static int[] readInts()
+	{
+		return StdIn.readAllInts();
+	}
+//[LineNumberTable(261), Obsolete]
+	
+	public static double[] readDoubles()
+	{
+		return StdIn.readAllDoubles();
+	}
+//[LineNumberTable(269), Obsolete]
+	
+	public static string[] readStrings()
+	{
+		return StdIn.readAllStrings();
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		System.@out.println("Type a string: ");
+		string str = StdIn.readString();
+		System.@out.println(new StringBuilder().append("Your string was: ").append(str).toString());
+		System.@out.println();
+		System.@out.println("Type an int: ");
+		int i = StdIn.readInt();
+		System.@out.println(new StringBuilder().append("Your int was: ").append(i).toString());
+		System.@out.println();
+		System.@out.println("Type a bool: ");
+		int b = StdIn.readBoolean() ? 1 : 0;
+		System.@out.println(new StringBuilder().append("Your bool was: ").append(b != 0).toString());
+		System.@out.println();
+		System.@out.println("Type a double: ");
+		double d = StdIn.readDouble();
+		System.@out.println(new StringBuilder().append("Your double was: ").append(d).toString());
+		System.@out.println();
+	}
+	
+	static StdIn()
+	{
+		StdIn.s_assertionsDisabled = !ClassLiteral<StdIn>.Value.desiredAssertionStatus();
+		StdIn.usLocale = new Locale("en", "US");
+		StdIn.WHITESPACE_PATTERN = Pattern.compile("\\p{javaWhitespace}+");
+		StdIn.EMPTY_PATTERN = Pattern.compile("");
+		StdIn.EVERYTHING_PATTERN = Pattern.compile("\\A");
+		StdIn.resync();
+	}
+}
+
+
+
+
+
+
+using java.lang.reflect;
+
+
+
+public class StdInTest
+{
+	private sealed class __<CallerID> : CallerID
+	{
+		internal __<CallerID>()
+		{
+		}
+	}
+	public static bool testStdIn;
+	public static Method resyncMethod;
+	public static int testCount = 0;
+	private static CallerID __<callerID>;
+	
+	
+	public static object escape(object obj)
+	{
+		if (obj is Character)
+		{
+			int num = (int)((Character)obj).charValue();
+			int num2 = java.lang.String.instancehelper_indexOf("\b\t\n\f\r\"'\\", num);
+			if (num2 >= 0)
+			{
+				return new StringBuilder().append("\\").append(java.lang.String.instancehelper_charAt("btnfr\"'\\", num2)).toString();
+			}
+			if (num < 32)
+			{
+				return new StringBuilder().append("\\").append(Integer.toOctalString(num)).toString();
+			}
+			if (num > 126)
+			{
+				return new StringBuilder().append("\\u").append(java.lang.String.format("%04X", new object[]
+				{
+					Integer.valueOf(num)
+				})).toString();
+			}
+			return obj;
+		}
+		else
+		{
+			if (obj is string)
+			{
+				StringBuilder stringBuilder = new StringBuilder();
+				char[] array = java.lang.String.instancehelper_toCharArray((string)obj);
+				int i = array.Length;
+				for (int j = 0; j < i; j++)
+				{
+					int c = (int)array[j];
+					stringBuilder.append(StdInTest.escape(Character.valueOf((char)c)));
+				}
+				return new StringBuilder().append("\"").append(stringBuilder.toString()).append("\"").toString();
+			}
+			if (java.lang.Object.instancehelper_getClass(obj).isArray())
+			{
+				StringBuilder stringBuilder = new StringBuilder("[");
+				int num2 = java.lang.reflect.Array.getLength(obj);
+				for (int i = 0; i < num2; i++)
+				{
+					stringBuilder.append(" ").append(StdInTest.escape(java.lang.reflect.Array.get(obj, i)));
+				}
+				return stringBuilder.append("]").toString();
+			}
+			return obj;
+		}
+	}
+	
+	
+	public static void test(string str, object[][] objarr, bool b)
+	{
+		In @in = null;
+		if (b)
+		{
+			UnsupportedEncodingException ex;
+			try
+			{
+				System.setIn(new ByteArrayInputStream(java.lang.String.instancehelper_getBytes(str, "UTF-8")));
+			}
+			catch (UnsupportedEncodingException arg_24_0)
+			{
+				ex = ByteCodeHelper.MapException<UnsupportedEncodingException>(arg_24_0, ByteCodeHelper.MapFlags.NoRemapping);
+				goto IL_2E;
+			}
+			IllegalAccessException ex2;
+			InvocationTargetException ex3;
+			try
+			{
+				try
+				{
+					StdInTest.resyncMethod.invoke(null, new object[0], StdInTest.__<GetCallerID>());
+				}
+				catch (IllegalAccessException arg_61_0)
+				{
+					ex2 = ByteCodeHelper.MapException<IllegalAccessException>(arg_61_0, ByteCodeHelper.MapFlags.NoRemapping);
+					goto IL_76;
+				}
+			}
+			catch (InvocationTargetException arg_6B_0)
+			{
+				ex3 = ByteCodeHelper.MapException<InvocationTargetException>(arg_6B_0, ByteCodeHelper.MapFlags.NoRemapping);
+				goto IL_7A;
+			}
+			goto IL_B9;
+			IL_76:
+			IllegalAccessException @this = ex2;
+			string arg_8E_0 = Throwable.instancehelper_toString(@this);
+			
+			throw new RuntimeException(arg_8E_0);
+			IL_7A:
+			InvocationTargetException this2 = ex3;
+			string arg_A2_0 = Throwable.instancehelper_toString(this2);
+			
+			throw new RuntimeException(arg_A2_0);
+			IL_2E:
+			UnsupportedEncodingException this3 = ex;
+			string arg_3F_0 = Throwable.instancehelper_toString(this3);
+			
+			throw new RuntimeException(arg_3F_0);
+		}
+		
+		@in = new In(new Scanner(str));
+		IL_B9:
+		int num = 0;
+		int num2 = objarr.Length;
+		int i = 0;
+		while (i < num2)
+		{
+			object[] array = objarr[i];
+			string text = (string)array[0];
+			object obj = array[1];
+			string text2 = "Failed input %s\nStep %d (%s)\n";
+			object obj2;
+			NoSuchMethodException ex4;
+			IllegalAccessException ex5;
+			InvocationTargetException ex6;
+			try
+			{
+				try
+				{
+					try
+					{
+						Method method;
+						if (b)
+						{
+							method = ClassLiteral<StdIn>.Value.getMethod(text, new Class[0], StdInTest.__<GetCallerID>());
+						}
+						else
+						{
+							method = java.lang.Object.instancehelper_getClass(@in).getMethod(text, new Class[0], StdInTest.__<GetCallerID>());
+						}
+						obj2 = method.invoke(@in, new object[0], StdInTest.__<GetCallerID>());
+					}
+					catch (NoSuchMethodException arg_141_0)
+					{
+						ex4 = ByteCodeHelper.MapException<NoSuchMethodException>(arg_141_0, ByteCodeHelper.MapFlags.NoRemapping);
+						goto IL_160;
+					}
+				}
+				catch (IllegalAccessException arg_14B_0)
+				{
+					ex5 = ByteCodeHelper.MapException<IllegalAccessException>(arg_14B_0, ByteCodeHelper.MapFlags.NoRemapping);
+					goto IL_164;
+				}
+			}
+			catch (InvocationTargetException arg_155_0)
+			{
+				ex6 = ByteCodeHelper.MapException<InvocationTargetException>(arg_155_0, ByteCodeHelper.MapFlags.NoRemapping);
+				goto IL_168;
+			}
+			if (java.lang.Object.instancehelper_getClass(obj).isArray())
+			{
+				if (java.lang.Object.instancehelper_getClass(obj2).isArray())
+				{
+					object obj3 = obj2;
+					object obj4 = obj;
+					int length = java.lang.reflect.Array.getLength(obj3);
+					int length2 = java.lang.reflect.Array.getLength(obj4);
+					if (length2 != length)
+					{
+						StdOut.printf(new StringBuilder().append(text2).append("Expected %d, got %d items:\n%s\n").toString(), new object[]
+						{
+							StdInTest.escape(str),
+							Integer.valueOf(num),
+							text,
+							Integer.valueOf(length2),
+							Integer.valueOf(length),
+							StdInTest.escape(obj3)
+						});
+					}
+					else
+					{
+						for (int j = 0; j < length; j++)
+						{
+							if (!java.lang.Object.instancehelper_equals(java.lang.reflect.Array.get(obj3, j), java.lang.reflect.Array.get(obj4, j)))
+							{
+								StdOut.printf(new StringBuilder().append(text2).append("\nExpected [%d]=%s, got %s\n").toString(), new object[]
+								{
+									StdInTest.escape(str),
+									Integer.valueOf(num),
+									text,
+									Integer.valueOf(j),
+									StdInTest.escape(java.lang.reflect.Array.get(obj4, j)),
+									StdInTest.escape(java.lang.reflect.Array.get(obj3, j))
+								});
+							}
+						}
+					}
+					goto IL_47A;
+				}
+				StdOut.printf(new StringBuilder().append(text2).append("Expected array, got %s\n").toString(), new object[]
+				{
+					str,
+					Integer.valueOf(num),
+					text,
+					obj2
+				});
+			}
+			else
+			{
+				if (!java.lang.Object.instancehelper_equals(obj2, obj))
+				{
+					StdOut.printf(new StringBuilder().append(text2).append("Expected %s, got %s\n").toString(), new object[]
+					{
+						StdInTest.escape(str),
+						Integer.valueOf(num),
+						text,
+						StdInTest.escape(obj),
+						StdInTest.escape(obj2)
+					});
+					goto IL_47A;
+				}
+				goto IL_47A;
+			}
+			IL_480:
+			i++;
+			continue;
+			IL_47A:
+			num++;
+			goto IL_480;
+			IL_160:
+			NoSuchMethodException this4 = ex4;
+			StringWriter stringWriter = new StringWriter();
+			Throwable.instancehelper_printStackTrace(this4, new PrintWriter(stringWriter));
+			string arg_1CB_0 = new StringBuilder().append(java.lang.String.format(text2, new object[]
+			{
+				str,
+				Integer.valueOf(num),
+				text
+			})).append(stringWriter.toString()).toString();
+			
+			throw new RuntimeException(arg_1CB_0);
+			IL_164:
+			IllegalAccessException this5 = ex5;
+			stringWriter = new StringWriter();
+			Throwable.instancehelper_printStackTrace(this5, new PrintWriter(stringWriter));
+			string arg_228_0 = new StringBuilder().append(java.lang.String.format(text2, new object[]
+			{
+				str,
+				Integer.valueOf(num),
+				text
+			})).append(stringWriter.toString()).toString();
+			
+			throw new RuntimeException(arg_228_0);
+			IL_168:
+			InvocationTargetException ex7 = ex6;
+			stringWriter = new StringWriter();
+			Throwable.instancehelper_printStackTrace(ex7, new PrintWriter(stringWriter));
+			Throwable.instancehelper_printStackTrace(ex7.getCause(), new PrintWriter(stringWriter));
+			string arg_298_0 = new StringBuilder().append(java.lang.String.format(text2, new object[]
+			{
+				str,
+				Integer.valueOf(num),
+				text
+			})).append(stringWriter.toString()).toString();
+			
+			throw new RuntimeException(arg_298_0);
+		}
+	}
+	
+	
+	public static bool canResync()
+	{
+		try
+		{
+			StdInTest.resyncMethod = ClassLiteral<StdIn>.Value.getMethod("resync", new Class[0], StdInTest.__<GetCallerID>());
+		}
+		catch (NoSuchMethodException arg_23_0)
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public static void test(string str, object[][] objarr)
+	{
+		StdInTest.test(str, objarr, false);
+		if (StdInTest.testStdIn)
+		{
+			StdInTest.test(str, objarr, true);
+		}
+		StdInTest.testCount++;
+	}
+	
+	
+	public StdInTest()
+	{
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		StdInTest.testStdIn = StdInTest.canResync();
+		if (StdInTest.testStdIn)
+		{
+			StdOut.println("Note: any errors appear duplicated since tests run 2x.");
+		}
+		else
+		{
+			StdOut.println("Note: StdIn.resync is private, only In will be tested.");
+		}
+		StdInTest.test("this is a test", new object[][]
+		{
+			new object[]
+			{
+				"isEmpty",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readAllStrings",
+				new string[]
+				{
+					"this",
+					"is",
+					"a",
+					"test"
+				}
+			},
+			new object[]
+			{
+				"isEmpty",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("\n\n\n", new object[][]
+		{
+			new object[]
+			{
+				"isEmpty",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readAll",
+				"\n\n\n"
+			}
+		});
+		StdInTest.test("", new object[][]
+		{
+			new object[]
+			{
+				"isEmpty",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("\t\t  \t\t", new object[][]
+		{
+			new object[]
+			{
+				"isEmpty",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readAll",
+				"\t\t  \t\t"
+			}
+		});
+		StdInTest.test("readLine consumes newline\nyeah!", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				"readLine consumes newline"
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf('y')
+			}
+		});
+		StdInTest.test("readString doesn't consume spaces", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"readString"
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf(' ')
+			}
+		});
+		StdInTest.test("\n\nblank lines test", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readLine",
+				"blank lines test"
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("   \n  \t \n  correct  \n\t\n\t .trim replacement \n\t", new object[][]
+		{
+			new object[]
+			{
+				"readAllStrings",
+				new string[]
+				{
+					"correct",
+					".trim",
+					"replacement"
+				}
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StringBuilder stringBuilder = new StringBuilder();
+		int arg_3E4_0 = 2000;
+		int arg_3DF_0 = 2;
+		int[] array = new int[2];
+		int num = arg_3DF_0;
+		array[1] = num;
+		num = arg_3E4_0;
+		array[0] = num;
+		object[][] array2 = (object[][])ByteCodeHelper.multianewarray(typeof(object[][]).TypeHandle, array);
+		for (int i = 0; i < 1000; i++)
+		{
+			stringBuilder.append((char)i);
+			stringBuilder.append((char)(i + 8000));
+			array2[2 * i][0] = "readChar";
+			array2[2 * i + 1][0] = "readChar";
+			array2[2 * i][1] = Character.valueOf((char)i);
+			array2[2 * i + 1][1] = Character.valueOf((char)(i + 8000));
+		}
+		StdInTest.test(stringBuilder.toString(), array2);
+		StdInTest.test(" this \n and \that \n ", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"this"
+			},
+			new object[]
+			{
+				"readString",
+				"and"
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf(' ')
+			},
+			new object[]
+			{
+				"readString",
+				"hat"
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf(' ')
+			},
+			new object[]
+			{
+				"isEmpty",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"readLine",
+				" "
+			}
+		});
+		StdInTest.test(" 1 2 3 \n\t 4 5 ", new object[][]
+		{
+			new object[]
+			{
+				"readAllInts",
+				new int[]
+				{
+					1,
+					2,
+					3,
+					4,
+					5
+				}
+			}
+		});
+		StdInTest.test(" 0 1 False true falsE True ", new object[][]
+		{
+			new object[]
+			{
+				"readBoolean",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"readBoolean",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readBoolean",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"readBoolean",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readBoolean",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"readBoolean",
+				java.lang.Boolean.valueOf(true)
+			}
+		});
+		StdInTest.test(" \u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u205f\u3000", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"\u00a0"
+			},
+			new object[]
+			{
+				"readString",
+				"\u2007"
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"isEmpty",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf('\u2008')
+			}
+		});
+		StdInTest.test("a\u2028b\u2029c\u001fd\ve\u0085f", new object[][]
+		{
+			new object[]
+			{
+				"readAllStrings",
+				new string[]
+				{
+					"a",
+					"b",
+					"c",
+					"d",
+					"e\u0085f"
+				}
+			}
+		});
+		StdInTest.test("a\u2028b\u2029c\u001fd\ve\u0085f", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				"a"
+			},
+			new object[]
+			{
+				"readLine",
+				"b"
+			},
+			new object[]
+			{
+				"readLine",
+				"c\u001fd\ve"
+			},
+			new object[]
+			{
+				"readLine",
+				"f"
+			}
+		});
+		StdInTest.test("\u2028\u2029", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("\n\n", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("\r\n\r\n", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("\n\r", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("\r\n", new object[][]
+		{
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextChar",
+				java.lang.Boolean.valueOf(false)
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test("3E4 \t -0.5 \n \t +4", new object[][]
+		{
+			new object[]
+			{
+				"readAllDoubles",
+				new double[]
+				{
+					30000.0,
+					-0.5,
+					4.0
+				}
+			}
+		});
+		StdInTest.test(" whitespace ", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"whitespace"
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf(' ')
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test(" whitespace \n", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"whitespace"
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf(' ')
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test(" whitespace \n ", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"whitespace"
+			},
+			new object[]
+			{
+				"readChar",
+				Character.valueOf(' ')
+			},
+			new object[]
+			{
+				"readLine",
+				""
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(true)
+			},
+			new object[]
+			{
+				"readLine",
+				" "
+			},
+			new object[]
+			{
+				"hasNextLine",
+				java.lang.Boolean.valueOf(false)
+			}
+		});
+		StdInTest.test(" 34 -12983   3.25\n\t foo!", new object[][]
+		{
+			new object[]
+			{
+				"readByte",
+				java.lang.Byte.valueOf(34)
+			},
+			new object[]
+			{
+				"readShort",
+				Short.valueOf(-12983)
+			},
+			new object[]
+			{
+				"readDouble",
+				java.lang.Double.valueOf(3.25)
+			},
+			new object[]
+			{
+				"readAll",
+				"\n\t foo!"
+			}
+		});
+		StdInTest.test("30000000000  3.5 3e4, foo   \t\t ya", new object[][]
+		{
+			new object[]
+			{
+				"readLong",
+				Long.valueOf(30000000000L)
+			},
+			new object[]
+			{
+				"readFloat",
+				Float.valueOf(3.5f)
+			},
+			new object[]
+			{
+				"readAllStrings",
+				new string[]
+				{
+					"3e4,",
+					"foo",
+					"ya"
+				}
+			}
+		});
+		StdInTest.test(" \u0001 foo \u0001 foo \u0001 foo", new object[][]
+		{
+			new object[]
+			{
+				"readAllStrings",
+				new string[]
+				{
+					"\u0001",
+					"foo",
+					"\u0001",
+					"foo",
+					"\u0001",
+					"foo"
+				}
+			}
+		});
+		StdInTest.test(" \u2005 foo \u2005 foo \u2005 foo", new object[][]
+		{
+			new object[]
+			{
+				"readAllStrings",
+				new string[]
+				{
+					"foo",
+					"foo",
+					"foo"
+				}
+			}
+		});
+		StdInTest.test(" \u0001 foo \u0001 foo \u0001 foo", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"\u0001"
+			},
+			new object[]
+			{
+				"readString",
+				"foo"
+			},
+			new object[]
+			{
+				"readString",
+				"\u0001"
+			},
+			new object[]
+			{
+				"readString",
+				"foo"
+			},
+			new object[]
+			{
+				"readString",
+				"\u0001"
+			},
+			new object[]
+			{
+				"readString",
+				"foo"
+			}
+		});
+		StdInTest.test(" \u2005 foo \u2005 foo \u2005 foo", new object[][]
+		{
+			new object[]
+			{
+				"readString",
+				"foo"
+			},
+			new object[]
+			{
+				"readString",
+				"foo"
+			},
+			new object[]
+			{
+				"readString",
+				"foo"
+			}
+		});
+		StdOut.printf("Ran %d tests.\n", new object[]
+		{
+			Integer.valueOf(StdInTest.testCount)
+		});
+	}
+	private static CallerID __<GetCallerID>()
+	{
+		if (StdInTest.__<callerID> == null)
+		{
+			StdInTest.__<callerID> = new StdInTest.__<CallerID>();
+		}
+		return StdInTest.__<callerID>;
+	}
+}
+
