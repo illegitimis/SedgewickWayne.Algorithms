@@ -61,6 +61,7 @@
     <Compile Include="PriorityQueueTests.cs" />
     <Compile Include="SortingTests.cs" />
     <Compile Include="BinarySearchTests.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SedgewickWayne.Algorithms\SedgewickWayne.Algorithms.csproj">

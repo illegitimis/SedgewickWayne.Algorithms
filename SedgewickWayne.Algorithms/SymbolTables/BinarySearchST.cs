@@ -372,7 +372,7 @@ namespace SedgewickWayne.Algorithms
          * @throws InvalidOperationException if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public Key floor(Key key)
+        public Key Floor(Key key)
         {
             if (key == null) throw new ArgumentNullException("argument to floor() is null");
             int i = Rank(key);
@@ -389,7 +389,7 @@ namespace SedgewickWayne.Algorithms
          * @throws InvalidOperationException if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public Key ceiling(Key key)
+        public Key Ceiling(Key key)
         {
             if (key == null) throw new ArgumentNullException("argument to ceiling() is null");
             int i = Rank(key);
@@ -407,7 +407,7 @@ namespace SedgewickWayne.Algorithms
          * @throws ArgumentNullException if either {@code lo} or {@code hi}
          *         is {@code null}
          */
-        public int size(Key lo, Key hi)
+        public int RangeSize(Key lo, Key hi)
         {
             if (lo == null) throw new ArgumentNullException("first argument to Size is null");
             if (hi == null) throw new ArgumentNullException("second argument to Size is null");
@@ -458,26 +458,6 @@ namespace SedgewickWayne.Algorithms
         IEnumerator IEnumerable.GetEnumerator()
         {
             return Keys(Min, Max).GetEnumerator();
-        }
-
-        /*
-        public static void main(string[] strarr)
-        {
-            BinarySearchST binarySearchST = new BinarySearchST();
-            int num = 0;
-            while (!StdIn.IsEmpty)
-            {
-                string text = StdIn.readString();
-                binarySearchST.put(text, Integer.valueOf(num));
-                num++;
-            }
-            Iterator iterator = binarySearchST.keys().iterator();
-            while (iterator.hasNext())
-            {
-                string text = (string)iterator.next();
-                StdOut.println(new StringBuilder().append(text).append(" ").append(binarySearchST.get(text)).toString());
-            }
-        }
-        */
+        }       
     }
 }

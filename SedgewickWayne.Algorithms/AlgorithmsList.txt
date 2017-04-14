@@ -120,7 +120,7 @@ SET                           |  Searching                    | http://algs4.cs.
 Shell                         |  Sorting                      |  Y
 Simplex                       |                               |
 SparseVector                  |  Searching                    | http://algs4.cs.princeton.edu/31elementary
-ST                            |  Searching                    |  http://algs4.cs.princeton.edu/35applications/ST.java.html
+ST                            |  Searching                    | http://algs4.cs.princeton.edu/35applications/ST.java.html
 Stack                         |                               |
 StaticSETOfInts               |                               |
 SuffixArray                   |                               |

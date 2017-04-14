@@ -39,10 +39,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Searching\BinarySearchST.cs" />
-    <Compile Include="Searching\SequentialSearchST.cs" />
+    <None Include="AnteRoom\Binary.cs" />
+    <None Include="AnteRoom\Copy.cs" />
+    <None Include="AnteRoom\Draw.cs" />
+    <None Include="AnteRoom\Intervals.cs" />
+    <None Include="AnteRoom\Cat.cs" />
+    <None Include="AnteRoom\KMP.cs" />
+    <None Include="AnteRoom\Knuth.cs" />
+    <None Include="AnteRoom\MSD.cs" />
+    <None Include="AnteRoom\NFA.cs" />
+    <None Include="AnteRoom\Particle.cs" />
+    <None Include="AnteRoom\Picture.cs" />
+    <None Include="AnteRoom\PolyRegression.cs" />
+    <None Include="AnteRoom\PrimMST.cs" />
+    <None Include="AnteRoom\Quick3string.cs" />
+    <None Include="AnteRoom\RabinKarp.cs" />
+    <None Include="AnteRoom\RandomSeq.cs" />
+    <None Include="AnteRoom\SET.cs" />
+    <Compile Include="SymbolTables\ArrayST.cs" />
+    <Compile Include="SymbolTables\BinarySearchST.cs" />
+    <None Include="SymbolTables\SeparateChainingHashST.cs" />
+    <Compile Include="SymbolTables\SequentialSearchST.cs" />
     <Compile Include="Sorting\BinarySearch.cs" />
-    <Compile Include="Searching\ISymbolTable.cs" />
+    <Compile Include="SymbolTables\ISymbolTable.cs" />
     <Compile Include="Sorting\Heap.cs" />
     <Compile Include="Sorting\Quick3Way.cs" />
     <Compile Include="Sorting\Quick.cs" />
@@ -65,7 +84,8 @@
     <Compile Include="Collections\LinkedStack.cs" />
     <Compile Include="Sorting\QuickX.cs" />
     <Compile Include="StdRandom.cs" />
-    <None Include="JAR.IKVM.Trim.cs" />
+    <Compile Include="SymbolTables\TrieST.cs" />
+    <None Include="AnteRoom\JAR.IKVM.Trim.cs" />
     <Compile Include="Sorting\Merge.cs" />
     <Compile Include="Sorting\BinaryInsertion.cs" />
     <Compile Include="Sorting\InsertionX.cs" />
@@ -85,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AlgorithmsList.txt" />
+    <None Include="AnteRoom\JAR.IKVM.Decompiled.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
