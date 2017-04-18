@@ -1,0 +1,41 @@
+public class DoublingRatio
+{
+	
+	
+	public static double timeTrial(int i)
+	{
+		int num = 1000000;
+		int[] array = new int[i];
+		for (int j = 0; j < i; j++)
+		{
+			array[j] = StdRandom.uniform(-num, num);
+		}
+		Stopwatch stopwatch = new Stopwatch();
+		ThreeSum.count(array);
+		return stopwatch.elapsedTime();
+	}
+	
+	
+	private DoublingRatio()
+	{
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		double num = DoublingRatio.timeTrial(125);
+		int num2 = 250;
+		while (true)
+		{
+			double num3 = DoublingRatio.timeTrial(num2);
+			StdOut.printf("%6d %7.1f %5.1f\n", new object[]
+			{
+				Integer.valueOf(num2),
+				java.lang.Double.valueOf(num3),
+				java.lang.Double.valueOf(num3 / num)
+			});
+			num = num3;
+			num2 += num2;
+		}
+	}
+}

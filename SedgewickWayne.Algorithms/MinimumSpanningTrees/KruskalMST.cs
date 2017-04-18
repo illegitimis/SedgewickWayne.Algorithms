@@ -1,5 +1,5 @@
 ﻿
-namespace Graph.Princeton
+namespace SedgewickWayne.Algorithms
 {
   using System;
   using System.Collections.Generic;
@@ -80,15 +80,15 @@ namespace Graph.Princeton
 
       // run greedy algorithm
       UF uf = new UF(G.V);
-      while (!pq.IsEmpty && mst.Count < G.V - 1)
+      while (!pq.IsEmpty && mst.Size < G.V - 1)
       {
-        Edge e = pq.delMin();
+        Edge e = pq.DeleteMin ();
         int v = e.Either;
         int w = e.other(v);
-        if (!uf.connected(v, w)) 
+        if (!uf.Connected(v, w)) 
         { // v-w does not create a cycle
           // merge v and w components
-          uf.union(v, w);
+          uf.Union(v, w);
           mst.Enqueue(e);  // add edge e to mst
           weight += e.Weight;
         }

@@ -1,6 +1,6 @@
 ﻿
 
-namespace Graph.Princeton
+namespace SedgewickWayne.Algorithms
 {
   using System;
   using System.Collections.Generic;
@@ -95,7 +95,7 @@ namespace Graph.Princeton
       scan(G, s);
       while (!pq.IsEmpty)
       {                                           // better to stop when mst has V-1 edges
-        Edge e = pq.delMin();                     // smallest edge on pq
+        Edge e = pq.DeleteMin();                  // smallest edge on pq
         int v = e.Either, w = e.other(v);         // two endpoints
         //assert marked[v] || marked[w];
         Contract.Assert(marked[v] || marked[w]);

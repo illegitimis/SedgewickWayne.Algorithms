@@ -1,6 +1,6 @@
-﻿
+﻿// Compute a minimum spanning forest using Prim's algorithm.
 
-namespace Graph.Princeton
+namespace SedgewickWayne.Algorithms
 {
   using System;
   using System.Collections.Generic;
@@ -12,33 +12,7 @@ namespace Graph.Princeton
 
 
 
-  /******************************************************************************
-   *  Compilation:  javac EagerPrimMST.java
-   *  Execution:    java EagerPrimMST filename.txt
-   *  Dependencies: EdgeWeightedGraph.java Edge.java Queue.java
-   *                IndexMinPQ.java UF.java In.java StdOut.java
-   *  Data files:   http://algs4.cs.princeton.edu/43mst/tinyEWG.txt
-   *                http://algs4.cs.princeton.edu/43mst/mediumEWG.txt
-   *                http://algs4.cs.princeton.edu/43mst/largeEWG.txt
-   *
-   *  Compute a minimum spanning forest using Prim's algorithm.
-
-   *  % java EagerPrimMST mediumEWG.txt
-   *  1-72   0.06506
-   *  2-86   0.05980
-   *  3-67   0.09725
-   *  4-55   0.06425
-   *  5-102  0.03834
-   *  6-129  0.05363
-   *  7-157  0.00516
-   *  ...
-   *  10.46351
-   *
-   *  % java EagerPrimMST largeEWG.txt
-   *  ...
-   *  647.66307
-   *
-   ******************************************************************************/
+ 
 
   /**
    *  The {@code EagerPrimMST} class represents a data type for computing a
@@ -116,8 +90,9 @@ namespace Graph.Princeton
       pq.Insert(s, distTo[s]);
       while (!pq.IsEmpty)
       {
-        int v = pq.DelMin();
-        scan(G, v);
+        throw new NotImplementedException();
+        //int v = pq.DeleteMin();
+        //scan(G, v);
       }
     }
 
@@ -133,7 +108,7 @@ namespace Graph.Princeton
         {
           distTo[w] = e.Weight;
           edgeTo[w] = e;
-          if (pq.Contains(w)) pq.DecreaseKey(w, distTo[w]);
+          if (pq.Contains(w)) pq.decreaseKey (w, distTo[w]);
           else pq.Insert(w, distTo[w]);
         }
       }

@@ -1,0 +1,233 @@
+
+
+public class Out
+{
+	private static string charsetName;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Locale US_LOCALE;
+	private PrintWriter @out;
+	
+	
+	
+	
+	public Out(string str)
+	{
+		IOException ex;
+		try
+		{
+			FileOutputStream fileOutputStream = new FileOutputStream(str);
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, Out.charsetName);
+			this.@out = new PrintWriter(outputStreamWriter, true);
+		}
+		catch (IOException arg_2D_0)
+		{
+			ex = ByteCodeHelper.MapException<IOException>(arg_2D_0, ByteCodeHelper.MapFlags.NoRemapping);
+			goto IL_37;
+		}
+		return;
+		IL_37:
+		IOException this2 = ex;
+		Throwable.instancehelper_printStackTrace(this2);
+	}
+	
+	
+	public virtual void println(object obj)
+	{
+		this.@out.println(obj);
+	}
+	
+	
+	public virtual void close()
+	{
+		this.@out.close();
+	}
+	
+	
+	public Out(OutputStream os)
+	{
+		IOException ex;
+		try
+		{
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(os, Out.charsetName);
+			this.@out = new PrintWriter(outputStreamWriter, true);
+		}
+		catch (IOException arg_26_0)
+		{
+			ex = ByteCodeHelper.MapException<IOException>(arg_26_0, ByteCodeHelper.MapFlags.NoRemapping);
+			goto IL_30;
+		}
+		return;
+		IL_30:
+		IOException this2 = ex;
+		Throwable.instancehelper_printStackTrace(this2);
+	}
+	
+	
+	public Out() : this(System.@out)
+	{
+	}
+	
+	
+	public Out(Socket s)
+	{
+		IOException ex;
+		try
+		{
+			OutputStream outputStream = s.getOutputStream();
+			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, Out.charsetName);
+			this.@out = new PrintWriter(outputStreamWriter, true);
+		}
+		catch (IOException arg_2D_0)
+		{
+			ex = ByteCodeHelper.MapException<IOException>(arg_2D_0, ByteCodeHelper.MapFlags.NoRemapping);
+			goto IL_37;
+		}
+		return;
+		IL_37:
+		IOException this2 = ex;
+		Throwable.instancehelper_printStackTrace(this2);
+	}
+	
+	
+	public virtual void println()
+	{
+		this.@out.println();
+	}
+	
+	
+	public virtual void println(bool b)
+	{
+		this.@out.println(b);
+	}
+	
+	
+	public virtual void println(char ch)
+	{
+		this.@out.println(ch);
+	}
+	
+	
+	public virtual void println(double d)
+	{
+		this.@out.println(d);
+	}
+	
+	
+	public virtual void println(float f)
+	{
+		this.@out.println(f);
+	}
+	
+	
+	public virtual void println(int i)
+	{
+		this.@out.println(i);
+	}
+	
+	
+	public virtual void println(long l)
+	{
+		this.@out.println(l);
+	}
+	
+	
+	public virtual void println(byte b)
+	{
+		int x = (int)((sbyte)b);
+		this.@out.println(x);
+	}
+	
+	
+	public virtual void print()
+	{
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(object obj)
+	{
+		this.@out.print(obj);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(bool b)
+	{
+		this.@out.print(b);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(char ch)
+	{
+		this.@out.print(ch);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(double d)
+	{
+		this.@out.print(d);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(float f)
+	{
+		this.@out.print(f);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(int i)
+	{
+		this.@out.print(i);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(long l)
+	{
+		this.@out.print(l);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void print(byte b)
+	{
+		int i = (int)((sbyte)b);
+		this.@out.print(i);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void printf(string str, params object[] objarr)
+	{
+		this.@out.printf(Out.US_LOCALE, str, objarr);
+		this.@out.flush();
+	}
+	
+	
+	public virtual void printf(Locale l, string str, params object[] objarr)
+	{
+		this.@out.printf(l, str, objarr);
+		this.@out.flush();
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		Out @out = new Out();
+		@out.println("Test 1");
+		@out.close();
+		@out = new Out("test.txt");
+		@out.println("Test 2");
+		@out.close();
+	}
+	
+	static Out()
+	{
+		Out.charsetName = "UTF-8";
+		Out.US_LOCALE = new Locale("en", "US");
+	}
+}

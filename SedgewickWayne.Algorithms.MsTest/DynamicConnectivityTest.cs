@@ -1,4 +1,23 @@
-﻿
+﻿/******************************************************************************
+  *  Data files:   http://algs4.cs.princeton.edu/15uf/tinyUF.txt
+ *                http://algs4.cs.princeton.edu/15uf/mediumUF.txt
+ *                http://algs4.cs.princeton.edu/15uf/largeUF.txt
+ *
+ *  Weighted quick-union by rank with path compression by halving.
+ *
+ *  % java UF < tinyUF.txt
+ *  4 3
+ *  3 8
+ *  6 5
+ *  9 4
+ *  2 1
+ *  5 0
+ *  7 2
+ *  6 1
+ *  2 components
+ *
+ ******************************************************************************/
+
 namespace SedgewickWayne.Algorithms.MsTest
 {
   using System;
@@ -6,6 +25,7 @@ namespace SedgewickWayne.Algorithms.MsTest
 
   /// <summary>
   /// tests for UF, QuickUnionUF, QuickFindUF, WeightedQuickUnionUF
+  /// The UF class represents a union–Find data type (aka the disjoint-sets data type).
   /// </summary>
   [TestClass]
   public class DynamicConnectivityTest

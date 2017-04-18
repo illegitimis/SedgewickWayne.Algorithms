@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace SedgewickWayne.Algorithms.AnteRoom
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
 
     /*[Implements(new string[]
     {

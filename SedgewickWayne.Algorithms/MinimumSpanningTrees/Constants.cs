@@ -1,5 +1,5 @@
 ﻿
-namespace Graph.Princeton
+namespace SedgewickWayne.Algorithms
 {
   using System;
   using System.Collections.Generic;

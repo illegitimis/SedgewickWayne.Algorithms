@@ -1,0 +1,616 @@
+
+public class Simplex
+{
+	private const double EPSILON = 1E-10;
+	private double[][] a;
+	private int M;
+	private int N;
+	private int[] basis;
+//[Modifiers(Modifiers.Static | Modifiers.Final | Modifiers.Synthetic)]
+	internal static bool s_assertionsDisabled;
+	
+	
+	
+	
+	private void solve()
+	{
+		while (true)
+		{
+			int num = this.bland();
+			if (num == -1)
+			{
+				break;
+			}
+			int num2 = this.minRatioRule(num);
+			if (num2 == -1)
+			{
+				goto Block_1;
+			}
+			this.pivot(num2, num);
+			this.basis[num2] = num;
+		}
+		return;
+		Block_1:
+		string arg_23_0 = "Linear program is unbounded";
+		
+		throw new java.lang.ArithmeticException(arg_23_0);
+	}
+	
+	
+	private bool check(double[][] array, double[] array2, double[] array3)
+	{
+		return this.isPrimalFeasible(array, array2) && this.isDualFeasible(array, array3) && this.isOptimal(array2, array3);
+	}
+	
+	private int bland()
+	{
+		for (int i = 0; i < this.M + this.N; i++)
+		{
+			if (this.a[this.M][i] > (double)0f)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	private int minRatioRule(int num)
+	{
+		int num2 = -1;
+		for (int i = 0; i < this.M; i++)
+		{
+			if (this.a[i][num] > (double)0f)
+			{
+				if (num2 == -1)
+				{
+					num2 = i;
+				}
+				else if (this.a[i][this.M + this.N] / this.a[i][num] < this.a[num2][this.M + this.N] / this.a[num2][num])
+				{
+					num2 = i;
+				}
+			}
+		}
+		return num2;
+	}
+	
+	private void pivot(int num, int num2)
+	{
+		for (int i = 0; i <= this.M; i++)
+		{
+			for (int j = 0; j <= this.M + this.N; j++)
+			{
+				if (i != num && j != num2)
+				{
+					double[] arg_32_0 = this.a[i];
+					int num3 = j;
+					double[] array = arg_32_0;
+					array[num3] -= this.a[num][j] * this.a[i][num2] / this.a[num][num2];
+				}
+			}
+		}
+		for (int i = 0; i <= this.M; i++)
+		{
+			if (i != num)
+			{
+				this.a[i][num2] = (double)0f;
+			}
+		}
+		for (int i = 0; i <= this.M + this.N; i++)
+		{
+			if (i != num2)
+			{
+				double[] arg_B1_0 = this.a[num];
+				int num3 = i;
+				double[] array = arg_B1_0;
+				array[num3] /= this.a[num][num2];
+			}
+		}
+		this.a[num][num2] = (double)1f;
+	}
+	
+	public virtual double[] primal()
+	{
+		double[] array = new double[this.N];
+		for (int i = 0; i < this.M; i++)
+		{
+			if (this.basis[i] < this.N)
+			{
+				array[this.basis[i]] = this.a[i][this.M + this.N];
+			}
+		}
+		return array;
+	}
+	
+	public virtual double[] dual()
+	{
+		double[] array = new double[this.M];
+		for (int i = 0; i < this.M; i++)
+		{
+			array[i] = -this.a[this.M][this.N + i];
+		}
+		return array;
+	}
+	
+	public virtual double value()
+	{
+		return -this.a[this.M][this.M + this.N];
+	}
+	
+	
+	private bool isPrimalFeasible(double[][] array, double[] array2)
+	{
+		double[] array3 = this.primal();
+		for (int i = 0; i < array3.Length; i++)
+		{
+			if (array3[i] < (double)0f)
+			{
+				StdOut.println(new StringBuilder().append("x[").append(i).append("] = ").append(array3[i]).append(" is negative").toString());
+				return false;
+			}
+		}
+		for (int i = 0; i < this.M; i++)
+		{
+			double num = (double)0f;
+			for (int j = 0; j < this.N; j++)
+			{
+				num += array[i][j] * array3[j];
+			}
+			if (num > array2[i] + 1E-10)
+			{
+				StdOut.println("not primal feasible");
+				StdOut.println(new StringBuilder().append("b[").append(i).append("] = ").append(array2[i]).append(", sum = ").append(num).toString());
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	private bool isDualFeasible(double[][] array, double[] array2)
+	{
+		double[] array3 = this.dual();
+		for (int i = 0; i < array3.Length; i++)
+		{
+			if (array3[i] < (double)0f)
+			{
+				StdOut.println(new StringBuilder().append("y[").append(i).append("] = ").append(array3[i]).append(" is negative").toString());
+				return false;
+			}
+		}
+		for (int i = 0; i < this.N; i++)
+		{
+			double num = (double)0f;
+			for (int j = 0; j < this.M; j++)
+			{
+				num += array[j][i] * array3[j];
+			}
+			if (num < array2[i] - 1E-10)
+			{
+				StdOut.println("not dual feasible");
+				StdOut.println(new StringBuilder().append("c[").append(i).append("] = ").append(array2[i]).append(", sum = ").append(num).toString());
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	private bool isOptimal(double[] array, double[] array2)
+	{
+		double[] array3 = this.primal();
+		double[] array4 = this.dual();
+		double num = this.value();
+		double num2 = (double)0f;
+		for (int i = 0; i < array3.Length; i++)
+		{
+			num2 += array2[i] * array3[i];
+		}
+		double num3 = (double)0f;
+		for (int j = 0; j < array4.Length; j++)
+		{
+			num3 += array4[j] * array[j];
+		}
+		if (java.lang.Math.abs(num - num2) > 1E-10 || java.lang.Math.abs(num - num3) > 1E-10)
+		{
+			StdOut.println(new StringBuilder().append("value = ").append(num).append(", cx = ").append(num2).append(", yb = ").append(num3).toString());
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public Simplex(double[][] darr1, double[] darr2, double[] darr3)
+	{
+		this.M = darr2.Length;
+		this.N = darr3.Length;
+		int arg_3C_0 = this.M + 1;
+		int arg_37_0 = this.N + this.M + 1;
+		int[] array = new int[2];
+		int num = arg_37_0;
+		array[1] = num;
+		num = arg_3C_0;
+		array[0] = num;
+		this.a = (double[][])ByteCodeHelper.multianewarray(typeof(double[][]).TypeHandle, array);
+		for (int i = 0; i < this.M; i++)
+		{
+			for (int j = 0; j < this.N; j++)
+			{
+				this.a[i][j] = darr1[i][j];
+			}
+		}
+		for (int i = 0; i < this.M; i++)
+		{
+			this.a[i][this.N + i] = (double)1f;
+		}
+		for (int i = 0; i < this.N; i++)
+		{
+			this.a[this.M][i] = darr3[i];
+		}
+		for (int i = 0; i < this.M; i++)
+		{
+			this.a[i][this.M + this.N] = darr2[i];
+		}
+		this.basis = new int[this.M];
+		for (int i = 0; i < this.M; i++)
+		{
+			this.basis[i] = this.N + i;
+		}
+		this.solve();
+		if (!Simplex.s_assertionsDisabled && !this.check(darr1, darr2, darr3))
+		{
+			
+			throw new AssertionError();
+		}
+	}
+	
+	
+	public static void test(double[][] darr1, double[] darr2, double[] darr3)
+	{
+		Simplex simplex = new Simplex(darr1, darr2, darr3);
+		StdOut.println(new StringBuilder().append("value = ").append(simplex.value()).toString());
+		double[] array = simplex.primal();
+		for (int i = 0; i < array.Length; i++)
+		{
+			StdOut.println(new StringBuilder().append("x[").append(i).append("] = ").append(array[i]).toString());
+		}
+		double[] array2 = simplex.dual();
+		for (int j = 0; j < array2.Length; j++)
+		{
+			StdOut.println(new StringBuilder().append("y[").append(j).append("] = ").append(array2[j]).toString());
+		}
+	}
+	
+	
+	public static void test1()
+	{
+		double[][] darr = new double[][]
+		{
+			new double[]
+			{
+				-1.0,
+				(double)1f,
+				(double)0f
+			},
+			new double[]
+			{
+				(double)1f,
+				4.0,
+				(double)0f
+			},
+			new double[]
+			{
+				2.0,
+				(double)1f,
+				(double)0f
+			},
+			new double[]
+			{
+				3.0,
+				-4.0,
+				(double)0f
+			},
+			new double[]
+			{
+				(double)0f,
+				(double)0f,
+				(double)1f
+			}
+		};
+		double[] darr2 = new double[]
+		{
+			(double)1f,
+			(double)1f,
+			(double)1f
+		};
+		double[] darr3 = new double[]
+		{
+			5.0,
+			45.0,
+			27.0,
+			24.0,
+			4.0
+		};
+		Simplex.test(darr, darr3, darr2);
+	}
+	
+	
+	public static void test2()
+	{
+		double[] darr = new double[]
+		{
+			13.0,
+			23.0
+		};
+		double[] darr2 = new double[]
+		{
+			480.0,
+			160.0,
+			1190.0
+		};
+		double[][] darr3 = new double[][]
+		{
+			new double[]
+			{
+				5.0,
+				15.0
+			},
+			new double[]
+			{
+				4.0,
+				4.0
+			},
+			new double[]
+			{
+				35.0,
+				20.0
+			}
+		};
+		Simplex.test(darr3, darr2, darr);
+	}
+	
+	
+	public static void test3()
+	{
+		double[] darr = new double[]
+		{
+			2.0,
+			3.0,
+			-1.0,
+			-12.0
+		};
+		double[] darr2 = new double[]
+		{
+			3.0,
+			2.0
+		};
+		double[][] darr3 = new double[][]
+		{
+			new double[]
+			{
+				-2.0,
+				-9.0,
+				(double)1f,
+				9.0
+			},
+			new double[]
+			{
+				(double)1f,
+				(double)1f,
+				-1.0,
+				-2.0
+			}
+		};
+		Simplex.test(darr3, darr2, darr);
+	}
+	
+	
+	public static void test4()
+	{
+		double[] darr = new double[]
+		{
+			10.0,
+			-57.0,
+			-9.0,
+			-24.0
+		};
+		double[] darr2 = new double[]
+		{
+			(double)0f,
+			(double)0f,
+			(double)1f
+		};
+		double[][] darr3 = new double[][]
+		{
+			new double[]
+			{
+				0.5,
+				-5.5,
+				-2.5,
+				9.0
+			},
+			new double[]
+			{
+				0.5,
+				-1.5,
+				-0.5,
+				(double)1f
+			},
+			new double[]
+			{
+				(double)1f,
+				(double)0f,
+				(double)0f,
+				(double)0f
+			}
+		};
+		Simplex.test(darr3, darr2, darr);
+	}
+	
+	private int dantzig()
+	{
+		int num = 0;
+		for (int i = 1; i < this.M + this.N; i++)
+		{
+			if (this.a[this.M][i] > this.a[this.M][num])
+			{
+				num = i;
+			}
+		}
+		if (this.a[this.M][num] <= (double)0f)
+		{
+			return -1;
+		}
+		return num;
+	}
+	
+	
+	public virtual void show()
+	{
+		StdOut.println(new StringBuilder().append("M = ").append(this.M).toString());
+		StdOut.println(new StringBuilder().append("N = ").append(this.N).toString());
+		for (int i = 0; i <= this.M; i++)
+		{
+			for (int j = 0; j <= this.M + this.N; j++)
+			{
+				StdOut.printf("%7.2f ", new object[]
+				{
+					java.lang.Double.valueOf(this.a[i][j])
+				});
+			}
+			StdOut.println();
+		}
+		StdOut.println(new StringBuilder().append("value = ").append(this.value()).toString());
+		for (int i = 0; i < this.M; i++)
+		{
+			if (this.basis[i] < this.N)
+			{
+				StdOut.println(new StringBuilder().append("x_").append(this.basis[i]).append(" = ").append(this.a[i][this.M + this.N]).toString());
+			}
+		}
+		StdOut.println();
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		java.lang.ArithmeticException ex;
+		try
+		{
+			Simplex.test1();
+		}
+		catch (System.Exception arg_0A_0)
+		{
+			java.lang.ArithmeticException expr_0F = ByteCodeHelper.MapException<java.lang.ArithmeticException>(arg_0A_0, ByteCodeHelper.MapFlags.None);
+			if (expr_0F == null)
+			{
+				throw;
+			}
+			ex = expr_0F;
+			goto IL_19;
+		}
+		goto IL_25;
+		IL_19:
+		java.lang.ArithmeticException @this = ex;
+		Throwable.instancehelper_printStackTrace(@this);
+		IL_25:
+		StdOut.println("--------------------------------");
+		java.lang.ArithmeticException ex2;
+		try
+		{
+			Simplex.test2();
+		}
+		catch (System.Exception arg_39_0)
+		{
+			java.lang.ArithmeticException expr_3E = ByteCodeHelper.MapException<java.lang.ArithmeticException>(arg_39_0, ByteCodeHelper.MapFlags.None);
+			if (expr_3E == null)
+			{
+				throw;
+			}
+			ex2 = expr_3E;
+			goto IL_48;
+		}
+		goto IL_54;
+		IL_48:
+		@this = ex2;
+		Throwable.instancehelper_printStackTrace(@this);
+		IL_54:
+		StdOut.println("--------------------------------");
+		java.lang.ArithmeticException ex3;
+		try
+		{
+			Simplex.test3();
+		}
+		catch (System.Exception arg_68_0)
+		{
+			java.lang.ArithmeticException expr_6D = ByteCodeHelper.MapException<java.lang.ArithmeticException>(arg_68_0, ByteCodeHelper.MapFlags.None);
+			if (expr_6D == null)
+			{
+				throw;
+			}
+			ex3 = expr_6D;
+			goto IL_77;
+		}
+		goto IL_83;
+		IL_77:
+		@this = ex3;
+		Throwable.instancehelper_printStackTrace(@this);
+		IL_83:
+		StdOut.println("--------------------------------");
+		java.lang.ArithmeticException ex4;
+		try
+		{
+			Simplex.test4();
+		}
+		catch (System.Exception arg_97_0)
+		{
+			java.lang.ArithmeticException expr_9C = ByteCodeHelper.MapException<java.lang.ArithmeticException>(arg_97_0, ByteCodeHelper.MapFlags.None);
+			if (expr_9C == null)
+			{
+				throw;
+			}
+			ex4 = expr_9C;
+			goto IL_A7;
+		}
+		goto IL_B4;
+		IL_A7:
+		@this = ex4;
+		Throwable.instancehelper_printStackTrace(@this);
+		IL_B4:
+		StdOut.println("--------------------------------");
+		int num = Integer.parseInt(strarr[0]);
+		int num2 = Integer.parseInt(strarr[1]);
+		double[] array = new double[num2];
+		double[] array2 = new double[num];
+		int arg_F8_0 = num;
+		int arg_F0_0 = num2;
+		int[] array3 = new int[2];
+		int num3 = arg_F0_0;
+		array3[1] = num3;
+		num3 = arg_F8_0;
+		array3[0] = num3;
+		double[][] array4 = (double[][])ByteCodeHelper.multianewarray(typeof(double[][]).TypeHandle, array3);
+		for (int i = 0; i < num2; i++)
+		{
+			array[i] = (double)StdRandom.uniform(1000);
+		}
+		for (int i = 0; i < num; i++)
+		{
+			array2[i] = (double)StdRandom.uniform(1000);
+		}
+		for (int i = 0; i < num; i++)
+		{
+			for (int j = 0; j < num2; j++)
+			{
+				array4[i][j] = (double)StdRandom.uniform(100);
+			}
+		}
+		Simplex simplex = new Simplex(array4, array2, array);
+		StdOut.println(simplex.value());
+	}
+	
+	static Simplex()
+	{
+		Simplex.s_assertionsDisabled = !ClassLiteral<Simplex>.Value.desiredAssertionStatus();
+	}
+}

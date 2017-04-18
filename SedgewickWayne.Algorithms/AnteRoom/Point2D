@@ -1,0 +1,600 @@
+
+/*[Implements(new string[]
+{
+	"java.lang.Comparable"
+}), Signature("Ljava/lang/Object;Ljava/lang/Comparable<LPoint2D;>;")]*/
+public class Point2D, Comparable
+{
+	/*[EnclosingMethod("Point2D", null, null), InnerClass(null, Modifiers.Static | Modifiers.Synthetic), Modifiers(Modifiers.Super | Modifiers.Synthetic), SourceFile("Point2D.java")]*/
+	
+	/*[Implements(new string[]
+	{
+		"java.util.Comparator"
+	}), InnerClass(null, Modifiers.Private), Modifiers(Modifiers.Super), Signature("Ljava/lang/Object;Ljava/util/Comparator<LPoint2D;>;"), SourceFile("Point2D.java")]*/
+	internal sealed class Atan2Order, Comparator
+	{
+//[Modifiers(Modifiers.Final | Modifiers.Synthetic)]
+		internal Point2D point2D;
+/*		[LineNumberTable(212), Modifiers(Modifiers.Synthetic)]*/
+		
+		internal Atan2Order(Point2D point2D, Point2D.1) : this(point2D)
+		{
+		}
+		
+		
+		private Atan2Order(Point2D point2D)
+		{
+		}
+		
+		
+		public virtual int compare(Point2D point2D, Point2D point2D2)
+		{
+			double num = Point2D.access_800(this.this$0, point2D);
+			double num2 = Point2D.access_800(this.this$0, point2D2);
+			if (num < num2)
+			{
+				return -1;
+			}
+			if (num > num2)
+			{
+				return 1;
+			}
+			return 0;
+		}
+/*		[LineNumberTable(212), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic)]*/
+		
+		public virtual int compare(object obj, object obj2)
+		{
+			return this.compare((Point2D)obj, (Point2D)obj2);
+		}
+		
+		bool Comparator.Object;)Zequals(object obj)
+		{
+			return java.lang.Object.instancehelper_equals(this, obj);
+		}
+	}
+	/*[Implements(new string[]
+	{
+		"java.util.Comparator"
+	}), InnerClass(null, Modifiers.Private), Modifiers(Modifiers.Super), Signature("Ljava/lang/Object;Ljava/util/Comparator<LPoint2D;>;"), SourceFile("Point2D.java")]*/
+	internal sealed class DistanceToOrder, Comparator
+	{
+//[Modifiers(Modifiers.Final | Modifiers.Synthetic)]
+		internal Point2D point2D;
+/*		[LineNumberTable(244), Modifiers(Modifiers.Synthetic)]*/
+		
+		internal DistanceToOrder(Point2D point2D, Point2D.1) : this(point2D)
+		{
+		}
+		
+		
+		private DistanceToOrder(Point2D point2D)
+		{
+		}
+		
+		
+		public virtual int compare(Point2D pd, Point2D pd2)
+		{
+			double num = this.this$0.distanceSquaredTo(pd);
+			double num2 = this.this$0.distanceSquaredTo(pd2);
+			if (num < num2)
+			{
+				return -1;
+			}
+			if (num > num2)
+			{
+				return 1;
+			}
+			return 0;
+		}
+/*		[LineNumberTable(244), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic)]*/
+		
+		public virtual int compare(object obj, object obj2)
+		{
+			return this.compare((Point2D)obj, (Point2D)obj2);
+		}
+		
+		bool Comparator.Object;)Zequals(object obj)
+		{
+			return java.lang.Object.instancehelper_equals(this, obj);
+		}
+	}
+	/*[Implements(new string[]
+	{
+		"java.util.Comparator"
+	}), InnerClass(null, Modifiers.Private), Modifiers(Modifiers.Super), Signature("Ljava/lang/Object;Ljava/util/Comparator<LPoint2D;>;"), SourceFile("Point2D.java")]*/
+	internal sealed class PolarOrder, Comparator
+	{
+//[Modifiers(Modifiers.Final | Modifiers.Synthetic)]
+		internal Point2D point2D;
+/*		[LineNumberTable(223), Modifiers(Modifiers.Synthetic)]*/
+		
+		internal PolarOrder(Point2D point2D, Point2D.1) : this(point2D)
+		{
+		}
+		
+		
+		private PolarOrder(Point2D point2D)
+		{
+		}
+		
+		
+		public virtual int compare(Point2D point2D, Point2D point2D2)
+		{
+			double num = Point2D.access_600(point2D) - Point2D.access_600(this.this$0);
+			double num2 = Point2D.access_700(point2D) - Point2D.access_700(this.this$0);
+			double num3 = Point2D.access_600(point2D2) - Point2D.access_600(this.this$0);
+			double num4 = Point2D.access_700(point2D2) - Point2D.access_700(this.this$0);
+			if (num2 >= (double)0f && num4 < (double)0f)
+			{
+				return -1;
+			}
+			if (num4 >= (double)0f && num2 < (double)0f)
+			{
+				return 1;
+			}
+			if (num2 != (double)0f || num4 != (double)0f)
+			{
+				return -Point2D.ccw(this.this$0, point2D, point2D2);
+			}
+			if (num >= (double)0f && num3 < (double)0f)
+			{
+				return -1;
+			}
+			if (num3 >= (double)0f && num < (double)0f)
+			{
+				return 1;
+			}
+			return 0;
+		}
+/*		[LineNumberTable(223), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic)]*/
+		
+		public virtual int compare(object obj, object obj2)
+		{
+			return this.compare((Point2D)obj, (Point2D)obj2);
+		}
+		
+		bool Comparator.Object;)Zequals(object obj)
+		{
+			return java.lang.Object.instancehelper_equals(this, obj);
+		}
+	}
+	/*[Implements(new string[]
+	{
+		"java.util.Comparator"
+	}), InnerClass(null, Modifiers.Private | Modifiers.Static), Modifiers(Modifiers.Super), Signature("Ljava/lang/Object;Ljava/util/Comparator<LPoint2D;>;"), SourceFile("Point2D.java")]*/
+	internal sealed class ROrder, Comparator
+	{
+/*		[LineNumberTable(202), Modifiers(Modifiers.Synthetic)]*/
+		
+		internal ROrder(Point2D.1) : this()
+		{
+		}
+		
+		
+		private ROrder()
+		{
+		}
+		
+		
+		public virtual int compare(Point2D point2D, Point2D point2D2)
+		{
+			double num = Point2D.access_600(point2D) * Point2D.access_600(point2D) + Point2D.access_700(point2D) * Point2D.access_700(point2D) - (Point2D.access_600(point2D2) * Point2D.access_600(point2D2) + Point2D.access_700(point2D2) * Point2D.access_700(point2D2));
+			if (num < (double)0f)
+			{
+				return -1;
+			}
+			if (num > (double)0f)
+			{
+				return 1;
+			}
+			return 0;
+		}
+/*		[LineNumberTable(202), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic)]*/
+		
+		public virtual int compare(object obj, object obj2)
+		{
+			return this.compare((Point2D)obj, (Point2D)obj2);
+		}
+		
+		bool Comparator.Object;)Zequals(object obj)
+		{
+			return java.lang.Object.instancehelper_equals(this, obj);
+		}
+	}
+	/*[Implements(new string[]
+	{
+		"java.util.Comparator"
+	}), InnerClass(null, Modifiers.Private | Modifiers.Static), Modifiers(Modifiers.Super), Signature("Ljava/lang/Object;Ljava/util/Comparator<LPoint2D;>;"), SourceFile("Point2D.java")]*/
+	internal sealed class XOrder, Comparator
+	{
+/*		[LineNumberTable(184), Modifiers(Modifiers.Synthetic)]*/
+		
+		internal XOrder(Point2D.1) : this()
+		{
+		}
+		
+		
+		private XOrder()
+		{
+		}
+		
+		
+		public virtual int compare(Point2D point2D, Point2D point2D2)
+		{
+			if (Point2D.access_600(point2D) < Point2D.access_600(point2D2))
+			{
+				return -1;
+			}
+			if (Point2D.access_600(point2D) > Point2D.access_600(point2D2))
+			{
+				return 1;
+			}
+			return 0;
+		}
+/*		[LineNumberTable(184), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic)]*/
+		
+		public virtual int compare(object obj, object obj2)
+		{
+			return this.compare((Point2D)obj, (Point2D)obj2);
+		}
+		
+		bool Comparator.Object;)Zequals(object obj)
+		{
+			return java.lang.Object.instancehelper_equals(this, obj);
+		}
+	}
+	/*[Implements(new string[]
+	{
+		"java.util.Comparator"
+	}), InnerClass(null, Modifiers.Private | Modifiers.Static), Modifiers(Modifiers.Super), Signature("Ljava/lang/Object;Ljava/util/Comparator<LPoint2D;>;"), SourceFile("Point2D.java")]*/
+	internal sealed class YOrder, Comparator
+	{
+/*		[LineNumberTable(193), Modifiers(Modifiers.Synthetic)]*/
+		
+		internal YOrder(Point2D.1) : this()
+		{
+		}
+		
+		
+		private YOrder()
+		{
+		}
+		
+		
+		public virtual int compare(Point2D point2D, Point2D point2D2)
+		{
+			if (Point2D.access_700(point2D) < Point2D.access_700(point2D2))
+			{
+				return -1;
+			}
+			if (Point2D.access_700(point2D) > Point2D.access_700(point2D2))
+			{
+				return 1;
+			}
+			return 0;
+		}
+/*		[LineNumberTable(193), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic)]*/
+		
+		public virtual int compare(object obj, object obj2)
+		{
+			return this.compare((Point2D)obj, (Point2D)obj2);
+		}
+		
+		bool Comparator.Object;)Zequals(object obj)
+		{
+			return java.lang.Object.instancehelper_equals(this, obj);
+		}
+	}
+//[Signature("Ljava/util/Comparator<LPoint2D;>;")]
+	internal static Comparator __X_ORDER;
+//[Signature("Ljava/util/Comparator<LPoint2D;>;")]
+	internal static Comparator __Y_ORDER;
+//[Signature("Ljava/util/Comparator<LPoint2D;>;")]
+	internal static Comparator __R_ORDER;
+//[Signature("Ljava/util/Comparator<LPoint2D;>;")]
+	internal Comparator __POLAR_ORDER;
+//[Signature("Ljava/util/Comparator<LPoint2D;>;")]
+	internal Comparator __ATAN2_ORDER;
+//[Signature("Ljava/util/Comparator<LPoint2D;>;")]
+	internal Comparator __DISTANCE_TO_ORDER;
+//[Modifiers(Modifiers.Private | Modifiers.Final)]
+	private double x;
+//[Modifiers(Modifiers.Private | Modifiers.Final)]
+	private double y;
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Comparator X_ORDER
+	{
+		
+		get
+		{
+			return Point2D.__X_ORDER;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Comparator Y_ORDER
+	{
+		
+		get
+		{
+			return Point2D.__Y_ORDER;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Static | Modifiers.Final)]
+	public static Comparator R_ORDER
+	{
+		
+		get
+		{
+			return Point2D.__R_ORDER;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Final)]
+	public Comparator POLAR_ORDER
+	{
+		
+		get
+		{
+			return this.__POLAR_ORDER;
+		}
+		
+		private set
+		{
+			this.__POLAR_ORDER = value;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Final)]
+	public Comparator ATAN2_ORDER
+	{
+		
+		get
+		{
+			return this.__ATAN2_ORDER;
+		}
+		
+		private set
+		{
+			this.__ATAN2_ORDER = value;
+		}
+	}
+//[Modifiers(Modifiers.Public | Modifiers.Final)]
+	public Comparator DISTANCE_TO_ORDER
+	{
+		
+		get
+		{
+			return this.__DISTANCE_TO_ORDER;
+		}
+		
+		private set
+		{
+			this.__DISTANCE_TO_ORDER = value;
+		}
+	}
+	
+	
+	
+	
+	public override bool equals(object obj)
+	{
+		if (obj == this)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+		}
+		if (obj.GetType() != this.GetType())
+		{
+			return false;
+		}
+		Point2D point2D = (Point2D)obj;
+		return this.x == point2D.x && this.y == point2D.y;
+	}
+	public virtual double x()
+	{
+		return this.x;
+	}
+	public virtual double y()
+	{
+		return this.y;
+	}
+	
+	
+	public virtual double distanceTo(Point2D pd)
+	{
+		double num = this.x - pd.x;
+		double num2 = this.y - pd.y;
+		return java.lang.Math.sqrt(num * num + num2 * num2);
+	}
+	
+	
+	public Point2D(double d1, double d2)
+	{
+		this.__POLAR_ORDER = new Point2D.PolarOrder(this, null);
+		this.__ATAN2_ORDER = new Point2D.Atan2Order(this, null);
+		this.__DISTANCE_TO_ORDER = new Point2D.DistanceToOrder(this, null);
+		if (java.lang.Double.isInfinite(d1) || java.lang.Double.isInfinite(d2))
+		{
+			string arg_4B_0 = "Coordinates must be finite";
+			
+			throw new ArgumentException(arg_4B_0);
+		}
+		if (java.lang.Double.isNaN(d1) || java.lang.Double.isNaN(d2))
+		{
+			string arg_6D_0 = "Coordinates cannot be NaN";
+			
+			throw new ArgumentException(arg_6D_0);
+		}
+		if (d1 == (double)0f)
+		{
+			d1 = (double)0f;
+		}
+		if (d2 == (double)0f)
+		{
+			d2 = (double)0f;
+		}
+		this.x = d1;
+		this.y = d2;
+	}
+	
+	public static double area2(Point2D pd1, Point2D pd2, Point2D pd3)
+	{
+		return (pd2.x - pd1.x) * (pd3.y - pd1.y) - (pd2.y - pd1.y) * (pd3.x - pd1.x);
+	}
+	
+	public static int ccw(Point2D pd1, Point2D pd2, Point2D pd3)
+	{
+		double num = (pd2.x - pd1.x) * (pd3.y - pd1.y) - (pd2.y - pd1.y) * (pd3.x - pd1.x);
+		if (num < (double)0f)
+		{
+			return -1;
+		}
+		if (num > (double)0f)
+		{
+			return 1;
+		}
+		return 0;
+	}
+	
+	
+	public virtual void draw()
+	{
+		StdDraw.point(this.x, this.y);
+	}
+	
+	
+	private double angleTo(Point2D point2D)
+	{
+		double num = point2D.x - this.x;
+		double num2 = point2D.y - this.y;
+		return java.lang.Math.atan2(num2, num);
+	}
+	
+	
+	public virtual void drawTo(Point2D pd)
+	{
+		StdDraw.line(this.x, this.y, pd.x, pd.y);
+	}
+	
+	public virtual int compareTo(Point2D pd)
+	{
+		if (this.y < pd.y)
+		{
+			return -1;
+		}
+		if (this.y > pd.y)
+		{
+			return 1;
+		}
+		if (this.x < pd.x)
+		{
+			return -1;
+		}
+		if (this.x > pd.x)
+		{
+			return 1;
+		}
+		return 0;
+	}
+	
+	
+	public virtual double r()
+	{
+		return java.lang.Math.sqrt(this.x * this.x + this.y * this.y);
+	}
+	
+	
+	public virtual double theta()
+	{
+		return java.lang.Math.atan2(this.y, this.x);
+	}
+	
+	public virtual double distanceSquaredTo(Point2D pd)
+	{
+		double num = this.x - pd.x;
+		double num2 = this.y - pd.y;
+		return num * num + num2 * num2;
+	}
+	
+	
+	public override string ToString()
+	{
+		return new StringBuilder().append("(").append(this.x).append(", ").append(this.y).append(")").toString();
+	}
+	
+	
+	public override int hashCode()
+	{
+		int num = java.lang.Double.valueOf(this.x).hashCode();
+		int num2 = java.lang.Double.valueOf(this.y).hashCode();
+		return 31 * num + num2;
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		int num = Integer.parseInt(strarr[0]);
+		int num2 = Integer.parseInt(strarr[1]);
+		int num3 = Integer.parseInt(strarr[2]);
+		StdDraw.setCanvasSize(800, 800);
+		StdDraw.setXscale((double)0f, 100.0);
+		StdDraw.setYscale((double)0f, 100.0);
+		StdDraw.setPenRadius(0.005);
+		Point2D[] array = new Point2D[num3];
+		for (int i = 0; i < num3; i++)
+		{
+			int j = StdRandom.uniform(100);
+			int num4 = StdRandom.uniform(100);
+			array[i] = new Point2D((double)j, (double)num4);
+			array[i].draw();
+		}
+		Point2D point2D = new Point2D((double)num, (double)num2);
+		StdDraw.setPenColor(StdDraw.__RED);
+		StdDraw.setPenRadius(0.02);
+		point2D.draw();
+		StdDraw.setPenRadius();
+		StdDraw.setPenColor(StdDraw.__BLUE);
+		Arrays.sort(array, point2D.__POLAR_ORDER);
+		for (int j = 0; j < num3; j++)
+		{
+			point2D.drawTo(array[j]);
+			StdDraw.show(100);
+		}
+	}
+/*	[LineNumberTable(26), Modifiers(Modifiers.Public | Modifiers.Volatile | Modifiers.Synthetic), EditorBrowsable(EditorBrowsableState.Never)]*/
+	
+	public virtual int compareTo(object obj)
+	{
+		return this.CompareTo((Point2D)obj);
+	}
+/*	[LineNumberTable(26), Modifiers(Modifiers.Static | Modifiers.Synthetic)]*/
+	internal static double access_600(Point2D point2D)
+	{
+		return point2D.x;
+	}
+/*	[LineNumberTable(26), Modifiers(Modifiers.Static | Modifiers.Synthetic)]*/
+	internal static double access_700(Point2D point2D)
+	{
+		return point2D.y;
+	}
+/*	[LineNumberTable(26), Modifiers(Modifiers.Static | Modifiers.Synthetic)]*/
+	
+	internal static double access_800(Point2D point2D, Point2D point2D2)
+	{
+		return point2D.angleTo(point2D2);
+	}
+	
+	static Point2D()
+	{
+		Point2D.__X_ORDER = new Point2D.XOrder(null);
+		Point2D.__Y_ORDER = new Point2D.YOrder(null);
+		Point2D.__R_ORDER = new Point2D.ROrder(null);
+	}
+	
+	int IComparable.Object;)IcompareTo(object obj)
+	{
+		return this.CompareTo(obj);
+	}
+}

@@ -1,4 +1,5 @@
-﻿
+﻿// Minimum-oriented indexed PQ implementation using a binary heap
+
 namespace SedgewickWayne.Algorithms
 {
     using System;

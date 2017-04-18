@@ -1,0 +1,587 @@
+
+public sealed class In
+{
+	private Scanner scanner;
+	private const string charsetName = "UTF-8";
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Locale usLocale;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Pattern WHITESPACE_PATTERN;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Pattern EMPTY_PATTERN;
+//[Modifiers(Modifiers.Private | Modifiers.Static | Modifiers.Final)]
+	private static Pattern EVERYTHING_PATTERN;
+//[Modifiers(Modifiers.Static | Modifiers.Final | Modifiers.Synthetic)]
+	internal static bool s_assertionsDisabled;
+	
+	
+	
+	
+	public In(string str)
+	{
+		try
+		{
+			File file = new File(str);
+			if (!file.exists())
+			{
+				URL uRL = java.lang.Object.instancehelper_getClass(this).getResource(str);
+				if (uRL == null)
+				{
+					uRL = new URL(str);
+				}
+				URLConnection uRLConnection = uRL.openConnection();
+				InputStream inputStream = uRLConnection.getInputStream();
+				Scanner.__<clinit>();
+				this.scanner = new Scanner(new BufferedInputStream(inputStream), "UTF-8");
+				this.scanner.useLocale(In.usLocale);
+				goto IL_95;
+			}
+			this.scanner = new Scanner(file, "UTF-8");
+			this.scanner.useLocale(In.usLocale);
+		}
+		catch (IOException arg_92_0)
+		{
+			goto IL_97;
+		}
+		return;
+		IL_95:
+		return;
+		IL_97:
+		System.err.println(new StringBuilder().append("Could not open ").append(str).toString());
+	}
+	
+	
+	public virtual int readInt()
+	{
+		return this.scanner.nextInt();
+	}
+	
+	
+	public virtual double readDouble()
+	{
+		return this.scanner.nextDouble();
+	}
+	
+	
+	public virtual int[] readAllInts()
+	{
+		string[] array = this.readAllStrings();
+		int[] array2 = new int[array.Length];
+		for (int i = 0; i < array.Length; i++)
+		{
+			array2[i] = Integer.parseInt(array[i]);
+		}
+		return array2;
+	}
+	
+	
+	public virtual bool IsEmpty
+	{
+		return !this.scanner.hasNext();
+	}
+	
+	
+	public virtual string readString()
+	{
+		return this.scanner.next();
+	}
+	
+	
+	public virtual string readAll()
+	{
+		if (!this.scanner.hasNextLine())
+		{
+			return "";
+		}
+		string result = this.scanner.useDelimiter(In.EVERYTHING_PATTERN).next();
+		this.scanner.useDelimiter(In.WHITESPACE_PATTERN);
+		return result;
+	}
+	
+	
+	public virtual void close()
+	{
+		this.scanner.close();
+	}
+	
+	
+	public In(File f)
+	{
+		try
+		{
+			this.scanner = new Scanner(f, "UTF-8");
+			this.scanner.useLocale(In.usLocale);
+		}
+		catch (IOException arg_2E_0)
+		{
+			goto IL_32;
+		}
+		return;
+		IL_32:
+		System.err.println(new StringBuilder().append("Could not open ").append(f).toString());
+	}
+	
+	
+	public virtual bool hasNextLine()
+	{
+		return this.scanner.hasNextLine();
+	}
+	
+	
+	public virtual string readLine()
+	{
+		string result;
+		try
+		{
+			result = this.scanner.nextLine();
+		}
+		catch (System.Exception arg_11_0)
+		{
+			if (ByteCodeHelper.MapException<java.lang.Exception>(arg_11_0, ByteCodeHelper.MapFlags.Unused) == null)
+			{
+				throw;
+			}
+			goto IL_1E;
+		}
+		return result;
+		IL_1E:
+		result = null;
+		return result;
+	}
+	
+	
+	public virtual string[] readAllStrings()
+	{
+		Pattern arg_1B_0 = In.WHITESPACE_PATTERN;
+		object _<ref> = this.readAll();
+		CharSequence input;
+		input.__<ref> = _<ref>;
+		string[] array = arg_1B_0.split(input);
+		if (array.Length == 0 || java.lang.String.instancehelper_length(array[0]) > 0)
+		{
+			return array;
+		}
+		string[] array2 = new string[array.Length - 1];
+		for (int i = 0; i < array.Length - 1; i++)
+		{
+			array2[i] = array[i + 1];
+		}
+		return array2;
+	}
+	
+	
+	public virtual double[] readAllDoubles()
+	{
+		string[] array = this.readAllStrings();
+		double[] array2 = new double[array.Length];
+		for (int i = 0; i < array.Length; i++)
+		{
+			array2[i] = java.lang.Double.parseDouble(array[i]);
+		}
+		return array2;
+	}
+	
+	
+	public In()
+	{
+		Scanner.__<clinit>();
+		BufferedInputStream.__<clinit>();
+		this.scanner = new Scanner(new BufferedInputStream(System.@in), "UTF-8");
+		this.scanner.useLocale(In.usLocale);
+	}
+	
+	
+	public virtual char readChar()
+	{
+		this.scanner.useDelimiter(In.EMPTY_PATTERN);
+		string this2 = this.scanner.next();
+		if (!In.s_assertionsDisabled && java.lang.String.instancehelper_length(this2) != 1)
+		{
+			object arg_37_0 = "Internal (Std)In.readChar() error! Please contact the authors.";
+			
+			throw new AssertionError(arg_37_0);
+		}
+		this.scanner.useDelimiter(In.WHITESPACE_PATTERN);
+		return java.lang.String.instancehelper_charAt(this2, 0);
+	}
+	
+	
+	public In(Socket s)
+	{
+		try
+		{
+			InputStream inputStream = s.getInputStream();
+			Scanner.__<clinit>();
+			this.scanner = new Scanner(new BufferedInputStream(inputStream), "UTF-8");
+			this.scanner.useLocale(In.usLocale);
+		}
+		catch (IOException arg_3F_0)
+		{
+			goto IL_43;
+		}
+		return;
+		IL_43:
+		System.err.println(new StringBuilder().append("Could not open ").append(s).toString());
+	}
+	
+	
+	public In(URL url)
+	{
+		try
+		{
+			URLConnection uRLConnection = url.openConnection();
+			InputStream inputStream = uRLConnection.getInputStream();
+			Scanner.__<clinit>();
+			this.scanner = new Scanner(new BufferedInputStream(inputStream), "UTF-8");
+			this.scanner.useLocale(In.usLocale);
+		}
+		catch (IOException arg_46_0)
+		{
+			goto IL_4A;
+		}
+		return;
+		IL_4A:
+		System.err.println(new StringBuilder().append("Could not open ").append(url).toString());
+	}
+	
+	
+	public In(Scanner s)
+	{
+		this.scanner = s;
+	}
+	public virtual bool exists()
+	{
+		return this.scanner != null;
+	}
+	
+	
+	public virtual bool hasNextChar()
+	{
+		this.scanner.useDelimiter(In.EMPTY_PATTERN);
+		int result = this.scanner.hasNext() ? 1 : 0;
+		this.scanner.useDelimiter(In.WHITESPACE_PATTERN);
+		return result != 0;
+	}
+	
+	
+	public virtual float readFloat()
+	{
+		return this.scanner.nextFloat();
+	}
+	
+	
+	public virtual long readLong()
+	{
+		return this.scanner.nextLong();
+	}
+	
+	
+	public virtual short readShort()
+	{
+		return this.scanner.nextShort();
+	}
+	
+	
+	public virtual byte readByte()
+	{
+		return (byte)((sbyte)this.scanner.nextByte());
+	}
+	
+	
+	public virtual bool readBoolean()
+	{
+		string this2 = this.readString();
+		if (java.lang.String.instancehelper_equalsIgnoreCase(this2, "true"))
+		{
+			return true;
+		}
+		if (java.lang.String.instancehelper_equalsIgnoreCase(this2, "false"))
+		{
+			return false;
+		}
+		if (java.lang.String.instancehelper_equals(this2, "1"))
+		{
+			return true;
+		}
+		if (java.lang.String.instancehelper_equals(this2, "0"))
+		{
+			return false;
+		}
+		
+		throw new InputMismatchException();
+	}
+//[LineNumberTable(364), Obsolete]
+	
+	public static int[] readInts(string str)
+	{
+		return new In(str).readAllInts();
+	}
+//[LineNumberTable(373), Obsolete]
+	
+	public static double[] readDoubles(string str)
+	{
+		return new In(str).readAllDoubles();
+	}
+//[LineNumberTable(382), Obsolete]
+	
+	public static string[] readStrings(string str)
+	{
+		return new In(str).readAllStrings();
+	}
+//[LineNumberTable(390), Obsolete]
+	
+	public static int[] readInts()
+	{
+		return new In().readAllInts();
+	}
+//[LineNumberTable(398), Obsolete]
+	
+	public static double[] readDoubles()
+	{
+		return new In().readAllDoubles();
+	}
+//[LineNumberTable(406), Obsolete]
+	
+	public static string[] readStrings()
+	{
+		return new In().readAllStrings();
+	}
+	
+	
+	/**/public static void main(string[] strarr)
+	{
+		string str = "http://introcs.cs.princeton.edu/stdlib/InTest.txt";
+		System.@out.println(new StringBuilder().append("readAll() from URL ").append(str).toString());
+		System.@out.println("---------------------------------------------------------------------------");
+		In @in;
+		java.lang.Exception ex;
+		try
+		{
+			@in = new In(str);
+			System.@out.println(@in.readAll());
+		}
+		catch (System.Exception arg_55_0)
+		{
+			java.lang.Exception expr_5A = ByteCodeHelper.MapException<java.lang.Exception>(arg_55_0, ByteCodeHelper.MapFlags.None);
+			if (expr_5A == null)
+			{
+				throw;
+			}
+			ex = expr_5A;
+			goto IL_64;
+		}
+		goto IL_75;
+		IL_64:
+		java.lang.Exception x = ex;
+		System.@out.println(x);
+		IL_75:
+		System.@out.println();
+		System.@out.println(new StringBuilder().append("readLine() from URL ").append(str).toString());
+		System.@out.println("---------------------------------------------------------------------------");
+		java.lang.Exception ex2;
+		try
+		{
+			@in = new In(str);
+			while (!@in.IsEmpty)
+			{
+				string x2 = @in.readLine();
+				System.@out.println(x2);
+			}
+		}
+		catch (System.Exception arg_DA_0)
+		{
+			java.lang.Exception expr_DF = ByteCodeHelper.MapException<java.lang.Exception>(arg_DA_0, ByteCodeHelper.MapFlags.None);
+			if (expr_DF == null)
+			{
+				throw;
+			}
+			ex2 = expr_DF;
+			goto IL_EA;
+		}
+		goto IL_FC;
+		IL_EA:
+		x = ex2;
+		System.@out.println(x);
+		IL_FC:
+		System.@out.println();
+		System.@out.println(new StringBuilder().append("readString() from URL ").append(str).toString());
+		System.@out.println("---------------------------------------------------------------------------");
+		java.lang.Exception ex3;
+		try
+		{
+			@in = new In(str);
+			while (!@in.IsEmpty)
+			{
+				string x2 = @in.readString();
+				System.@out.println(x2);
+			}
+		}
+		catch (System.Exception arg_161_0)
+		{
+			java.lang.Exception expr_166 = ByteCodeHelper.MapException<java.lang.Exception>(arg_161_0, ByteCodeHelper.MapFlags.None);
+			if (expr_166 == null)
+			{
+				throw;
+			}
+			ex3 = expr_166;
+			goto IL_171;
+		}
+		goto IL_183;
+		IL_171:
+		x = ex3;
+		System.@out.println(x);
+		IL_183:
+		System.@out.println();
+		System.@out.println("readLine() from current directory");
+		System.@out.println("---------------------------------------------------------------------------");
+		java.lang.Exception ex4;
+		try
+		{
+			@in = new In("./InTest.txt");
+			while (!@in.IsEmpty)
+			{
+				string x2 = @in.readLine();
+				System.@out.println(x2);
+			}
+		}
+		catch (System.Exception arg_1D7_0)
+		{
+			java.lang.Exception expr_1DC = ByteCodeHelper.MapException<java.lang.Exception>(arg_1D7_0, ByteCodeHelper.MapFlags.None);
+			if (expr_1DC == null)
+			{
+				throw;
+			}
+			ex4 = expr_1DC;
+			goto IL_1E7;
+		}
+		goto IL_1F9;
+		IL_1E7:
+		x = ex4;
+		System.@out.println(x);
+		IL_1F9:
+		System.@out.println();
+		System.@out.println("readLine() from relative path");
+		System.@out.println("---------------------------------------------------------------------------");
+		java.lang.Exception ex5;
+		try
+		{
+			@in = new In("../stdlib/InTest.txt");
+			while (!@in.IsEmpty)
+			{
+				string x2 = @in.readLine();
+				System.@out.println(x2);
+			}
+		}
+		catch (System.Exception arg_24D_0)
+		{
+			java.lang.Exception expr_252 = ByteCodeHelper.MapException<java.lang.Exception>(arg_24D_0, ByteCodeHelper.MapFlags.None);
+			if (expr_252 == null)
+			{
+				throw;
+			}
+			ex5 = expr_252;
+			goto IL_25D;
+		}
+		goto IL_26F;
+		IL_25D:
+		x = ex5;
+		System.@out.println(x);
+		IL_26F:
+		System.@out.println();
+		System.@out.println("readChar() from file");
+		System.@out.println("---------------------------------------------------------------------------");
+		java.lang.Exception ex6;
+		try
+		{
+			@in = new In("InTest.txt");
+			while (!@in.IsEmpty)
+			{
+				int c = (int)@in.readChar();
+				System.@out.print((char)c);
+			}
+		}
+		catch (System.Exception arg_2C3_0)
+		{
+			java.lang.Exception expr_2C8 = ByteCodeHelper.MapException<java.lang.Exception>(arg_2C3_0, ByteCodeHelper.MapFlags.None);
+			if (expr_2C8 == null)
+			{
+				throw;
+			}
+			ex6 = expr_2C8;
+			goto IL_2D3;
+		}
+		goto IL_2E5;
+		IL_2D3:
+		x = ex6;
+		System.@out.println(x);
+		IL_2E5:
+		System.@out.println();
+		System.@out.println();
+		System.@out.println("readLine() from absolute OS X / Linux path");
+		System.@out.println("---------------------------------------------------------------------------");
+		@in = new In("/n/fs/introcs/www/java/stdlib/InTest.txt");
+		java.lang.Exception ex7;
+		try
+		{
+			while (!@in.IsEmpty)
+			{
+				string x2 = @in.readLine();
+				System.@out.println(x2);
+			}
+		}
+		catch (System.Exception arg_343_0)
+		{
+			java.lang.Exception expr_348 = ByteCodeHelper.MapException<java.lang.Exception>(arg_343_0, ByteCodeHelper.MapFlags.None);
+			if (expr_348 == null)
+			{
+				throw;
+			}
+			ex7 = expr_348;
+			goto IL_353;
+		}
+		goto IL_365;
+		IL_353:
+		x = ex7;
+		System.@out.println(x);
+		IL_365:
+		System.@out.println();
+		System.@out.println("readLine() from absolute Windows path");
+		System.@out.println("---------------------------------------------------------------------------");
+		java.lang.Exception ex8;
+		try
+		{
+			@in = new In("G:\\www\\introcs\\stdlib\\InTest.txt");
+			while (!@in.IsEmpty)
+			{
+				string x2 = @in.readLine();
+				System.@out.println(x2);
+			}
+			System.@out.println();
+		}
+		catch (System.Exception arg_3C5_0)
+		{
+			java.lang.Exception expr_3CA = ByteCodeHelper.MapException<java.lang.Exception>(arg_3C5_0, ByteCodeHelper.MapFlags.None);
+			if (expr_3CA == null)
+			{
+				throw;
+			}
+			ex8 = expr_3CA;
+			goto IL_3D5;
+		}
+		goto IL_3E7;
+		IL_3D5:
+		x = ex8;
+		System.@out.println(x);
+		IL_3E7:
+		System.@out.println();
+	}
+	
+	static In()
+	{
+		In.s_assertionsDisabled = !ClassLiteral<In>.Value.desiredAssertionStatus();
+		In.usLocale = new Locale("en", "US");
+		In.WHITESPACE_PATTERN = Pattern.compile("\\p{javaWhitespace}+");
+		In.EMPTY_PATTERN = Pattern.compile("");
+		In.EVERYTHING_PATTERN = Pattern.compile("\\A");
+	}
+}

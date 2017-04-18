@@ -1,5 +1,5 @@
 ﻿
-namespace Graph.Princeton
+namespace SedgewickWayne.Algorithms
 {
 using System;
 using System.Collections.Generic;
@@ -139,7 +139,7 @@ using System.Text;
       {
         // reverse so that adjacency list is in same order as original
         Stack<Edge> reverse = new Stack<Edge>();
-        foreach (Edge edge in G.adj[i]) reverse.Push(edge);
+        foreach (Edge edge in G.adj[i]) reverse.push (edge);
 
         foreach (Edge edge in reverse) adj[i].AddLast(edge);
       }
