@@ -38,11 +38,12 @@ namespace SedgewickWayne.Algorithms.MsTest
             Assert.IsFalse(setInts.Contains(100));
         }
 
+        #region 3sum
 
         [TestMethod]
         [TestCategory("3Sum")]
         [ExpectedException(typeof(ArgumentException))]
-        public void ThreeSumFastThrowsExceptionIfInputArrayContainsDuplicates ()
+        public void ThreeSumFastThrowsExceptionIfInputArrayContainsDuplicates()
         {
             var r2050 = Enumerable.Range(20, 50);
             var r3080 = Enumerable.Range(30, 80);
@@ -114,10 +115,28 @@ namespace SedgewickWayne.Algorithms.MsTest
 
             if (b)
             {
-                var slow = TestHelper.Time(() => ThreeSum.Count(intArray), "3SumSlow");            
+                var slow = TestHelper.Time(() => ThreeSum.Count(intArray), "3SumSlow");
                 Assert.AreEqual(expectedCount, slow.Item1);
                 Assert.IsTrue(fast.Item2 < slow.Item2);
             }
+        } 
+        #endregion
+
+        [TestMethod]
+        [TestCategory("Parantheses")]
+        public void BalancedParanthesesTest ()
+        {
+            Assert.IsTrue(Parantheses.IsBalanced("[()]{ } {[()()]()}"));
+            Assert.IsFalse(Parantheses.IsBalanced("[(])"));
+        }
+
+        // ( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )
+        [TestMethod]
+        [TestCategory("Parantheses")]
+        public void ArithmeticExpressionEvaluateTest()
+        {
+            //Assert.AreEqual(101, Parantheses.Evaluate("( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )"), 1E-6);
+            Assert.AreEqual(1.618033988749895, Parantheses.Evaluate("( ( 1 + sqrt ( 5 ) ) / 2.0 )"), 1E-6);
         }
     }
 }
