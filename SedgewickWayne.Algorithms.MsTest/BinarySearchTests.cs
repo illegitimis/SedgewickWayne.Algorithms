@@ -7,6 +7,7 @@ namespace SedgewickWayne.Algorithms.MsTest
     using System.Threading.Tasks;
     using System.IO;
     using System.Linq;
+    using System.Diagnostics;
 
     [TestClass]
     public class BinarySearchTests
@@ -94,6 +95,18 @@ namespace SedgewickWayne.Algorithms.MsTest
 
                 wc.DownloadFile(u, f);
             }
+        }
+
+        public static Tuple<int, long> Time (Func<int> f, string name)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            int count = f();
+            sw.Stop();
+
+            Trace.WriteLine(name + ": " + count + ", " + sw.ElapsedMilliseconds + " ms");
+
+            return new Tuple<int, long>(count, sw.ElapsedMilliseconds);
         }
     }
 

@@ -2,10 +2,13 @@
 namespace SedgewickWayne.Algorithms
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
+    /// <summary>
+    ///  A program with n^2 log n running time. 
+    ///  Counts the number of triples that sum to exactly 0.
+    ///  Limitations: we ignore integer overflow, doesn't handle case when input has duplicates
+    ///  http://algs4.cs.princeton.edu/14analysis/ThreeSum.java.html
+    /// </summary>
     public static class ThreeSumFast
     {
 

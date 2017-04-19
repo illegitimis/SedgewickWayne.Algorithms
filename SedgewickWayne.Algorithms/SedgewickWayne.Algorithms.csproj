@@ -129,6 +129,7 @@
     <None Include="AnteRoom\SuffixArrayX.cs" />
     <None Include="AnteRoom\Vector.cs" />
     <None Include="AnteRoom\Counter.cs" />
+    <Compile Include="Fundamentals\Parantheses.cs" />
     <Compile Include="MinimumSpanningTrees\BoruvkaMST.cs" />
     <Compile Include="MinimumSpanningTrees\Constants.cs" />
     <Compile Include="MinimumSpanningTrees\EagerPrimMST.cs" />

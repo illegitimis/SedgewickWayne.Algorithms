@@ -51,6 +51,16 @@ namespace SedgewickWayne.Algorithms.MsTest
             ThreeSumFast.Count(duplicateValues);
         }
 
+        /// <summary>
+        ///  Data files:   
+        ///  http://algs4.cs.princeton.edu/14analysis/1Kints.txt    *  70
+        ///  http://algs4.cs.princeton.edu/14analysis/2Kints.txt    *  528
+        ///  http://algs4.cs.princeton.edu/14analysis/4Kints.txt    *  4039
+        ///  http://algs4.cs.princeton.edu/14analysis/8Kints.txt    *  32074
+        ///  http://algs4.cs.princeton.edu/14analysis/16Kints.txt   *  255181
+        ///  http://algs4.cs.princeton.edu/14analysis/32Kints.txt   *  2052358
+        ///  http://algs4.cs.princeton.edu/14analysis/1Mints.txt
+        /// </summary>
         [TestMethod]
         [TestCategory("3Sum")]
         public void ThreeSumFast1K()
@@ -60,62 +70,14 @@ namespace SedgewickWayne.Algorithms.MsTest
 
             int[] onek = File.ReadAllLines(file).Select(s => int.Parse(s)).ToArray();
 
-            var sw = new Stopwatch();
-            sw.Start();
-            int count = ThreeSumFast.Count(onek);
-            sw.Stop();
+            var fast = TestHelper.Time(() => ThreeSumFast.Count(onek), "3SumFast");
+            var slow = TestHelper.Time(() => ThreeSum.Count(onek), "3SumSlow");
 
-            Trace.WriteLine("3SumFast: " + count + " " + sw.ElapsedMilliseconds + " ms");
-
-            sw = new Stopwatch();
-            sw.Start();
-            count = ThreeSum.Count(onek);
-            sw.Stop();
-
-            Trace.WriteLine("3SumSlow: " + count + " " + sw.ElapsedMilliseconds + " ms");
+            Assert.AreEqual(70, fast.Item1);
+            Assert.AreEqual(70, slow.Item1);
+            Assert.IsTrue(fast.Item2 < slow.Item2);
         }
     }
 }
 
 
-
-/******************************************************************************
- *  Compilation:  javac ThreeSumFast.java
- *  Execution:    java ThreeSumFast input.txt
- *  Dependencies: StdOut.java In.java Stopwatch.java
- *  Data files:   http://algs4.cs.princeton.edu/14analysis/1Kints.txt
- *                http://algs4.cs.princeton.edu/14analysis/2Kints.txt
- *                http://algs4.cs.princeton.edu/14analysis/4Kints.txt
- *                http://algs4.cs.princeton.edu/14analysis/8Kints.txt
- *                http://algs4.cs.princeton.edu/14analysis/16Kints.txt
- *                http://algs4.cs.princeton.edu/14analysis/32Kints.txt
- *                http://algs4.cs.princeton.edu/14analysis/1Mints.txt
- *
- *  A program with n^2 log n running time. Reads n integers
- *  and counts the number of triples that sum to exactly 0.
- *
- *  Limitations
- *  -----------
- *     - we ignore integer overflow
- *     - doesn't handle case when input has duplicates
- *
- *
- *  % java ThreeSumFast 1Kints.txt
- *  70
- *  
- *  % java ThreeSumFast 2Kints.txt
- *  528
- *                
- *  % java ThreeSumFast 4Kints.txt
- *  4039
- * 
- *  % java ThreeSumFast 8Kints.txt
- *  32074
- *
- *  % java ThreeSumFast 16Kints.txt
- *  255181
- *
- *  % java ThreeSumFast 32Kints.txt
- *  2052358
- *
- ******************************************************************************/
