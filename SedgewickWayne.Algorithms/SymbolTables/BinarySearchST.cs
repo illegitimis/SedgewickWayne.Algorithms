@@ -1,24 +1,8 @@
 /******************************************************************************
+ *  
  *  BinarySearchST.java
  *  Symbol table implementation with binary search in an ordered array.
  *  
- *  Data files:   http://algs4.cs.princeton.edu/31elementary/tinyST.txt  
- *
- *  % more tinyST.txt
- *  S E A R C H E X A M P L E
- *  
- *  % java BinarySearchST < tinyST.txt
- *  A 8
- *  C 4
- *  E 12
- *  H 5
- *  L 11
- *  M 9
- *  P 10
- *  R 3
- *  S 0
- *  X 7
- *
  ******************************************************************************/
 
 

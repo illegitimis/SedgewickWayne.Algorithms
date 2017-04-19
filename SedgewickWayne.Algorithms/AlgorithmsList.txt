@@ -79,7 +79,7 @@ KosarajuSharirSCC             |                               |
 KruskalMST                    |                               |
 KWIK                          |                               |
 LazyPrimMST                   |                               |
-LinearProbingHashST           |  Searching                    | http://algs4.cs.princeton.edu/31elementary
+LinearProbingHashST           |  Searching                    | http://algs4.cs.princeton.edu/34hash/LinearProbingHashST.java.html
 LinearRegression              |                               |
 LinkedBag                     |  Collections                  |  N
 LinkedQueue                   |  Collections                  |  N
@@ -108,7 +108,7 @@ QuickUnionUF                  |  DynamicConnectivity          |
 QuickX                        |  Sorting                      |  N
 RabinKarp                     |                               |
 RandomSeq                     |                               |
-RedBlackBST                   |  Searching                    | http://algs4.cs.princeton.edu/31elementary
+RedBlackBST                   |  Searching                    | http://algs4.cs.princeton.edu/33balanced/RedBlackLiteBST.java.html
 ResizingArrayBag              |  Collections                  |  N
 ResizingArrayQueue            |  Collections                  |  N
 ResizingArrayStack            |  Collections                  |  Y
@@ -165,3 +165,6 @@ using IKVM.Runtime;
 (\[Implements\(new string\[\]\r\n[^{]+{[^\]]+\])
 \[LineNumberTable\(new byte\[\]\r\n[^{]+{[^}]+\}\), 
 [LineNumberTable(33), Modifiers(Modifiers.Static | Modifiers.Synthetic)]
+
+
+https://www.ime.usp.br/~pf/sedgewick-wayne/algs4/

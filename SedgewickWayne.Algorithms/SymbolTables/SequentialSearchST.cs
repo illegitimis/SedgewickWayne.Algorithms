@@ -1,30 +1,14 @@
 ﻿
-    /******************************************************************************
-     *  SequentialSearchST.java
-     *  Below is the syntax highlighted version of SequentialSearchST.java from §3.1 Elementary Symbol Tables. 
-     *  
-     *  Symbol table implementation with sequential search in an unordered linked list of key-value pairs.
-     *  
-     *    Copyright © 2000–2016, Robert Sedgewick and Kevin Wayne. 
-     *    Last updated: Wed Nov 2 05:20:57 EDT 2016.
-     *
-     * Data files:   http://algs4.cs.princeton.edu/31elementary/tinyST.txt  
-     *  % more tinyST.txt
-     *  S E A R C H E X A M P L E
-     *
-     *  % java SequentialSearchST < tiny.txt 
-     *  L 11
-     *  P 10
-     *  M 9
-     *  X 7
-     *  H 5
-     *  C 4
-     *  R 3
-     *  A 8
-     *  E 12
-     *  S 0
-     *
-     ******************************************************************************/
+/******************************************************************************
+ *  SequentialSearchST.java
+ *  Below is the syntax highlighted version of SequentialSearchST.java from §3.1 Elementary Symbol Tables. 
+ *  
+ *  Symbol table implementation with sequential search in an unordered linked list of key-value pairs.
+ *  
+ *    Copyright © 2000–2016, Robert Sedgewick and Kevin Wayne. 
+ *    Last updated: Wed Nov 2 05:20:57 EDT 2016.
+ *  
+ ******************************************************************************/
 
 namespace SedgewickWayne.Algorithms
 {

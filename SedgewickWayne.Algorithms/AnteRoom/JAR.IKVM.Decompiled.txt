@@ -31968,15 +31968,15 @@ public class RedBlackBST : java.lang.Object
 		{
 			StdOut.println("Ranks not consistent");
 		}
-		if (!this.is23())
+		if (!this.Is23())
 		{
 			StdOut.println("Not a 2-3 tree");
 		}
-		if (!this.isBalanced())
+		if (!this.IsBalanced)
 		{
 			StdOut.println("Not balanced");
 		}
-		return this.isBST() && this.isSizeConsistent() && this.isRankConsistent() && this.is23() && this.isBalanced();
+		return this.isBST() && this.isSizeConsistent() && this.isRankConsistent() && this.Is23() && this.IsBalanced;
 	}
 	[LineNumberTable(new byte[]
 	{
@@ -32644,9 +32644,9 @@ public class RedBlackBST : java.lang.Object
 	}
 	[LineNumberTable(514)]
 	[MethodImpl(MethodImplOptions.NoInlining)]
-	private bool is23()
+	private bool Is23()
 	{
-		return this.is23(this.root);
+		return this.Is23(this.root);
 	}
 	[LineNumberTable(new byte[]
 	{
@@ -32659,7 +32659,7 @@ public class RedBlackBST : java.lang.Object
 		137
 	})]
 	[MethodImpl(MethodImplOptions.NoInlining)]
-	private bool isBalanced()
+	private bool IsBalanced
 	{
 		int num = 0;
 		for (RedBlackBST.Node node = this.root; node != null; node = RedBlackBST.Node.access$300(node))
@@ -32731,9 +32731,9 @@ public class RedBlackBST : java.lang.Object
 		98
 	}), Signature("(LRedBlackBST<TKey;TValue;>.Node;)Z")]
 	[MethodImpl(MethodImplOptions.NoInlining)]
-	private bool is23(RedBlackBST.Node node)
+	private bool Is23(RedBlackBST.Node node)
 	{
-		return node == null || (!this.isRed(RedBlackBST.Node.access$400(node)) && (node == this.root || !this.isRed(node) || !this.isRed(RedBlackBST.Node.access$300(node))) && (this.is23(RedBlackBST.Node.access$300(node)) && this.is23(RedBlackBST.Node.access$400(node))));
+		return node == null || (!this.isRed(RedBlackBST.Node.access$400(node)) && (node == this.root || !this.isRed(node) || !this.isRed(RedBlackBST.Node.access$300(node))) && (this.Is23(RedBlackBST.Node.access$300(node)) && this.Is23(RedBlackBST.Node.access$400(node))));
 	}
 	[LineNumberTable(new byte[]
 	{
@@ -45994,9 +45994,9 @@ public sealed class StdIn : java.lang.Object
 		int i = StdIn.readInt();
 		System.@out.println(new StringBuilder().append("Your int was: ").append(i).toString());
 		System.@out.println();
-		System.@out.println("Type a boolean: ");
+		System.@out.println("Type a bool: ");
 		int b = StdIn.readBoolean() ? 1 : 0;
-		System.@out.println(new StringBuilder().append("Your boolean was: ").append(b != 0).toString());
+		System.@out.println(new StringBuilder().append("Your bool was: ").append(b != 0).toString());
 		System.@out.println();
 		System.@out.println("Type a double: ");
 		double d = StdIn.readDouble();

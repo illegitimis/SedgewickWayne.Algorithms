@@ -63,6 +63,7 @@
     <Compile Include="BinarySearchTests.cs" />
     <Compile Include="SymbolTableTests.cs" />
     <Compile Include="MST_Tests.cs" />
+    <Compile Include="FundamentalsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SedgewickWayne.Algorithms\SedgewickWayne.Algorithms.csproj">

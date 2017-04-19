@@ -44,34 +44,13 @@ namespace SedgewickWayne.Algorithms.MsTest
         const string largew = "largeW.txt";
         const string larget = "largeT.txt";
 
-
-        void down(Uri u, string f)
-        {
-            if (File.Exists(f)) return;
-
-            using (var wc = new WebClient())
-            {
-                wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
-                {
-                    Console.WriteLine("{0}    downloaded {1} of {2} bytes. {3} % complete...{4}",
-                        (string)e.UserState, e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage, f);
-                };
-                wc.DownloadFileCompleted += (object sender, System.ComponentModel.AsyncCompletedEventArgs e) => {
-                    Console.WriteLine("{0}    cancelled? {1} error? {2} ... {3}",
-                        (string)e.UserState, e.Cancelled, e.Error == null ? "N" : e.Error.Message, f);
-                };
-
-                wc.DownloadFile(u, f);
-            }
-        }
-
         [TestMethod]
         public void BinarySearchLarge()
         {
             // 85.8 MB
-            var t1 = Task.Factory.StartNew(() => down(urit, larget));
+            var t1 = Task.Factory.StartNew(() => TestHelper.DownloadFile (urit, larget));
             // 6.6MB  [367, 966 total values]
-            var t2 = Task.Factory.StartNew(() => down(uriw, largew));
+            var t2 = Task.Factory.StartNew(() => TestHelper.DownloadFile(uriw, largew));
             // 
             Task.WaitAll(t1, t2);
 
@@ -92,4 +71,30 @@ namespace SedgewickWayne.Algorithms.MsTest
         }
 
     }
+
+
+
+    public static class TestHelper
+    {
+        public static void DownloadFile(Uri u, string f)
+        {
+            if (File.Exists(f)) return;
+
+            using (var wc = new WebClient())
+            {
+                wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
+                {
+                    Console.WriteLine("{0}    downloaded {1} of {2} bytes. {3} % complete...{4}",
+                        (string)e.UserState, e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage, f);
+                };
+                wc.DownloadFileCompleted += (object sender, System.ComponentModel.AsyncCompletedEventArgs e) => {
+                    Console.WriteLine("{0}    cancelled? {1} error? {2} ... {3}",
+                        (string)e.UserState, e.Cancelled, e.Error == null ? "N" : e.Error.Message, f);
+                };
+
+                wc.DownloadFile(u, f);
+            }
+        }
+    }
+
 }
