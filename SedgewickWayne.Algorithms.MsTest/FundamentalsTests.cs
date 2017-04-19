@@ -65,17 +65,59 @@ namespace SedgewickWayne.Algorithms.MsTest
         [TestCategory("3Sum")]
         public void ThreeSumFast1K()
         {
-            string file = "1Kints.txt";
-            TestHelper.DownloadFile(new Uri("http://algs4.cs.princeton.edu/14analysis/1Kints.txt"), file);
+            ThreeSumFastCommon("1Kints.txt", "http://algs4.cs.princeton.edu/14analysis/1Kints.txt", 70, true);
+        }
+        [TestMethod]
+        [TestCategory("3Sum")]
+        public void ThreeSumFast2K()
+        {
+            ThreeSumFastCommon("2Kints.txt", "http://algs4.cs.princeton.edu/14analysis/2Kints.txt", 528);
+        }
+        [TestMethod]
+        [TestCategory("3Sum")]
+        public void ThreeSumFast4K()
+        {
+            ThreeSumFastCommon("4Kints.txt", "http://algs4.cs.princeton.edu/14analysis/4Kints.txt", 4039);
+        }
+        [TestMethod]
+        [TestCategory("3Sum")]
+        public void ThreeSumFast8K()
+        {
+            ThreeSumFastCommon("8Kints.txt", "http://algs4.cs.princeton.edu/14analysis/8Kints.txt", 32074);
+        }
 
-            int[] onek = File.ReadAllLines(file).Select(s => int.Parse(s)).ToArray();
+        [TestMethod]
+        [TestCategory("3Sum")]
+        public void ThreeSumFast16K()
+        {
+            ThreeSumFastCommon("16Kints.txt", "http://algs4.cs.princeton.edu/14analysis/16Kints.txt", 255181);
+        }
+        [TestMethod]
+        [TestCategory("3Sum")]
+        public void ThreeSumFast32K()
+        {
+            ThreeSumFastCommon("32Kints.txt", "http://algs4.cs.princeton.edu/14analysis/32Kints.txt", 2052358);
+        }
 
-            var fast = TestHelper.Time(() => ThreeSumFast.Count(onek), "3SumFast");
-            var slow = TestHelper.Time(() => ThreeSum.Count(onek), "3SumSlow");
+        void ThreeSumFastCommon(
+            string file = "1Kints.txt",
+            string uri = "http://algs4.cs.princeton.edu/14analysis/1Kints.txt",
+            int expectedCount = 70,
+            bool b = false)
+        {
+            TestHelper.DownloadFile(new Uri(uri), file);
 
-            Assert.AreEqual(70, fast.Item1);
-            Assert.AreEqual(70, slow.Item1);
-            Assert.IsTrue(fast.Item2 < slow.Item2);
+            int[] intArray = File.ReadAllLines(file).Select(s => int.Parse(s)).ToArray();
+
+            var fast = TestHelper.Time(() => ThreeSumFast.Count(intArray), "3SumFast");
+            Assert.AreEqual(expectedCount, fast.Item1);
+
+            if (b)
+            {
+                var slow = TestHelper.Time(() => ThreeSum.Count(intArray), "3SumSlow");            
+                Assert.AreEqual(expectedCount, slow.Item1);
+                Assert.IsTrue(fast.Item2 < slow.Item2);
+            }
         }
     }
 }
