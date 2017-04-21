@@ -173,9 +173,8 @@
     <Compile Include="Collections\Stack.cs" />
     <Compile Include="Collections\ResizingArrayStack.cs" />
     <Compile Include="DynamicConnectivity\UFBase.cs" />
-    <Compile Include="DynamicConnectivity\WeightedQuickUnionUF.cs" />
     <Compile Include="DynamicConnectivity\QuickFindUF.cs" />
-    <Compile Include="DynamicConnectivity\QuickUnionUF.cs" />
+    <Compile Include="DynamicConnectivity\QuickUnionUFBase.cs" />
     <Compile Include="DynamicConnectivity\UF.cs" />
     <Compile Include="Collections\LinkedStack.cs" />
     <Compile Include="Sorting\QuickX.cs" />
