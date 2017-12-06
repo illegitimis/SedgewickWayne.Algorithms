@@ -28,10 +28,10 @@ namespace SedgewickWayne.Algorithms.MsTest
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class MST_Tests
+    public class MinimumSpanningTreesTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void Todo()
         {
         }
     }

@@ -6,8 +6,7 @@ namespace SedgewickWayne.Algorithms
     using System.Runtime.CompilerServices;
 
     /// <summary>
-    /// [lazy approach] avoid doing work until we have to
-    /// set of trees(forest)
+    /// [lazy approach] avoid doing work until we have to set of trees(forest).
     /// id array is parent/root of the component tree
     /// Defect: trees can get tall, and find is too expensive
     /// worst: M*N, same as quick find
@@ -17,6 +16,9 @@ namespace SedgewickWayne.Algorithms
 
     internal enum UnionImprovementStrategy { None, WeightingBySize, WeightingByHeight, WeightingByRank }
 
+    /// <summary>
+    /// This implementation uses quick union.
+    /// </summary>
     public abstract class QuickUnionUFBase : UFBase
     {
         #region commonality / variance
@@ -100,9 +102,10 @@ namespace SedgewickWayne.Algorithms
             count--;
         }
 
-        // size[i] = number of sites in tree rooted at i
-        // Note: not necessarily correct if i is not a root node
-        private int[] size;
+    // size[i] = number of sites in tree rooted at i
+    // Note: not necessarily correct if i is not a root node
+    // The size of a tree is its number of nodes. The depth of a node in a tree is the number of links on the path from it to the root. The height of a tree is the maximum depth among its nodes. 
+    protected int[] size;
 
         /// <summary>
         /// WeightedQuickUnionPathCompressionUF UNION is WSQUUnion
@@ -171,7 +174,7 @@ namespace SedgewickWayne.Algorithms
         }
 
         // rank[i] = rank of subtree rooted at i (never more than 31)
-        private byte[] rank;
+        protected byte[] rank;
         protected void WRQUUnion(int p, int q)
         {
             int rootP = Find(p);
@@ -204,16 +207,17 @@ namespace SedgewickWayne.Algorithms
             if (N <= 0) throw new ArgumentException("N > 0");
             this.count = N;
             this.id = new int[N];
+
             this.rank = new byte[N];
             this.size = new int[N];
+            this.height = new int[N];
 
             for (int j = 0; j < N; j++)
             {
                 this.id[j] = j;
                 this.rank[j] = 0;
-                this.size[j] = 0;
+                this.size[j] = 1;
                 this.height[j] = 0;
-
             }
         }
 
@@ -265,9 +269,11 @@ namespace SedgewickWayne.Algorithms
         {
             switch (FindImprovement)
             {
-                case FindImprovementStrategy.None:
-                default: return QUFind(i);                    
+                default:
+                case FindImprovementStrategy.None: return QUFind(i);                    
+
                 case FindImprovementStrategy.PathCompression: return PCQUFind(i);
+
                 case FindImprovementStrategy.PathSplittingOrHalving:return PHQUFind(i);                    
             }
         }

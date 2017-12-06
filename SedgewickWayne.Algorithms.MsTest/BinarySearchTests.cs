@@ -50,9 +50,11 @@ namespace SedgewickWayne.Algorithms.MsTest
         {
             // 85.8 MB
             var t1 = Task.Factory.StartNew(() => TestHelper.DownloadFile (urit, larget));
+            
             // 6.6MB  [367, 966 total values]
             var t2 = Task.Factory.StartNew(() => TestHelper.DownloadFile(uriw, largew));
-            // 
+            
+            // run download tasks in parallel
             Task.WaitAll(t1, t2);
 
             int[] ts = File.ReadAllLines(larget).Select(s => int.Parse(s)).ToArray();

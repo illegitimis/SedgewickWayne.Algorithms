@@ -130,6 +130,7 @@
     <None Include="AnteRoom\Vector.cs" />
     <None Include="AnteRoom\Counter.cs" />
     <Compile Include="Fundamentals\Parantheses.cs" />
+    <Compile Include="DynamicConnectivity\IUnionFind.cs" />
     <Compile Include="MinimumSpanningTrees\BoruvkaMST.cs" />
     <Compile Include="MinimumSpanningTrees\Constants.cs" />
     <Compile Include="MinimumSpanningTrees\EagerPrimMST.cs" />
@@ -175,7 +176,7 @@
     <Compile Include="DynamicConnectivity\UFBase.cs" />
     <Compile Include="DynamicConnectivity\QuickFindUF.cs" />
     <Compile Include="DynamicConnectivity\QuickUnionUFBase.cs" />
-    <Compile Include="DynamicConnectivity\UF.cs" />
+    <Compile Include="DynamicConnectivity\QUUF.cs" />
     <Compile Include="Collections\LinkedStack.cs" />
     <Compile Include="Sorting\QuickX.cs" />
     <Compile Include="StdRandom.cs" />
@@ -200,7 +201,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AlgorithmsList.txt" />
     <None Include="AnteRoom\JAR.IKVM.Decompiled.txt" />
   </ItemGroup>
   <ItemGroup />

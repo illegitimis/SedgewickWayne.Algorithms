@@ -35,17 +35,40 @@ namespace SedgewickWayne.Algorithms
         [MethodImpl(MethodImplOptions.NoInlining)]
         public override void Union(int p, int q)
         {
-            QFUnion(p, q);
+            Validate(p);
+            Validate(q);
+
+            // nothing to do if already connected
+            // p and q are already in the same component
+            if (this.Connected(p, q)) return;
+
+            // needed for correctness
+            int pid = this.id[p];
+
+            // to reduce the number of array accesses
+            int qid = this.id[q];
+
+            for (int i = 0; i < this.id.Length; i++)
+            {
+                if (this.id[i] == pid)
+                {
+                    this.id[i] = qid;
+                }
+            }
+
+            // decrease component count
+            this.count--;
         }
 
         /// <summary>
         /// Find: constant, array index O(1)
         /// </summary>
-        /// <param name="i">component index</param>
-        /// <returns></returns>
-        public override int Find(int i)
+        /// <param name="p">component index</param>
+        /// <returns>the component identifier for the component containing site p</returns>
+        public override int Find(int p)
         {
-            return QFFind(i);
+            Validate(p);
+            return id[p];
         }
 
         /// <summary>
@@ -58,7 +81,6 @@ namespace SedgewickWayne.Algorithms
             Validate(q);
             return this.id[p] == this.id[q];
         }
-
-
+        
     }
 }

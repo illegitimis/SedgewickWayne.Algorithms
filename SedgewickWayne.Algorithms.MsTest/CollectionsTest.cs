@@ -4,7 +4,8 @@ namespace SedgewickWayne.Algorithms.MsTest
 {
   using System;
   using Microsoft.VisualStudio.TestTools.UnitTesting;
-  
+  using System.Threading;
+  using System.Globalization;
 
   [TestClass]
   public class CollectionsTest
@@ -68,12 +69,17 @@ namespace SedgewickWayne.Algorithms.MsTest
 
     void StackIterateToString(IStack stack)
     {
+      // Arrange: stack empty to start with
       Assert.IsTrue(stack.IsEmpty);
+
+      // Act
       stack.push(1);
-      stack.push(new DateTime(2017,2,6));
+      stack.push(2.0d);
       stack.push("three");
       var s = stack.ToString();
-      Assert.AreEqual("three 06.02.2017 00:00:00 1", s);
+      
+      // Assert
+      Assert.AreEqual("three 2 1", s);
     }
 
     

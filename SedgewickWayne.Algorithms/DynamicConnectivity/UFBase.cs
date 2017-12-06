@@ -3,19 +3,10 @@
 namespace SedgewickWayne.Algorithms
 {
     using System;
-    using System.Runtime.CompilerServices;
-
-    public interface IUnionFind
-    {
-        int Count { get; }
-        bool Connected(int p, int q);
-        void Union(int p, int q);
-        int Find(int i);
-    }
+       
     
     /// <summary>
-    /// there's no linear time algo for dynamic connectivity
-    /// [Fredman-Saks]
+    /// There's no linear time algo for dynamic connectivity [Fredman-Saks].
     /// </summary>
     public abstract class UFBase : IUnionFind
     {
@@ -76,55 +67,14 @@ namespace SedgewickWayne.Algorithms
         /// <param name="p">integer representing one site</param>
         protected void Validate(int p)
         {
-            if (p < count || p >= count)
+            if (p < 0 || p >= id.Length)
             {
                 //throw new IndexOutOfBoundsException("index " + p + " is not between 0 and " + (n - 1));
                 throw new IndexOutOfRangeException("index " + p + " is not between 0 and " + (count - 1));
             }
         }
         
-        /// <summary>
-        /// FIND @ QUICK FIND 
-        /// Returns the component identifier for the component containing site <see cref="p"/> 
-        /// </summary>      
-        /// <param name="p">integer representing one site</param>
-        /// <returns>the component identifier for the component containing site p</returns>
-        protected int QFFind(int p)
-        {
-            Validate(p);
-            return id[p];
-        }
-
-        /// <summary>
-        /// UNION @ QUICK FIND
-        /// </summary>        
-        protected void QFUnion(int p, int q)
-        {
-            Validate(p);
-            Validate(q);
-
-            // nothing to do if already connected
-            // p and q are already in the same component
-            if (this.Connected(p, q)) return;
-
-            // needed for correctness
-            int pid = this.id[p];
-
-            // to reduce the number of array accesses
-            int qid = this.id[q];
-
-            for (int i = 0; i < this.id.Length; i++)
-            {
-                if (this.id[i] == pid)
-                {
-                    this.id[i] = qid;
-                }
-            }
-
-            // decrease component count
-            this.count--;
-        }        
-
+   
     }
     
 }
