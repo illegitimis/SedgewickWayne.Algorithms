@@ -15,7 +15,11 @@ Replaced regex: `\[LineNumberTable\([^\)]+\)\]`, `^.*(\[[^\]\(\)]+\([^\]\(\)]+\)
 
 **Instead, it seems easier to port java files from the [Princeton repo](http://algs4.cs.princeton.edu) or the [duplicated Brazilian one](https://www.ime.usp.br/~pf/sedgewick-wayne/algs4/)**.
 
-## Algorithms List
+## Pages
++ [Dynamic Connectivity](./doc/uf.md)
+
+## Algorithms to do list
+### Mapped
 
 Name | Category | Princeton java link | Done
 --- | --- | --- | ---
@@ -45,9 +49,6 @@ MergeX                        |  Sorting                      |  N
 MinPQ                         |  Priority Queues              |  http://algs4.cs.princeton.edu/24pq/MinPQ.java.html | Y
 Quick                         |  Sorting                      |  N
 Quick3Way                     |  Sorting                      |  N
-QuickFindUF                   |  DynamicConnectivity          | http://algs4.cs.princeton.edu/15uf/QuickFindUF.java.html
-QuickUnionPathCompressionUF | DynamicConnectivity | https://algs4.cs.princeton.edu/15uf/QuickUnionPathCompressionUF.java.html 
-QuickUnionUF                  |  DynamicConnectivity          | http://algs4.cs.princeton.edu/15uf/QuickUnionUF.java.html
 QuickX                        |  Sorting                      |  N
 RedBlackBST                   |  Searching                    | http://algs4.cs.princeton.edu/33balanced/RedBlackLiteBST.java.html
 ResizingArrayBag              |  Collections                  |  N
@@ -62,12 +63,9 @@ SparseVector                  |  Searching                    | http://algs4.cs.
 ST                            |  Searching                    | http://algs4.cs.princeton.edu/35applications/ST.java.html
 ThreeSum                      |  Fundamentals                 | http://algs4.cs.princeton.edu/14analysis/ThreeSum.java
 ThreeSumFast                  |  Fundamentals                 | http://algs4.cs.princeton.edu/14analysis/ThreeSumFast.java
-UF                            |  DynamicConnectivity          | http://algs4.cs.princeton.edu/15uf/UF.java.html
-WeightedQuickUnionUF          |  DynamicConnectivity          | http://algs4.cs.princeton.edu/15uf/WeightedQuickUnionUF.java.html
-WeightedQuickUnionByHeightUF | DynamicConnectivity | https://algs4.cs.princeton.edu/15uf/WeightedQuickUnionByHeightUF.java.html
 WhiteFilter                   |  Searching                    | http://algs4.cs.princeton.edu/31elementary
 
-## To do
+### Unmapped
 
 - AcyclicLP                     
 - AcyclicSP                     
