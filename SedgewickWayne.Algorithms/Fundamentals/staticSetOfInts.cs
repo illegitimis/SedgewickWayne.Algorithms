@@ -1,5 +1,5 @@
 /******************************************************************************
- *  http://algs4.cs.princeton.edu/12oop/StaticSETofInts.java.html
+ *  http://algs4.cs.princeton.edu/12oop/SetofInts.java.html
  *  Data type to store a set of integers.
  ******************************************************************************/
 
@@ -8,18 +8,18 @@ namespace SedgewickWayne.Algorithms
     using System;
 
     /// <summary>
-    /// StaticSETofInts class represents a set of integers. 
+    /// SetofInts class represents a set of integers. 
     /// It supports searching for a given integer is in the set. 
     /// It accomplishes this by keeping the set of integers in a 
     /// sorted array and using binary search to find the given integer.
     /// The <see cref="rank"/> and <see cref="contains"/> operations 
     /// take logarithmic time in the worst case.
     /// </summary>
-    public class StaticSETofInts
+    public class SetofInts
     {
         private int[] a;
 		
-        public StaticSETofInts(int[] iarr)
+        public SetofInts(int[] iarr)
         {
             this.a = new int[iarr.Length];
             for (int i = 0; i < iarr.Length; i++) this.a[i] = iarr[i];

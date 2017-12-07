@@ -12,7 +12,7 @@ namespace SedgewickWayne.Algorithms.MsTest
     public class FundamentalsTests
     {
         [TestMethod]
-        [TestCategory("StaticSETofInts")]
+        [TestCategory("SetofInts")]
         [ExpectedException(typeof (ArgumentException))]
         public void SETofIntsThrowsExceptionIfInputArrayIsNotASet()
         {
@@ -20,14 +20,14 @@ namespace SedgewickWayne.Algorithms.MsTest
             var r3080 = Enumerable.Range(30, 80);
             var duplicateValues = r2050.Concat(r3080).ToArray();
 
-            var setInts = new StaticSETofInts(duplicateValues);
+            var setInts = new SetofInts(duplicateValues);
         }
 
         [TestMethod]
-        [TestCategory("StaticSETofInts")]
+        [TestCategory("SetofInts")]
         public void SETofIntsSetContainsTest()
         {
-            var setInts = new StaticSETofInts(Enumerable.Range(20, 50).ToArray());
+            var setInts = new SetofInts(Enumerable.Range(20, 50).ToArray());
 
             Assert.IsFalse(setInts.Contains(0));
 
