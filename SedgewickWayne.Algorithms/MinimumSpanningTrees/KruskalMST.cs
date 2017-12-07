@@ -1,12 +1,9 @@
 ﻿
 namespace SedgewickWayne.Algorithms
 {
-  using System;
   using System.Collections.Generic;
-  using System.Linq;
-  using System.Text;
   using System.Diagnostics.Contracts;
-
+  using UF = SedgewickWayne.Algorithms.DynamicConnectivity.UF;
 
   /******************************************************************************
    *  Compilation:  javac KruskalMST.java

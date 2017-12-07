@@ -59,6 +59,10 @@
     <None Include="AnteRoom\RabinKarp.cs" />
     <None Include="AnteRoom\RandomSeq.cs" />
     <None Include="AnteRoom\SET.cs" />
+    <Compile Include="DynamicConnectivity\QuickUnionUF.cs" />
+    <Compile Include="DynamicConnectivity\WeightedQuickUnionByHeightUF.cs" />
+    <Compile Include="DynamicConnectivity\WeightedQuickUnionPathCompressionUF.cs" />
+    <Compile Include="DynamicConnectivity\WeightedQuickUnionUF.cs" />
     <Compile Include="Fundamentals\3Sum.cs" />
     <Compile Include="Fundamentals\3SumFast.cs" />
     <None Include="AnteRoom\AcyclicLP.cs" />
@@ -173,10 +177,9 @@
     <Compile Include="Collections\ResizingArrayQueue.cs" />
     <Compile Include="Collections\Stack.cs" />
     <Compile Include="Collections\ResizingArrayStack.cs" />
-    <Compile Include="DynamicConnectivity\UFBase.cs" />
+    <Compile Include="DynamicConnectivity\AbstractUFBase.cs" />
     <Compile Include="DynamicConnectivity\QuickFindUF.cs" />
-    <Compile Include="DynamicConnectivity\QuickUnionUFBase.cs" />
-    <Compile Include="DynamicConnectivity\QUUF.cs" />
+    <Compile Include="DynamicConnectivity\UF.cs" />
     <Compile Include="Collections\LinkedStack.cs" />
     <Compile Include="Sorting\QuickX.cs" />
     <Compile Include="StdRandom.cs" />

@@ -1,22 +1,22 @@
 ﻿
 namespace SedgewickWayne.Algorithms
 {
-    /// <summary>
-    /// Represents the union–find data type, aka disjoint sets data.
-    /// 
-    /// It supports the union and find operations, 
-    /// along with aconnected operation for determining whether two sites are in the same component 
-    /// and a count operation that returns the total number of components.
-    /// 
-    /// The union–find data type models connectivity among a set of n sites, named 0 through n–1.
-    /// 
-    /// Both sites and components are identified with integers between 0 and n–1. 
-    /// Initially, there are n components, with each site in its own component.
-    /// The component identifier of a component (also known as the root, canonical element, leader, or set representative) is one of the sites in the component:
-    /// two sites have the same component identifier if and only if they are in the same component.
-    /// </summary>
-    public interface IUnionFind
-    {
+  /// <summary>
+  /// Represents the union–find data type, aka disjoint sets data.
+  /// 
+  /// It supports the union and find operations, 
+  /// along with aconnected operation for determining whether two sites are in the same component 
+  /// and a count operation that returns the total number of components.
+  /// 
+  /// The union–find data type models connectivity among a set of n sites, named 0 through n–1.
+  /// 
+  /// Both sites and components are identified with integers between 0 and n–1. 
+  /// Initially, there are n components, with each site in its own component.
+  /// The component identifier of a component (also known as the root, canonical element, leader, or set representative) is one of the sites in the component:
+  /// two sites have the same component identifier if and only if they are in the same component.
+  /// </summary>
+  public interface IUnionFind
+  {
     /// <summary>
     /// number of components.
     /// </summary>
@@ -50,6 +50,8 @@ namespace SedgewickWayne.Algorithms
     /// </summary>
     /// <param name="i"></param>
     /// <returns></returns>
-        int Find(int i);
-    }
+    int Find(int i);
+
+    int[] Ids { get; }
+  }
 }

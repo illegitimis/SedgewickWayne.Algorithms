@@ -5,43 +5,39 @@
 
 namespace SedgewickWayne.Algorithms
 {
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Diagnostics.Contracts;
+  using System.Collections.Generic;
+  using System.Diagnostics.Contracts;
+  using UF = SedgewickWayne.Algorithms.DynamicConnectivity.UF;
 
 
-
-
-    /**
-     *  The {@code BoruvkaMST} class represents a data type for computing a
-     *  <em>minimum spanning tree</em> in a undirected weighted adjacency-list graph .
-     *  The edge weights can be positive, zero, or negative and need not
-     *  be distinct. If the graph is not connected, it computes a <em>minimum
-     *  spanning forest</em>, which is the union of minimum spanning trees
-     *  in each connected component. The {@code weight()} method returns the 
-     *  weight of a minimum spanning tree and the {@code edges()} method
-     *  returns its edges.
-     *  <p>
-     *  This implementation uses <em>Boruvka's algorithm</em> and the union-Find
-     *  data type.
-     *  The constructor takes time proportional to <em>E</em> log <em>V</em>
-     *  and extra space (not including the graph) proportional to <em>V</em>,
-     *  where <em>V</em> is the number of vertices and <em>E</em> is the number of edges.
-     *  Afterwards, the {@code weight()} method takes constant time
-     *  and the {@code edges()} method takes time proportional to <em>V</em>.
-     *  <p>
-     *  For additional documentation,
-     *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
-     *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
-     *  For alternate implementations, see {@link LazyPrimMST}, {@link PrimMST},
-     *  and {@link KruskalMST}.
-     *
-     *  @author Robert Sedgewick
-     *  @author Kevin Wayne
-     */
-    public class BoruvkaMST : IMinimumSpanningTreeAlgorithm
+  /**
+   *  The {@code BoruvkaMST} class represents a data type for computing a
+   *  <em>minimum spanning tree</em> in a undirected weighted adjacency-list graph .
+   *  The edge weights can be positive, zero, or negative and need not
+   *  be distinct. If the graph is not connected, it computes a <em>minimum
+   *  spanning forest</em>, which is the union of minimum spanning trees
+   *  in each connected component. The {@code weight()} method returns the 
+   *  weight of a minimum spanning tree and the {@code edges()} method
+   *  returns its edges.
+   *  <p>
+   *  This implementation uses <em>Boruvka's algorithm</em> and the union-Find
+   *  data type.
+   *  The constructor takes time proportional to <em>E</em> log <em>V</em>
+   *  and extra space (not including the graph) proportional to <em>V</em>,
+   *  where <em>V</em> is the number of vertices and <em>E</em> is the number of edges.
+   *  Afterwards, the {@code weight()} method takes constant time
+   *  and the {@code edges()} method takes time proportional to <em>V</em>.
+   *  <p>
+   *  For additional documentation,
+   *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
+   *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+   *  For alternate implementations, see {@link LazyPrimMST}, {@link PrimMST},
+   *  and {@link KruskalMST}.
+   *
+   *  @author Robert Sedgewick
+   *  @author Kevin Wayne
+   */
+  public class BoruvkaMST : IMinimumSpanningTreeAlgorithm
   {
 
     // edges in MST

@@ -2,3 +2,4 @@ SedgewickWayne.Algorithms/obj/
 SedgewickWayne.Algorithms.MsTest/bin/
 .vs/
 SedgewickWayne.Algorithms.MsTest/obj/
+*.cd

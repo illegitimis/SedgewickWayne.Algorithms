@@ -3,40 +3,43 @@
  *                http://algs4.cs.princeton.edu/15uf/mediumUF.txt
  *                http://algs4.cs.princeton.edu/15uf/largeUF.txt
  *
- *  Weighted quick-union by rank with path compression by halving.
- *
- *  % java UF < tinyUF.txt
- *  4 3
- *  3 8
- *  6 5
- *  9 4
- *  2 1
- *  5 0
- *  7 2
- *  6 1
- *  2 components
- *
  ******************************************************************************/
 
 namespace SedgewickWayne.Algorithms.MsTest
 {
   using System;
   using Microsoft.VisualStudio.TestTools.UnitTesting;
+  using UF = SedgewickWayne.Algorithms.DynamicConnectivity.UF;
+  using QuickFindUF = SedgewickWayne.Algorithms.DynamicConnectivity.QuickFindUF;
+  using QuickUnionUF = SedgewickWayne.Algorithms.DynamicConnectivity.QuickUnionUF;
+  using WeightedQuickUnionUF = SedgewickWayne.Algorithms.DynamicConnectivity.WeightedQuickUnionUF;
+  using WeightedQuickUnionPathCompressionUF = SedgewickWayne.Algorithms.DynamicConnectivity.WeightedQuickUnionPathCompressionUF;
 
   /// <summary>
-  /// tests for UF, QuickUnionUF, QuickFindUF, WeightedQuickUnionUF
-  /// The UF class represents a union–Find data type (aka the disjoint-sets data type).
+  /// tests for <see cref="IUnionFind"/> which represents a union–Find data type (aka the disjoint-sets data type).
   /// </summary>
   [TestClass]
   public class DynamicConnectivityTest
   {
+    /******************************************************************************
+     *  Data files:   http://algs4.cs.princeton.edu/15uf/tinyUF.txt
+    ******************************************************************************/
+
+    static readonly int[,] tinyUF = new int[,] { { 4, 3 }, { 3, 8 }, { 6, 5 }, { 9, 4 }, { 2, 1 }, { 8, 9 }, { 5, 0 }, { 7, 2 }, { 6, 1 }, { 1, 0 }, { 6, 7 } };
+
+    static readonly int[,] tuples = new int[,] { { 4, 3 }, { 3, 8 }, { 6, 5 }, { 9, 4 }, { 2, 1 }, { 8, 9 }, { 5, 0 }, { 7, 2 }, { 6, 1 }, { 7, 3 } };
+
+    static readonly int[,] exercise = { {9, 3}, {8, 2}, {1, 5}, {9, 4}, {4, 0}, {6, 3}, {8, 5}, {9, 7}, {6, 8} };
+
+     
+
     [TestMethod]
-    public void TinyWeightedQuickUnionPathCompressionUF()
+    public void OptimalAlgorithm_UF_StepByStep_Tuples()
     {
 
       UF uF = new UF(10);
-      //var tuples = new int[,] { { 4, 3 }, { 3, 8 }, { 6, 5 }, { 9, 4 }, { 2, 1 }, { 8, 9 }, { 5, 0 }, { 7, 2 }, { 6, 1 }, { 1, 0 }, { 6, 7 } };
-      var tuples = new int[,] { { 4, 3 }, { 3, 8 }, { 6, 5 }, { 9, 4 }, { 2, 1 }, { 8, 9 }, { 5, 0 }, { 7, 2 }, { 6, 1 }, { 7, 3 } };
+      
+      
       for (int i = 0; i < 10; i++)
       {
         int p = tuples[i, 0];
@@ -126,9 +129,9 @@ namespace SedgewickWayne.Algorithms.MsTest
     }
 
     [TestMethod]
-    public void TinyQuickFindUF()
+    public void QuickFindUF_StepByStep_Tiny()
     {
-      UFBase qf = new QuickFindUF(10);
+      IUnionFind qf = new QuickFindUF(10);
       qf.Union(4, 3);
       Assert.AreEqual(qf.Ids[3], 3);
       Assert.AreEqual(qf.Ids[4], 3);
@@ -164,22 +167,21 @@ namespace SedgewickWayne.Algorithms.MsTest
       Assert.AreEqual(qf.Ids[5], 1);
       Assert.AreEqual(qf.Ids[6], 1);
       Assert.AreEqual(qf.Ids[0], 1);
-
       Assert.IsTrue(qf.Connected(1, 0));
+
       qf.Union(1, 0);
-
       Assert.IsTrue(qf.Connected(1, 0));
+
       qf.Union(6, 7);
 
       CollectionAssert.AreEqual(new int[] { 1, 1, 1, 8, 8, 1, 1, 1, 8, 8 }, qf.Ids);
-
       Assert.AreEqual(qf.Count, 2);
     }
 
     [TestMethod]
-    public void TinyQuickUnionUF()
+    public void QuickUnionUF_StepByStep_Tuples()
     {
-      UFBase qu = new QuickUnionUF(10);
+      IUnionFind qu = new QuickUnionUF(10);
 
       qu.Union(4, 3);
       Assert.AreEqual(qu.Ids[3], 3);
@@ -240,9 +242,9 @@ namespace SedgewickWayne.Algorithms.MsTest
 
 
     [TestMethod]
-    public void TinyWeightedQuickUnionUF()
+    public void WeightedQuickUnionUF_StepByStep_Tuples()
     {
-      var wqu = new SizeWeightedPathHalvingQUUF(10);
+      var wqu = new WeightedQuickUnionUF(10);
 
       // first time else branch
       wqu.Union(4, 3);
@@ -311,20 +313,13 @@ namespace SedgewickWayne.Algorithms.MsTest
     }
 
     [TestMethod]
-    public void ExerciseWeightedQuickUnion ()
+    public void WeightedQuickUnion_Batch_Exercise ()
     {
-      var wqu = new SizeWeightedPathHalvingQUUF(10);
-      wqu.Union(9, 3);
-      wqu.Union(8, 2);
-      wqu.Union(1, 5);
-      wqu.Union(9, 4);
-      wqu.Union(4, 0);
-      wqu.Union(6, 3);
-      wqu.Union(8, 5);
-      wqu.Union(9, 7);
-      wqu.Union(6, 8);
-      CollectionAssert.AreEqual(new int[] { 9,8,8,9,9,1,9,9,9,9}, wqu.Ids);
-      CollectionAssert.AreEqual(new int[] { 1, 2, 1, 1,1,1,1,1,4,10}, wqu.Sizes);
+      var wqu = new WeightedQuickUnionPathCompressionUF(10);
+      for (int i = 0; i < exercise.GetLength(0); i++) wqu.Union(exercise[i, 0], exercise[i, 1]);
+
+      CollectionAssert.AreEqual(new int[] { 9,8,8,9,9,1,9,9,9, 9}, wqu.Ids);
+      CollectionAssert.AreEqual(new int[] { 1,2,1,1,1,1,1,1,4,10}, wqu.Sizes);
       Assert.AreEqual(1, wqu.Count);
     }
 
