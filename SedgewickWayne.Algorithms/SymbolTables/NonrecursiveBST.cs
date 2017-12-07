@@ -110,12 +110,12 @@ namespace SedgewickWayne.Algorithms
             {
                 if (x != null)
                 {
-                    stack.push(x);
+                    stack.Push(x);
                     x = x.left;
                 }
                 else
                 {
-                    x = stack.pop();
+                    x = stack.Pop();
                     queue.Enqueue(x.key);
                     x = x.right;
                 }

@@ -50,7 +50,7 @@ namespace SedgewickWayne.Algorithms
                     case LEFT_BRACKET:
                     case LEFT_ANGLE:
                     {
-                        stack.push(c);
+                        stack.Push(c);
                     }
                     break;
 
@@ -60,7 +60,7 @@ namespace SedgewickWayne.Algorithms
                     case RIGHT_ANGLE:
                     {
                         if (stack.IsEmpty) return false;
-                        char top = stack.pop();
+                        char top = stack.Pop();
                         if (top != pair(c)) return false;
                     }
                     break;
@@ -120,27 +120,27 @@ namespace SedgewickWayne.Algorithms
                         case OP_SUB: 
                         case OP_DIV: 
                         case OP_MOD:
-                            ops.push(s);
+                            ops.Push(s);
                             break;
 
                         case RIGHT_PARENTHESIS:
                         case RIGHT_BRACE:
                         case RIGHT_BRACKET:
                         {
-                                string sop = ops.pop();
-                                if (sop == "sqrt") vals.push(Math.Sqrt(vals.pop()));
+                                string sop = ops.Pop();
+                                if (sop == "sqrt") vals.Push(Math.Sqrt(vals.Pop()));
                                 else
                                 {
-                                    var v1 = vals.pop();
-                                    var v2 = vals.pop();
+                                    var v1 = vals.Pop();
+                                    var v2 = vals.Pop();
                                     
                                     switch (sop[0])
                                     {
-                                        case OP_ADD: vals.push(v2 + v1); break;
-                                        case OP_MUL: vals.push(v2 * v1); break;
-                                        case OP_SUB: vals.push(v2 - v1); break;
-                                        case OP_DIV: vals.push(v2 / v1); break;
-                                        case OP_MOD: vals.push(v2 % v1); break;
+                                        case OP_ADD: vals.Push(v2 + v1); break;
+                                        case OP_MUL: vals.Push(v2 * v1); break;
+                                        case OP_SUB: vals.Push(v2 - v1); break;
+                                        case OP_DIV: vals.Push(v2 / v1); break;
+                                        case OP_MOD: vals.Push(v2 % v1); break;
                                         default: break;
                                     }
                                 }
@@ -148,7 +148,7 @@ namespace SedgewickWayne.Algorithms
                         break;
 
                         default:
-                            if (Char.IsNumber(c)) vals.push(c - '0');
+                            if (Char.IsNumber(c)) vals.Push(c - '0');
                             else throw new NotImplementedException(s);
                             break;
                     }
@@ -157,14 +157,14 @@ namespace SedgewickWayne.Algorithms
                 else
                 {
                     double d;
-                    if (Double.TryParse(s, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out d )) vals.push(d);
-                    else if (s == "sqrt") ops.push(s);
+                    if (Double.TryParse(s, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out d )) vals.Push(d);
+                    else if (s == "sqrt") ops.Push(s);
                     else throw new NotImplementedException(s);
                 }                                        
                 
             }
 
-            return vals.pop();
+            return vals.Pop();
         }
 
     }

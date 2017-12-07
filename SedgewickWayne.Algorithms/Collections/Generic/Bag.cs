@@ -5,14 +5,10 @@ namespace SedgewickWayne.Algorithms
   using System.Collections;
   using System.Collections.Generic;
 
-  /*
-  [Implements(new string[] { "java.lang.Iterable" })]
-  [Signature("<Item:Ljava/lang/Object;>Ljava/lang/Object;Ljava/lang/Iterable<TItem;>;")]
-  [EnclosingMethod("Bag", null, null)]
-  [InnerClass(null, Modifiers.Static | Modifiers.Synthetic)] 
-  [Modifiers(Modifiers.Super | Modifiers.Synthetic)]
-  [SourceFile("java")]
-  */
+  /// <summary>
+  /// A bag is a collection where removing items is not supported—its purpose is to provide clients with the ability to collect items and then to iterate through the collected items.
+  /// </summary>
+  /// <typeparam name="TBag"></typeparam>
   public class Bag<TBag> : IBag<TBag>
   {
     /*

@@ -113,7 +113,7 @@ namespace SedgewickWayne.Algorithms
 
     #region IStack
     public bool IsEmpty { get { return this.N == 0; } }
-    public void push(object obj)
+    public void Push(object obj)
     {
       if (this.N == this.a.Length)
       { // capacity check, repeated doubling
@@ -124,7 +124,7 @@ namespace SedgewickWayne.Algorithms
       this.a[N] = obj;
       this.N++;
     }
-    public object pop()
+    public object Pop()
     {
       StackUnderflowCheck();
       // store last
@@ -142,7 +142,7 @@ namespace SedgewickWayne.Algorithms
       return last;
     }
     public int Size { get { return this.N; } }
-    public object peek()
+    public object Peek()
     {
       StackUnderflowCheck();
       return this.a[this.N - 1];

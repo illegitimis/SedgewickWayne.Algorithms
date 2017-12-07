@@ -79,7 +79,7 @@ namespace SedgewickWayne.Algorithms
     }
 
 
-    public void push(TStack obj)
+    public void Push(TStack obj)
     {
       Node node = this.first;
       this.first = new Node();
@@ -91,14 +91,14 @@ namespace SedgewickWayne.Algorithms
 
 
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public TStack peek()
+    public TStack Peek()
     {
       if (IsEmpty) throw new NotSupportedException("Stack underflow");
       return this.first.item;
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
-    public TStack pop()
+    public TStack Pop()
     {
       if (IsEmpty) throw new NotSupportedException("Stack underflow");
 

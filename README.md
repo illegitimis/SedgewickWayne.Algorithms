@@ -16,6 +16,9 @@ Replaced regex: `\[LineNumberTable\([^\)]+\)\]`, `^.*(\[[^\]\(\)]+\([^\]\(\)]+\)
 **Instead, it seems easier to port java files from the [Princeton repo](http://algs4.cs.princeton.edu) or the [duplicated Brazilian one](https://www.ime.usp.br/~pf/sedgewick-wayne/algs4/)**.
 
 ## Pages
+Below is the work for which porting was finished and unit tests passing.
+
++ [Collections](./doc/col.md)
 + [Dynamic Connectivity](./doc/uf.md)
 
 ## Algorithms to do list
@@ -23,7 +26,6 @@ Replaced regex: `\[LineNumberTable\([^\)]+\)\]`, `^.*(\[[^\]\(\)]+\([^\]\(\)]+\)
 
 Name | Category | Princeton java link | Done
 --- | --- | --- | ---
-Bag                           | Collections                   |  | N
 BinarySearch                  |  Sorting                      |  | Y
 BinarySearchST                |  Searching                    | http://algs4.cs.princeton.edu/31elementary/BinarySearchST.java.html
 BlackFilter                   |  Searching                    | http://algs4.cs.princeton.edu/31elementary
@@ -37,9 +39,6 @@ IndexMinPQ                    |  Priority Queues              |  Y
 Insertion                     |  Sorting                      |
 InsertionX                    |  Sorting                      |
 LinearProbingHashST           |  Searching                    | http://algs4.cs.princeton.edu/34hash/LinearProbingHashST.java.html
-LinkedBag                     |  Collections                  |  N
-LinkedQueue                   |  Collections                  |  N
-LinkedStack                   |  Collections                  |  Y
 LookupCSV                     |  Searching                    | http://algs4.cs.princeton.edu/31elementary
 LookupIndex                   |  Searching                    | http://algs4.cs.princeton.edu/31elementary
 MaxPQ                         |  Priority Queues              | http://algs4.cs.princeton.edu/24pq/MaxPQ.java.html | Y
@@ -51,9 +50,6 @@ Quick                         |  Sorting                      |  N
 Quick3Way                     |  Sorting                      |  N
 QuickX                        |  Sorting                      |  N
 RedBlackBST                   |  Searching                    | http://algs4.cs.princeton.edu/33balanced/RedBlackLiteBST.java.html
-ResizingArrayBag              |  Collections                  |  N
-ResizingArrayQueue            |  Collections                  |  N
-ResizingArrayStack            |  Collections                  |  Y
 Selection                     |  Sorting                      |  Y
 SeparateChainingHashST        |  Searching                    | http://algs4.cs.princeton.edu/31elementary
 SequentialSearchST            |  Searching                    | http://algs4.cs.princeton.edu/31elementary/SequentialSearchST.java.html 

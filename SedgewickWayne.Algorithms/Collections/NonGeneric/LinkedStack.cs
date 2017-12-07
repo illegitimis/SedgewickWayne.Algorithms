@@ -136,7 +136,7 @@ namespace SedgewickWayne.Algorithms
     }
 
 
-    public void push(object obj)
+    public void Push(object obj)
     {
       // save a link to the list
       LinkedStack.Node node = this.first;
@@ -152,7 +152,7 @@ namespace SedgewickWayne.Algorithms
     }
 
 
-    public object pop()
+    public object Pop()
     {
       if (IsEmpty)
       {
@@ -173,7 +173,7 @@ namespace SedgewickWayne.Algorithms
     }
 
 
-    public object peek()
+    public object Peek()
     {
       if (IsEmpty) throw new NotSupportedException("Stack underflow");
 

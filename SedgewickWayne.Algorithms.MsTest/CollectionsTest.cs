@@ -73,9 +73,9 @@ namespace SedgewickWayne.Algorithms.MsTest
       Assert.IsTrue(stack.IsEmpty);
 
       // Act
-      stack.push(1);
-      stack.push(2.0d);
-      stack.push("three");
+      stack.Push(1);
+      stack.Push(2.0d);
+      stack.Push("three");
       var s = stack.ToString();
       
       // Assert
@@ -102,13 +102,13 @@ namespace SedgewickWayne.Algorithms.MsTest
         switch (t)
         {
           case "-":
-            if (nstack != null) strings.Add (nstack.pop() as string);
-            else if (gstack != null) strings.Add(gstack.pop());
+            if (nstack != null) strings.Add (nstack.Pop() as string);
+            else if (gstack != null) strings.Add(gstack.Pop());
             break;
 
           default:
-            if (nstack != null) nstack.push(t);
-            else if (gstack != null) gstack.push(t);
+            if (nstack != null) nstack.Push(t);
+            else if (gstack != null) gstack.Push(t);
             break;
         }
       }
@@ -119,12 +119,12 @@ namespace SedgewickWayne.Algorithms.MsTest
 
       if (nstack != null)
       {
-        while (!nstack.IsEmpty) strings.Add(nstack.pop() as string);
+        while (!nstack.IsEmpty) strings.Add(nstack.Pop() as string);
         Assert.IsTrue(nstack.IsEmpty);
       }
       else if (gstack != null)
       {
-        while (!gstack.IsEmpty) strings.Add(gstack.pop());
+        while (!gstack.IsEmpty) strings.Add(gstack.Pop());
         Assert.IsTrue(gstack.IsEmpty);
       }
 
