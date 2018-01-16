@@ -1,33 +1,29 @@
 ﻿/******************************************************************************
  *  http://algs4.cs.princeton.edu/23quicksort/QuickX.java.html
- *  
- *  Uses the Bentley-McIlroy 3-way partitioning scheme, chooses the 
- *  partitioning element using Tukey's ninther, and cuts off to insertion sort.
  *
- *  Reference: Engineering a Sort Function by Jon L. Bentley
- *  and M. Douglas McIlroy. Softwae-Practice and Experience,
- *  Vol. 23 (11), 1249-1265 (November 1993).
- *
+ *  Reference: Engineering a Sort Function by Jon L. Bentley & M. Douglas McIlroy. Software-Practice and Experience, Vol. 23 (11), 1249-1265 (November 1993).
  ******************************************************************************/
 
 namespace SedgewickWayne.Algorithms
 {
     using System;
 
-
-    public static class QuickX<T>
-        where T : IComparable<T>
+  /// <summary>
+  /// Uses the Bentley-McIlroy 3-way partitioning scheme, chooses the partitioning element using Tukey's ninther, and cuts off to insertion sort.
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+    public static class QuickX<T> where T : IComparable<T>
     {
         // cutoff to insertion sort, must be >= 1
         private const int INSERTION_SORT_CUTOFF = 8;
 
         // cutoff to median-of-3 partitioning
         private const int MEDIAN_OF_3_CUTOFF = 40;
-
-        /**
-         * Rearranges the array in ascending order, using the natural order.
-         * @param a the array to be sorted
-         */
+         
+        /// <summary>
+        /// Rearranges the array in ascending order, using the natural order.
+        /// </summary>
+        /// <param name="a">the array to be sorted.</param>
         public static void Sort(T[] a)
         {
             sort(a, 0, a.Length - 1);

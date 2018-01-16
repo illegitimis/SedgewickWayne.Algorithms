@@ -1,10 +1,7 @@
 ﻿/******************************************************************************
  *  http://algs4.cs.princeton.edu/22mergesort/MergeX.java.html
  *     
- *  Sorts a sequence of strings from standard input using an
- *  optimized version of mergesort.
- *  OPTIMIZED MERGESORT 
- *  
+ *  OPTIMIZED MERGESORT  
  ******************************************************************************/
 
 namespace SedgewickWayne.Algorithms
@@ -13,8 +10,11 @@ namespace SedgewickWayne.Algorithms
     using System.Diagnostics;
 
 
-    public static class MergeX<T> 
-        where T : IComparable<T>
+  /// <summary>
+  /// Sorts a sequence of strings from standard input using an optimized version of mergesort.
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  public static class MergeX<T> where T : IComparable<T>
     {
         private const int CUTOFF = 7;  // cutoff to insertion sort
 
@@ -66,10 +66,10 @@ namespace SedgewickWayne.Algorithms
             merge(src, dst, lo, mid, hi);
         }
 
-        /**
-         * Rearranges the array in ascending order, using the natural order.
-         * @param a the array to be sorted
-         */
+          /// <summary>
+          /// Rearranges the array in ascending order, using the natural order.
+          /// </summary>
+          /// <param name="a">the array to be sorted</param>
         public static void Sort(T[] a)
         {
             T[] aux = (T[])a.Clone();

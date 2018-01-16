@@ -9,6 +9,9 @@ namespace SedgewickWayne.Algorithms
     using System.Collections;
     using System.Diagnostics;
 
+  /// <summary>
+  /// provides static methods for sorting an array using insertion sort.
+  /// </summary>
     public class Insertion
     {
         #region less
@@ -79,9 +82,13 @@ namespace SedgewickWayne.Algorithms
             return Insertion.isSorted(array, comparator, 0, array.Length - 1);
         }
 
-        #endregion
+    #endregion
 
-        public static void Sort(IComparable[] carr)
+    /// <summary>
+    /// Rearranges the array in ascending order, using the natural order.
+    /// </summary>
+    /// <param name="carr">the array to be sorted</param>
+    public static void Sort(IComparable[] carr)
         {
             int num = carr.Length;
             for (int i = 0; i < num; i++)
@@ -99,7 +106,12 @@ namespace SedgewickWayne.Algorithms
             Debug.Assert(Insertion.isSorted(carr));
         }
 
-        public static void Sort(object[] objarr, IComparer c)
+    /// <summary>
+    /// Rearranges the array in ascending order, using a comparator.
+    /// </summary>
+    /// <param name="objarr">the array</param>
+    /// <param name="c">comparator the comparator specifying the order, Java type is <see cref="Comparator"/></param>
+    public static void Sort(object[] objarr, IComparer c)
         {
             int num = objarr.Length;
             for (int i = 0; i < num; i++)
@@ -115,9 +127,15 @@ namespace SedgewickWayne.Algorithms
             }
 
             Debug.Assert(Insertion.isSorted(objarr, c));
-        }
+    }
 
-        public static int[] IndexSort(IComparable[] carr)
+    /// <summary>
+    /// Returns a permutation that gives the elements in a[] in ascending order. 
+    /// Does not change the original array, <paramref name="carr"/>
+    /// </summary>
+    /// <param name="carr">the array</param>
+    /// <returns>a permutation p[]} such that a[p[0]], a[p[1]], ...,  a[p[n - 1]] are in ascending order</returns>
+    public static int[] IndexSort(IComparable[] carr)
         {
             int num = carr.Length;
             int[] array = new int[num];

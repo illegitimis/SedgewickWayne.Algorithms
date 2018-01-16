@@ -1,49 +1,29 @@
-﻿/******************************************************************************
- *  algs4.cs.princeton.edu/21elementary/InsertionX.java.html
- *  Data files:   http://algs4.cs.princeton.edu/21elementary/tiny.txt
- *                http://algs4.cs.princeton.edu/21elementary/words3.txt
- *  SORTING
- *  Sorts a sequence of strings from standard input using an optimized
- *  version of insertion sort that uses half exchanges instead of 
- *  full exchanges to reduce data movement..
- *
- *  % more tiny.txt
- *  S O R T E X A M P L E
- *
- *  % java InsertionX < tiny.txt
- *  A E E L M O P R S T X                 [ one string per line ]
- *
- *  % more words3.txt
- *  bed bug dad yes zoo ... all bad yet
- *
- *  % java InsertionX < words3.txt
- *  all bad bed bug dad ... yes yet zoo   [ one string per line ]
- *
- ******************************************************************************/
+﻿/****************************************************************************
+  http://algs4.cs.princeton.edu/21elementary/InsertionX.java.html
+
+  SORTING
+  Sorts a sequence using an optimized version of insertion sort that 
+  uses half exchanges instead of full exchanges to reduce data movement..
+
+ *****************************************************************************/
 
 namespace SedgewickWayne.Algorithms
 {
     using System;
     using System.Diagnostics;
 
-    /**
-     *  The {@code InsertionX} class provides static methods for sorting an array 
-     *  using an optimized version of insertion sort (with half exchanges and a sentinel).
-     *  <p>
-     *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/21elementary">Section 2.1</a> 
-     *  of <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
-     *
-     *  @author Robert Sedgewick
-     *  @author Kevin Wayne
-     */
+     
+    /// <summary>
+    /// Provides static methods for sorting an array using an optimized version of insertion sort (with half exchanges and a sentinel).
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public static class InsertionX<T>
         where T : IComparable<T>
-    {
-        /**
-    * Rearranges the array in ascending order, using the natural order.
-    * @param a the array to be sorted
-    */
-        //public static void Sort(IComparable<T>[] a)
+    {    
+        /// <summary>
+        /// Rearranges the array in ascending order, using the natural order.
+        /// </summary>
+        /// <param name="a">the array to be sorted</param>
         public static void Sort(T[] a)
         {
             int n = a.Length;
