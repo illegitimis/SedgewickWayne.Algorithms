@@ -1,27 +1,8 @@
-﻿/******************************************************************************
- *  SORTING
- *  Data files:   
- *  
- *  http://algs4.cs.princeton.edu/21elementary/tiny.txt
- *  % more tiny.txt 
- *  S O R T E X A M P L E
- *  A E E L M O P R S T X
- *                  
- *  http://algs4.cs.princeton.edu/21elementary/words3.txt    
- *  % more words3.txt
- *  bed bug dad yes zoo ... all bad yet
- *  all bad bed bug dad ... yes yet zoo    [ one string per line ]
- *
- *
- ******************************************************************************/
-
+﻿
 namespace SedgewickWayne.Algorithms.MsTest
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using SedgewickWayne.Algorithms;
 
 
@@ -34,13 +15,13 @@ namespace SedgewickWayne.Algorithms.MsTest
         static readonly char[] inty = new char[] { 'A', 'E', 'E', 'L', 'M', 'O', 'P', 'R', 'S', 'T', 'X' };
 
         static readonly string[] words3 = new string[] {
-            "bed", "bug", "dad", "yes", "zoo",   
-            "now", "for", "tip", "ilk", "dim",   
-            "tag", "jot", "sob", "nob", "sky",   
-            "hut", "men", "egg", "few", "jay",   
-            "owl", "joy", "rap", "gig", "wee",   
-            "was", "wad", "fee", "tap", "tar",   
-            "dug", "jam", "all", "bad", "yet",   
+            "bed", "bug", "dad", "yes", "zoo",
+            "now", "for", "tip", "ilk", "dim",
+            "tag", "jot", "sob", "nob", "sky",
+            "hut", "men", "egg", "few", "jay",
+            "owl", "joy", "rap", "gig", "wee",
+            "was", "wad", "fee", "tap", "tar",
+            "dug", "jam", "all", "bad", "yet",
         };
 
         static readonly string[] dorsw = new string[] {
@@ -54,8 +35,13 @@ namespace SedgewickWayne.Algorithms.MsTest
         };
 
 
-
-[TestMethod]
+        /// <summary>
+        ///  http://algs4.cs.princeton.edu/21elementary/tiny.txt
+        ///  % more tiny.txt
+        ///  S O R T E X A M P L E
+        ///  A E E L M O P R S T X
+        /// </summary>
+        [TestMethod]
         public void TinySort()
         {
             var characterArraySorters = new SortDelegate<char>[]
@@ -77,16 +63,22 @@ namespace SedgewickWayne.Algorithms.MsTest
                 TinySortStep(sorter);
         }
 
-        void TinySortStep (SortDelegate<char> characterArraySorter)
+        void TinySortStep(SortDelegate<char> characterArraySorter)
         {
             var copy = new char[11];
             Array.Copy(tiny, copy, 11);
-                        
+
             characterArraySorter(copy);
             Assert.IsNotNull(copy);
             CollectionAssert.AreEqual(inty, copy, characterArraySorter.Method.DeclaringType.Name);
         }
 
+        /// <summary>
+        ///  http://algs4.cs.princeton.edu/21elementary/words3.txt    
+        ///  % more words3.txt
+        ///  bed bug dad yes zoo ... all bad yet
+        ///  all bad bed bug dad ... yes yet zoo    [ one string per line ] 
+        /// </summary>
         [TestMethod]
         public void ThreeLetterWordsSort()
         {
