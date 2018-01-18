@@ -146,3 +146,8 @@ public interface ICheckEmpty
   bool IsEmpty { get; }
 }
 
+
+public interface ICloneable<T> where T : class
+{
+    T Clone();
+}

@@ -4,47 +4,60 @@ namespace SedgewickWayne.Algorithms
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Text;
+    using System.Diagnostics.Contracts;
 
-    /**********************************************************************
-     * 
-     * indexed priority queue of generic keys.
-     * 
-     * This implementation uses a binary heap along with an array 
-     * to associate keys with integers in the given range.
-     * 
-     ***********************************************************************/
 
-    public abstract class IndexPQBase<Key> 
-        : IIndexedPriorityQueue<Key>
-        where Key : System.IComparable<Key>
+    /// <summary>
+    /// Indexed priority queue of generic keys.
+    /// This implementation uses a binary heap along with an array 
+    /// to associate keys with integers in the given range.
+    /// </summary>
+    /// <remarks>
+    /// It also supports methods for peeking at the minimum key, 
+    /// testing if the priority queue is empty, and iterating through the keys.
+    /// The <see cref="Insert(int, TKey)"/>, <see cref="DeleteKey"/>, 
+    /// <see cref="Delete(int)"/>, <see cref="decreaseKey(int, TKey)"/> and 
+    /// <see cref="increaseKey(int, TKey)"/> operations take logarithmic time.
+    /// The <see cref="IsEmpty"/>, <seealso cref="Size"/>, <see cref="Index"/>, 
+    /// <see cref="KeyOf(int)"/> and <see cref="TopKey"/> 
+    /// operations take constant time.
+    /// </remarks>
+    /// <typeparam name="Key">the generic type of key on this priority queue</typeparam>
+    public abstract class IndexPQBase<TKey>
+        : IIndexedPriorityQueue<TKey>
+        , ICloneable<IndexPQBase<TKey>>
+        where TKey : System.IComparable<TKey>
     {
         protected int maxN;        // maximum number of elements on PQ
         protected int n;           // number of elements on PQ
         protected int[] pq;        // binary heap using 1-based indexing
         protected int[] qp;        // inverse of pq - qp[pq[i]] = pq[qp[i]] = i
-        protected Key[] keys;      // keys[i] = priority of i
+        protected TKey[] keys;     // keys[i] = priority of i
 
-        /**
-         * Initializes an empty indexed priority queue with indices between {@code 0} and {@code maxN - 1}.
-         * @param  maxN the keys on this priority queue are index from {@code 0} {@code maxN - 1}
-         * @throws ArgumentException if {@code maxN < 0}
-         */
+        /// <summary>
+        /// Initializes an empty indexed priority queue with indices between 0 and <paramref name="maxN"/> - 1.
+        /// </summary>
+        /// <remarks>
+        /// throws ArgumentException if <paramref name="maxN"/> less than 0.
+        /// </remarks>
+        /// <param name="maxN">maimum index</param>
         public IndexPQBase(int maxN)
         {
             if (maxN < 0) throw new ArgumentException();
             this.maxN = maxN;
             n = 0;
 
-            keys = new Key[maxN + 1];    // make this of length maxN??
+            keys = new TKey[maxN + 1];    // make this of length maxN??
             pq = new int[maxN + 1];
             qp = new int[maxN + 1];      // make this of length maxN??
             for (int i = 0; i <= maxN; i++) qp[i] = -1;
         }
 
-        public IndexPQBase(Key[] keys) : this (keys.Length)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys"></param>
+        public IndexPQBase(TKey[] keys) : this(keys.Length)
         {
             for (int i = 0; i < keys.Length; i++)
             {
@@ -52,46 +65,42 @@ namespace SedgewickWayne.Algorithms
             }
         }
 
-
-        /**
-         * Returns true if this priority queue is empty.
-         *
-         * @return {@code true} if this priority queue is empty;
-         *         {@code false} otherwise
-         */
+       
+        /// <summary>
+        /// Returns true if this priority queue is empty. False otherwise.
+        /// </summary>
         public bool IsEmpty { get { return n == 0; } }
-        
-        /**
-         * Is {@code i} an index on this priority queue?
-         *
-         * @param  i an index
-         * @return {@code true} if {@code i} is an index on this priority queue;
-         *         {@code false} otherwise
-         * @throws ArgumentOutOfRangeException unless {@code 0 <= i < maxN}
-         */
+
+        /// <summary>
+        /// Is <paramref name="i"/> an index on this priority queue?
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="ArgumentOutOfRangeException"/> unless <paramref name="i"/>
+        /// between 0 and <see cref="maxN"/>.
+        /// </remarks>
+        /// <param name="i">an index</param>
+        /// <returns>True if <paramref name="i"/> is an index on this priority queue</returns>
         public bool Contains(int i)
         {
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
             return qp[i] != -1;
         }
 
-        /**
-         * Returns the number of keys on this priority queue.
-         *
-         * @return the number of keys on this priority queue
-         */
+        /// <summary>
+        /// Returns the number of keys on this priority queue.
+        /// </summary>
         public int Size { get { return n; } }
-        
 
-        /**
-         * Associates key with index {@code i}.
-         *
-         * @param  i an index
-         * @param  key the key to associate with index {@code i}
-         * @throws ArgumentOutOfRangeException unless {@code 0 <= i < maxN}
-         * @throws ArgumentException if there already is an item associated with index {@code i}
-         */
-        public void Insert(int i, Key key)
+        /// <summary>
+        /// Associates key with index <paramref name="i"/>.
+        /// </summary>
+        /// <remarks>
+        /// throws <see cref="ArgumentOutOfRangeException"/> unless <paramref name="i"/> between 0 and <see cref="maxN"/>.
+        /// throws <see cref="ArgumentException"/> if there already is an item associated with index <paramref name="i"/>.
+        /// </remarks>
+        /// <param name="i">an index</param>
+        /// <param name="key">the key to associate with index <paramref name="i"/>.</param>
+        public void Insert(int i, TKey key)
         {
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
             if (Contains(i)) throw new ArgumentException("index is already in the priority queue");
@@ -102,53 +111,59 @@ namespace SedgewickWayne.Algorithms
             swim(n);
         }
 
-        /**
-         * Returns an index associated with a minimum key.
-         * @return an index associated with a minimum key
-         * @throws InvalidOperationException if this priority queue is empty
-         */
-
-        public virtual int Index { get {
+        /// <summary>
+        /// Returns an index associated with a minimum/maximum key.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="InvalidOperationException"/> if this priority queue is empty.
+        /// </remarks>
+        public virtual int Index {
+            get {
                 if (n == 0) throw new InvalidOperationException("Priority queue underflow");
                 return pq[1];
-            } }
+            }
+        }
 
-        /**
-         * Returns a minimum key.
-         *
-         * @return a minimum key
-         * @throws InvalidOperationException if this priority queue is empty
-         */
-        public virtual Key TopKey { get { 
-            if (n == 0) throw new InvalidOperationException("Priority queue underflow");
-            return keys[pq[1]];
-        }}
+        /// <summary>
+        /// Returns a minimum key.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="InvalidOperationException"/> if this priority queue is empty.
+        /// </remarks>
+        public virtual TKey TopKey {
+            get {
+                if (n == 0) throw new InvalidOperationException("Priority queue underflow");
+                return keys[pq[1]];
+            }
+        }
 
-        /**
-         * Removes a minimum key and returns its associated index.
-         * @return an index associated with a minimum key
-         * @throws InvalidOperationException if this priority queue is empty
-         */
+        /// <summary>
+        /// Removes a top key and returns its associated index.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="InvalidOperationException"/> if this priority queue is empty.
+        /// </remarks>
+        /// <returns>Index of the top key.</returns>
         public virtual int DeleteIndex()
         {
             if (n == 0) throw new InvalidOperationException("Priority queue underflow");
             int min = pq[1];
             exch(1, n--);
             sink(1);
-            
-            // assert min == pq[n + 1];
-            qp[min] = -1;        // delete
-            
-            // to help with garbage collection
-            //keys[min] = null;    
-            keys[min] = default(Key);
 
-            pq[n + 1] = -1;        // not needed?
+            Contract.Assert(min == pq[n + 1]);
+            qp[min] = -1;               // delete
+            keys[min] = default(TKey);  // to help with garbage collection
+            pq[n + 1] = -1;             // not needed?        
 
             return min;
         }
 
-        public virtual Key DeleteKey()
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <returns>Key that got removed.</returns>
+        public virtual TKey DeleteKey()
         {
             if (n == 0) throw new InvalidOperationException("Priority queue underflow");
 
@@ -156,40 +171,42 @@ namespace SedgewickWayne.Algorithms
             exch(1, n--);
             sink(1);
 
-            Debug.Assert(min == pq[n + 1]);
+            Contract.Assert(min == pq[n + 1]);
 
             qp[min] = -1;               // delete
             var key = keys[min];        // memo
-            keys[min] = default(Key);   // GC
+            keys[min] = default(TKey);  // GC
             pq[n + 1] = -1;             // not needed?
 
             return key;
         }
 
-        /**
-         * Returns the key associated with index {@code i}.
-         *
-         * @param  i the index of the key to return
-         * @return the key associated with index {@code i}
-         * @throws ArgumentOutOfRangeException unless {@code 0 <= i < maxN}
-         * @throws InvalidOperationException no key is associated with index {@code i}
-         */
-        public Key KeyOf(int i)
+        /// <summary>
+        /// Returns the key associated with index <paramref name="i"/>.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="ArgumentOutOfRangeException"/> unless <paramref name="i"/> between 0 and <see cref="maxN"/>.
+        /// Throws InvalidOperationException no key is associated with index <paramref name="i"/>.
+        /// </remarks>
+        /// <param name="i">the index of the key to return</param>
+        /// <returns>the key associated with index <paramref name="i"/>.</returns>
+        public TKey KeyOf(int i)
         {
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             else return keys[i];
         }
 
-        /**
-         * Change the key associated with index {@code i} to the specified value.
-         *
-         * @param  i the index of the key to change
-         * @param  key change the key associated with index {@code i} to this key
-         * @throws ArgumentOutOfRangeException unless {@code 0 <= i < maxN}
-         * @throws InvalidOperationException no key is associated with index {@code i}
-         */
-        public void ChangeKey(int i, Key key)
+        /// <summary>
+        /// Change the key associated with index <paramref name="i"/> to the specified value.
+        /// </summary>
+        /// <remarks>
+        /// Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>.
+        /// Throws <see cref="ArgumentOutOfRangeException"/> unless <paramref name="i"/> between 0 and <see cref="maxN"/>.
+        /// </remarks>
+        /// <param name="i">the index of the key to change</param>
+        /// <param name="key">change the key associated with index <paramref name="i"/> to this key</param>
+        public void ChangeKey(int i, TKey key)
         {
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
@@ -198,17 +215,28 @@ namespace SedgewickWayne.Algorithms
             sink(qp[i]);
         }
 
-        public abstract void decreaseKey(int i, Key key);
-        public abstract void increaseKey(int i, Key key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="key"></param>
+        public abstract void decreaseKey(int i, TKey key);
 
-       
-        /**
-         * Remove the key associated with index {@code i}.
-         *
-         * @param  i the index of the key to remove
-         * @throws ArgumentOutOfRangeException unless {@code 0 <= i < maxN}
-         * @throws InvalidOperationException no key is associated with index {@code i}
-         */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="key"></param>
+        public abstract void increaseKey(int i, TKey key);        
+     
+            /// <summary>
+            /// Remove the key associated with index <paramref name="i"/>.
+            /// <remarks>
+            /// Throws <see cref="ArgumentOutOfRangeException"/> unless <paramref name="i"/> between 0 and <see cref="maxN"/>.
+            /// Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>.
+            /// </remarks>
+            /// </summary>
+            /// <param name="i">the index of the key to remove</param>
         public void Delete(int i)
         {
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
@@ -218,16 +246,23 @@ namespace SedgewickWayne.Algorithms
             swim(index);
             sink(index);
             //keys[i] = null;
-            keys[i] = default(Key);
+            keys[i] = default(TKey);
             qp[i] = -1;
         }
 
 
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <param name="i"></param>
+      /// <param name="j"></param>
+      /// <returns></returns>
+        protected abstract bool Predicate(int i, int j);
+  
+        
         /***************************************************************************
          * General helper functions.
          ***************************************************************************/
-        protected abstract bool predicate(int i, int j);
-              
         protected void exch(int i, int j)
         {
             int swap = pq[i];
@@ -243,7 +278,7 @@ namespace SedgewickWayne.Algorithms
          ***************************************************************************/
         protected void swim(int k)
         {
-            while (k > 1 && predicate(k / 2, k))
+            while (k > 1 && Predicate(k / 2, k))
             {
                 exch(k, k / 2);
                 k = k / 2;
@@ -255,8 +290,8 @@ namespace SedgewickWayne.Algorithms
             while (2 * k <= n)
             {
                 int j = 2 * k;
-                if (j < n && predicate(j, j + 1)) j++;
-                if (!predicate(k, j)) break;
+                if (j < n && Predicate(j, j + 1)) j++;
+                if (!Predicate(k, j)) break;
                 exch(k, j);
                 k = j;
             }
@@ -271,20 +306,17 @@ namespace SedgewickWayne.Algorithms
          *
          * @return an iterator that iterates over the keys in ascending order
          */
-        public IEnumerator<int> GetEnumerator() { return new HeapIEnumerator(this); }
+        public IEnumerator<int> GetEnumerator() { return new HeapEnumerator(this); }
 
-        IEnumerator IEnumerable.GetEnumerator() { return new HeapIEnumerator(this); }
+        IEnumerator IEnumerable.GetEnumerator() { return new HeapEnumerator(this); }
 
-        private class HeapIEnumerator : IEnumerator<int>
+        private class HeapEnumerator : IEnumerator<int>
         {
             // create a new pq
-            private IndexPQBase<Key> copy;
+            private IndexPQBase<TKey> copy;
 
             // public int next()
-            public int Current
-            {
-                get
-                {
+            public int Current { get {
                     if (!MoveNext()) throw new ArgumentOutOfRangeException();
                     return copy.DeleteIndex();
                 }
@@ -294,10 +326,10 @@ namespace SedgewickWayne.Algorithms
 
             // add all elements to copy of heap
             // takes linear time since already in heap order so no keys move
-            public HeapIEnumerator(IndexPQBase<Key> src)
+            public HeapEnumerator(IndexPQBase<TKey> src)
             {
                 int n = src.pq.Length;
-                copy = src.Instance();                   
+                copy = src.Clone();
             }
 
 
@@ -309,8 +341,10 @@ namespace SedgewickWayne.Algorithms
             public void Reset() { throw new NotImplementedException(); }
         }
 
-        internal abstract IndexPQBase<Key> Instance();
+        public abstract IndexPQBase<TKey> Clone();
 
         #endregion
     }
+
+    
 }

@@ -300,6 +300,99 @@ namespace SedgewickWayne.Algorithms.MsTest
                     default: pq.Insert(s); break;
                 }
             }
-        }        
+        }
+
+        [TestMethod]
+        public void UnorderedArrayMaxPQ_SimpleTest()
+        {
+            var pq = new UnorderedArrayMaxPQ<string>(10);
+            TestArrayMaxPQ(pq, ProduceArrayMax);
+        }
+
+        [TestMethod]
+        public void OrderedArrayMaxPQ_SimpleTest()
+        {
+            var pq = new OrderedArrayMaxPQ<string>(10);
+            TestArrayMaxPQ(pq, ProduceArrayMax);
+        }
+
+        [TestMethod]
+        public void UnorderedArrayMaxPQ_Enumerate()
+        {
+            var pq = new UnorderedArrayMaxPQ<string>(10);
+            TestArrayMaxPQ(pq, EnumerateArrayMax, false);
+        }
+
+        [TestMethod]
+        public void OrderedArrayMaxPQ_Enumerate()
+        {
+            var pq = new OrderedArrayMaxPQ<string>(10);
+            TestArrayMaxPQ(pq, EnumerateArrayMax, false);
+        }
+
+        private void TestArrayMaxPQ(ArrayMaxPQBase<string> pq, ArrayMaxPQProducer f, bool IsConsumer = true)
+        {
+            var maxes = f(pq).ToArray();
+            if (IsConsumer) Assert.IsTrue(pq.IsEmpty);
+            CollectionAssert.AreEqual(new string[] { "this", "test", "is", "a" }, maxes);
+        }
+
+        delegate IEnumerable<string> ArrayMaxPQProducer(ArrayMaxPQBase<string> pq);
+
+        IEnumerable<string> EnumerateArrayMax(ArrayMaxPQBase<string> pq)
+        {
+            pq.Insert("this");
+            pq.Insert("is");
+            pq.Insert("a");
+            pq.Insert("test");
+            foreach(string s in pq) yield return s;
+        }
+
+        IEnumerable<string> ProduceArrayMax(ArrayMaxPQBase<string> pq)
+        {
+            pq.Insert("this");
+            pq.Insert("is");
+            pq.Insert("a");
+            pq.Insert("test");
+            while (!pq.IsEmpty) yield return pq.DeleteMax();
+        }
+
+        // https://algs4.cs.princeton.edu/24pq/images/pq-array.png
+        void SequenceOfOperations(IMaxPriorityQueue<char> pq)
+        {
+            pq.Insert('P');
+            pq.Insert('Q');
+            pq.Insert('E');
+            Assert.AreEqual(pq.Delete(), 'Q');
+            pq.Insert('X');
+            pq.Insert('A');
+            pq.Insert('M');
+            Assert.AreEqual(pq.Delete(), 'X');
+            pq.Insert('P');
+            pq.Insert('L');
+            pq.Insert('E');
+            Assert.AreEqual(pq.Delete(), 'P');
+            Assert.AreEqual(pq.Size, 6);
+            CollectionAssert.AreEqual(new char[] { 'P', 'M', 'L', 'E', 'E', 'A' }, pq.ToArray());
+        }
+
+        [TestMethod]
+        void SequenceOfOperations_MaxPQ()
+        {
+            var pq = new MaxPQ<char>(10);
+            SequenceOfOperations(pq);
+        }
+        [TestMethod]
+        void SequenceOfOperations_OrderedArrayMaxPQ()
+        {
+            var pq = new OrderedArrayMaxPQ<char>(10);
+            SequenceOfOperations(pq);
+        }
+        [TestMethod]
+        void SequenceOfOperations_UnOrderedArrayMaxPQ()
+        {
+            var pq = new UnorderedArrayMaxPQ<char>(10);
+            SequenceOfOperations(pq);
+        }
     }
 }

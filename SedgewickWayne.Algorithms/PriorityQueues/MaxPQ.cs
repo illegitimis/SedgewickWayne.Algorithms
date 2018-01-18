@@ -44,11 +44,11 @@ namespace SedgewickWayne.Algorithms
      *  Construction takes time proportional to the specified capacity or the number of
      *  items used to initialize the data structure.
      *  <p>
-     *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/24pq">Section 2.4</a> of
-     *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+     <a href="http://algs4.cs.princeton.edu/24pq">Section 2.4</a> of
+     
      *
-     *  @author Robert Sedgewick
-     *  @author Kevin Wayne
+     
+    
      *
      *  @param <TKey> the generic type of key on this priority queue
      *  
@@ -100,7 +100,7 @@ namespace SedgewickWayne.Algorithms
          * Returns a largest key on this priority queue.
          *
          * @return a largest key on this priority queue
-         * @throws InvalidOperationException if this priority queue is empty
+         * Throws <see cref="InvalidOperationException" /> if this priority queue is empty
          */
         public Key Max { get { return Top; } }
 
@@ -111,7 +111,7 @@ namespace SedgewickWayne.Algorithms
          * Removes and returns a largest key on this priority queue.
          *
          * @return a largest key on this priority queue
-         * @throws InvalidOperationException if this priority queue is empty
+         * Throws <see cref="InvalidOperationException" /> if this priority queue is empty
          */
         public Key DeleteMax()
         {

@@ -1,26 +1,14 @@
-﻿/******************************************************************************
-*  Compilation:  javac IndexMaxPQ.java
-*  Execution:    java IndexMaxPQ
-*  Dependencies: StdOut.java
-*  http://algs4.cs.princeton.edu/24pq/IndexMaxPQ.java
-*  Maximum-oriented indexed PQ implementation using a binary heap.
-*
-******************************************************************************/
-
+﻿
 namespace SedgewickWayne.Algorithms
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /******************************************************************************
      *  The {@code IndexMaxPQ} class represents an indexed priority queue of generic keys.
      *  It supports the usual <em>insert</em> and <em>delete-the-maximum</em>
      *  operations, along with <em>delete</em> and <em>change-the-key</em> 
      *  methods. In order to let the client refer to items on the priority queue,
-     *  an integer between {@code 0} and {@code maxN - 1}
+     *  an integer between 0 and <see cref="maxN" /> - 1
      *  is associated with each key—the client
      *  uses this integer to specify which key to delete or change.
      *  It also supports methods for peeking at a maximum key,
@@ -36,29 +24,27 @@ namespace SedgewickWayne.Algorithms
      *  and <em>key-of</em> operations take constant time.
      *  Construction takes time proportional to the specified capacity.
      *  <p>
-     *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/24pq">Section 2.4</a> of
-     *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
-     *
-     *  @author Robert Sedgewick
-     *  @author Kevin Wayne
-     *
-     *  @param <Key> the generic type of key on this priority queue
-     *  
+     <a href="http://algs4.cs.princeton.edu/24pq">Section 2.4</a> 
      ******************************************************************************/
 
+    /// <summary>
+    /// Maximum-oriented indexed PQ implementation using a binary heap.
+    /// </summary>
+    /// <typeparam name="Key">the generic type of key on this priority queue</typeparam>
+    /// <see href="http://algs4.cs.princeton.edu/24pq/IndexMaxPQ.java"/>
     public class IndexMaxPQ<Key> 
         : IndexPQBase<Key>
-        , IMaxPriorityQueue<Key>
+        , IIndexedMaxPriorityQueue<Key>
         where Key : IComparable<Key>
     {
        
 
         /**
-* Initializes an empty indexed priority queue with indices between {@code 0}
-* and {@code maxN - 1}.
+* Initializes an empty indexed priority queue with indices between 0
+* and <see cref="maxN" /> - 1.
 *
-* @param  maxN the keys on this priority queue are index from {@code 0} to {@code maxN - 1}
-* @throws ArgumentException if {@code maxN < 0}
+* @param  maxN the keys on this priority queue are index from 0 to <see cref="maxN" /> - 1
+* Throws <see cref="ArgumentException" /> if {@code maxN < 0}
 */
         public IndexMaxPQ(int maxN) : base (maxN) { }
 
@@ -69,7 +55,7 @@ namespace SedgewickWayne.Algorithms
          * Returns an index associated with a maximum key.
          *
          * @return an index associated with a maximum key
-         * @throws InvalidOperationException if this priority queue is empty
+         * Throws <see cref="InvalidOperationException" /> if this priority queue is empty
          */
         public int MaxIndex { get { return Index; } }
 
@@ -77,7 +63,7 @@ namespace SedgewickWayne.Algorithms
          * Returns a maximum key.
          *
          * @return a maximum key
-         * @throws InvalidOperationException if this priority queue is empty
+         * Throws <see cref="InvalidOperationException" /> if this priority queue is empty
          */
         public Key Max { get { return TopKey; } }
 
@@ -85,7 +71,7 @@ namespace SedgewickWayne.Algorithms
          * Removes a maximum key and returns its associated index.
          *
          * @return an index associated with a maximum key
-         * @throws InvalidOperationException if this priority queue is empty
+         * Throws <see cref="InvalidOperationException" /> if this priority queue is empty
          */
         public Key DeleteMax()
         {
@@ -94,13 +80,13 @@ namespace SedgewickWayne.Algorithms
 
 
         /**
-         * Increase the key associated with index {@code i} to the specified value.
+         * Increase the key associated with index <paramref name="i"/> to the specified value.
          *
          * @param  i the index of the key to increase
-         * @param  key increase the key associated with index {@code i} to this key
-         * @throws ArgumentOutOfRangeException unless {@code 0 <= i < maxN}
-         * @throws ArgumentException if {@code key <= keyOf(i)}
-         * @throws InvalidOperationException no key is associated with index {@code i}
+         * @param  key increase the key associated with index <paramref name="i"/> to this key
+         * Throws <see cref="ArgumentOutOfRangeException"/> unless <paramref name="i"/> between 0 and <see cref="maxN"/>.
+         * Throws <see cref="ArgumentException" /> if {@code key <= keyOf(i)}
+         * Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>
          */
         public override void increaseKey(int i, Key key)
         {
@@ -113,13 +99,13 @@ namespace SedgewickWayne.Algorithms
         }
 
         /**
-         * Decrease the key associated with index {@code i} to the specified value.
+         * Decrease the key associated with index <paramref name="i"/> to the specified value.
          *
          * @param  i the index of the key to decrease
-         * @param  key decrease the key associated with index {@code i} to this key
-         * @throws ArgumentOutOfRangeException unless {@code 0 <= i < maxN}
-         * @throws ArgumentException if {@code key >= keyOf(i)}
-         * @throws InvalidOperationException no key is associated with index {@code i}
+         * @param  key decrease the key associated with index <paramref name="i"/> to this key
+         * Throws <see cref="ArgumentOutOfRangeException"/> unless <paramref name="i"/> between 0 and <see cref="maxN"/>.
+         * Throws <see cref="ArgumentException" /> if {@code key >= keyOf(i)}
+         * Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>
          */
         public override void decreaseKey(int i, Key key)
         {
@@ -131,17 +117,16 @@ namespace SedgewickWayne.Algorithms
             sink(qp[i]);
         }
 
-        /***************************************************************************
-         * General helper functions.
-         ***************************************************************************/
-        private bool less(int i, int j)
-        {
-            return keys[pq[i]].CompareTo(keys[pq[j]]) < 0;
-        }
+           
+        /// <summary>
+        /// Strictly less.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        protected override bool Predicate(int i, int j) { return keys[pq[i]].CompareTo(keys[pq[j]]) < 0; }
 
-        protected override bool predicate(int i, int j) { return less(i, j); }
-
-        internal override IndexPQBase<Key> Instance()
+        public override IndexPQBase<Key> Clone()
         {
             var copy = new IndexMaxPQ<Key>(n + 1);
             for (int i = 1; i <= n; i++)
