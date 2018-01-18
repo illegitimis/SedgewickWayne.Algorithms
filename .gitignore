@@ -3,3 +3,5 @@ SedgewickWayne.Algorithms.MsTest/bin/
 .vs/
 SedgewickWayne.Algorithms.MsTest/obj/
 *.cd
+SedgewickWayne.Algorithms/GraphOld/
+SedgewickWayne.Algorithms.MsTest/Txt/
