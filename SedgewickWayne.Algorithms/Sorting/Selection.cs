@@ -30,11 +30,11 @@ namespace SedgewickWayne.Algorithms
  *  The {@code Selection} class provides static methods 
  *  for sorting an array using selection sort.
  *  <p>
- *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/21elementary">Section 2.1</a> 
+ <a href="http://algs4.cs.princeton.edu/21elementary">Section 2.1</a> 
  *  of <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
+ 
+
  */
     public static class Selection<T>
         where T : IComparable<T>

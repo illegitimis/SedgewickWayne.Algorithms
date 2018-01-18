@@ -16,11 +16,11 @@ namespace SedgewickWayne.Algorithms
  *  The {@code Shell} class provides static methods for sorting an
  *  array using Shellsort with Knuth's increment sequence (1, 4, 13, 40, ...).
  *  <p>
- *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/21elementary">Section 2.1</a> 
+ <a href="http://algs4.cs.princeton.edu/21elementary">Section 2.1</a> 
  *  of <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *  
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
+ 
+
  */
     public static class Shell<T> 
         where T : IComparable<T>

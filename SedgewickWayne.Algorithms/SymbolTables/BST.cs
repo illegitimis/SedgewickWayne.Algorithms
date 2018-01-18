@@ -31,14 +31,14 @@ namespace SedgewickWayne.Algorithms
  *  The <em>size</em>, and <em>is-empty</em> operations take constant time.
  *  Construction takes constant time.
  *  
- *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/32bst">Section 3.2</a> of
- *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ <a href="http://algs4.cs.princeton.edu/32bst">Section 3.2</a> of
+ 
  *  For other implementations, see {@link ST}, {@link BinarySearchST},
  *  {@link SequentialSearchST}, {@link RedBlackBST},
  *  {@link SeparateChainingHashST}, and {@link LinearProbingHashST},
  *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
+ 
+
  */
 
     public class BST<Key, Value>
@@ -147,7 +147,7 @@ namespace SedgewickWayne.Algorithms
 
 
 
-////[Signature("<Key::Ljava/lang/Comparable<TKey;>;Value:Ljava/lang/Object;>Ljava/lang/Object;")]
+////[Signature("<TKey::Ljava/lang/Comparable<TKey;>;Value:Ljava/lang/Object;>Ljava/lang/Object;")]
 //public class BST
 //{
 //	[InnerClass(null, Modifiers.Private), Modifiers(Modifiers.Super), SourceFile("BST.java")]

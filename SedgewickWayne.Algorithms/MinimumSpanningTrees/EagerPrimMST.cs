@@ -33,11 +33,11 @@ namespace SedgewickWayne.Algorithms
    *  <p>
    *  For additional documentation,
    *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
-   *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+   
    *  For alternate implementations, see {@link LazyEagerPrimMST}, {@link KruskalMST}, and {@link BoruvkaMST}.
    *
-   *  @author Robert Sedgewick
-   *  @author Kevin Wayne
+   
+  
    *  
    * Eager implementation. 
    * To improve the lazy implementation of Prim's algorithm, we might try to DELETE 

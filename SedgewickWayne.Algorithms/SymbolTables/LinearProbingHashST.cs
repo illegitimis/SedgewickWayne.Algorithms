@@ -15,7 +15,7 @@ namespace SedgewickWayne.Algorithms.SymbolTables
 
 
 
-////[Signature("<Key:Ljava/lang/Object;Value:Ljava/lang/Object;>Ljava/lang/Object;")]
+////[Signature("<TKey:Ljava/lang/Object;Value:Ljava/lang/Object;>Ljava/lang/Object;")]
 //public class LinearProbingHashST
 //{
 //    private const int INIT_CAPACITY = 4;

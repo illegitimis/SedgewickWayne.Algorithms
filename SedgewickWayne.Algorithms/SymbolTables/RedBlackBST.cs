@@ -37,14 +37,14 @@ namespace SedgewickWayne.Algorithms
      *  The <em>size</em>, and <em>is-empty</em> operations take constant time.
      *  Construction takes constant time.
      *  <p>
-     *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/33balanced">Section 3.3</a> of
-     *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+     <a href="http://algs4.cs.princeton.edu/33balanced">Section 3.3</a> of
+     
      *  For other implementations of the same API, see {@link ST}, {@link BinarySearchST},
      *  {@link SequentialSearchST}, {@link BST},
      *  {@link SeparateChainingHashST}, {@link LinearProbingHashST}, and {@link AVLTreeST}.
      *
-     *  @author Robert Sedgewick
-     *  @author Kevin Wayne
+     
+    
      */
 
     public class RedBlackBST<Key, Value> 

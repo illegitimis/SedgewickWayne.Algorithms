@@ -93,7 +93,7 @@ namespace SedgewickWayne.Algorithms
         public IEnumerator<Key> GetEnumerator()
         {
             /*
-              Queue<Key> queue = new Queue<Key>();
+              Queue<TKey> queue = new Queue<TKey>();
               for (int i = 0; i < N; i++) queue.enqueue(keys[i]);
               return queue;
              */

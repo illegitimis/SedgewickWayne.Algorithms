@@ -42,12 +42,12 @@ namespace SedgewickWayne.Algorithms
      *  <em>is-empty</em>, <em>minimum</em>, <em>maximum</em>, and <em>select</em>
      *  operations take constant time. Construction takes constant time.
      *  <p>
-     *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> of
-     *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+     <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> of
+     
      *  For other implementations, see {@link ST}, {@link BST},
      *  {@link SequentialSearchST}, {@link RedBlackBST},
      *  {@link SeparateChainingHashST}, and {@link LinearProbingHashST},
-     *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+     
      */
     public class BinarySearchST<Key, Value>
         : IOrderedSymbolTable<Key, Value>
@@ -275,7 +275,7 @@ namespace SedgewickWayne.Algorithms
         /**
  * Removes the smallest key and associated value from this symbol table.
  *
- * @throws InvalidOperationException if the symbol table is empty
+ * Throws <see cref="InvalidOperationException" /> if the symbol table is empty
  */
         public void DeleteMin()
         {
@@ -286,7 +286,7 @@ namespace SedgewickWayne.Algorithms
         /**
          * Removes the largest key and associated value from this symbol table.
          *
-         * @throws InvalidOperationException if the symbol table is empty
+         * Throws <see cref="InvalidOperationException" /> if the symbol table is empty
          */
         public void DeleteMax()
         {
@@ -305,7 +305,7 @@ namespace SedgewickWayne.Algorithms
           * Returns the smallest key in this symbol table.
           *
           * @return the smallest key in this symbol table
-          * @throws InvalidOperationException if this symbol table is empty
+          * Throws <see cref="InvalidOperationException" /> if this symbol table is empty
           */
         public Key Min
         {
@@ -320,7 +320,7 @@ namespace SedgewickWayne.Algorithms
          * Returns the largest key in this symbol table.
          *
          * @return the largest key in this symbol table
-         * @throws InvalidOperationException if this symbol table is empty
+         * Throws <see cref="InvalidOperationException" /> if this symbol table is empty
          */
         public Key Max
         {
@@ -353,7 +353,7 @@ namespace SedgewickWayne.Algorithms
          *
          * @param  key the key
          * @return the largest key in this symbol table less than or equal to {@code key}
-         * @throws InvalidOperationException if there is no such key
+         * Throws <see cref="InvalidOperationException" /> if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
         public Key Floor(Key key)
@@ -370,7 +370,7 @@ namespace SedgewickWayne.Algorithms
          *
          * @param  key the key
          * @return the smallest key in this symbol table greater than or equal to {@code key}
-         * @throws InvalidOperationException if there is no such key
+         * Throws <see cref="InvalidOperationException" /> if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
         public Key Ceiling(Key key)
@@ -430,7 +430,7 @@ namespace SedgewickWayne.Algorithms
         /**
          * Returns all keys in this symbol table as an {@code Iterable}.
          * To iterate over all of the keys in the symbol table named {@code st},
-         * use the foreach notation: {@code for (Key key : st.keys())}.
+         * use the foreach notation: {@code for (TKey key : st.keys())}.
          *
          * @return all keys in this symbol table
          */

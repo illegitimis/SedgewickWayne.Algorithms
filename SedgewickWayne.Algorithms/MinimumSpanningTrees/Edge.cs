@@ -26,11 +26,11 @@ namespace SedgewickWayne.Algorithms
    *  the weight. The natural order for this data type is by
    *  ascending order of weight.
    *  <p>
-   *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
-   *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+   <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
+   
    *
-   *  @author Robert Sedgewick
-   *  @author Kevin Wayne
+   
+  
    */
   //public class Edge implements Comparable<Edge> 
   public class Edge : IComparable<Edge>, IEquatable<Edge>
@@ -46,8 +46,8 @@ namespace SedgewickWayne.Algorithms
      * @param  v one vertex
      * @param  w the other vertex
      * @param  weight the weight of this edge
-     * @throws ArgumentException if either {@code v} or {@code w} is a negative integer
-     * @throws ArgumentException if {@code weight} is {@code NaN}
+     * Throws <see cref="ArgumentException" /> if either {@code v} or {@code w} is a negative integer
+     * Throws <see cref="ArgumentException" /> if {@code weight} is {@code NaN}
      */
     public Edge (int v, int w, double weight)
     {
@@ -75,7 +75,7 @@ namespace SedgewickWayne.Algorithms
      *
      * @param  vertex one endpoint of this edge
      * @return the other endpoint of this edge
-     * @throws ArgumentException if the vertex is not one of the endpoints of this edge
+     * Throws <see cref="ArgumentException" /> if the vertex is not one of the endpoints of this edge
      */
     public int other (int vertex)
     {

@@ -39,11 +39,11 @@ namespace SedgewickWayne.Algorithms
      *  The <em>size</em>, and <em>is-empty</em> operations take constant time.
      *  Construction takes constant time.
      *  <p>
-     *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> of
-     *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+     <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> of
+     
      *
-     *  @author Robert Sedgewick
-     *  @author Kevin Wayne
+     
+    
      */
     public class SequentialSearchST<Key, Value> 
         : ISymbolTable<Key, Value>
@@ -107,7 +107,7 @@ namespace SedgewickWayne.Algorithms
         /**
          * Returns all keys in the symbol table as an {@code Iterable}.
          * To iterate over all of the keys in the symbol table named {@code st},
-         * use the foreach notation: {@code for (Key key : st.keys())}.
+         * use the foreach notation: {@code for (TKey key : st.keys())}.
          *
          * @return all keys in the symbol table
          */

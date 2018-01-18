@@ -47,10 +47,10 @@ using System.Text;
  *  <p>
  *  For additional documentation,
  *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
- *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ 
  *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
+ 
+
  */
   public class EdgeWeightedGraph
   {
@@ -77,7 +77,7 @@ using System.Text;
      * Initializes an empty edge-weighted graph with {@code V} vertices and 0 edges.
      *
      * @param  V the number of vertices
-     * @throws ArgumentException if {@code V < 0}
+     * Throws <see cref="ArgumentException" /> if {@code V < 0}
      */
     public EdgeWeightedGraph (int V)
     {
@@ -94,8 +94,8 @@ using System.Text;
      *
      * @param  V the number of vertices
      * @param  E the number of edges
-     * @throws ArgumentException if {@code V < 0}
-     * @throws ArgumentException if {@code E < 0}
+     * Throws <see cref="ArgumentException" /> if {@code V < 0}
+     * Throws <see cref="ArgumentException" /> if {@code E < 0}
      */
     public EdgeWeightedGraph (int V, int E)
       : this(V)
@@ -156,7 +156,7 @@ using System.Text;
      * Adds the undirected edge {@code e} to this edge-weighted graph.
      *
      * @param  e the edge
-     * @throws ArgumentException unless both endpoints are between {@code 0} and {@code V-1}
+     * Throws <see cref="ArgumentException" /> unless both endpoints are between 0 and {@code V-1}
      */
     public void AddEdge (Edge edge)
     {
@@ -180,7 +180,7 @@ using System.Text;
      *
      * @param  v the vertex
      * @return the edges incident on vertex {@code v} as an Iterable
-     * @throws ArgumentException unless {@code 0 <= v < V}
+     * Throws <see cref="ArgumentException" /> unless {@code 0 <= v < V}
      */
     public IEnumerable<Edge> Adjacency (int v)
     {
@@ -193,7 +193,7 @@ using System.Text;
      *
      * @param  v the vertex
      * @return the degree of vertex {@code v}               
-     * @throws ArgumentException unless {@code 0 <= v < V}
+     * Throws <see cref="ArgumentException" /> unless {@code 0 <= v < V}
      */
     public int Degree (int v)
     {
