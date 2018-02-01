@@ -143,7 +143,9 @@
     <Compile Include="MinimumSpanningTrees\IMinimumSpanningTreeAlgorithm.cs" />
     <Compile Include="MinimumSpanningTrees\KruskalMST.cs" />
     <Compile Include="MinimumSpanningTrees\LazyPrimMST.cs" />
-    <Compile Include="PriorityQueues\ArrayMaxPQBase.cs" />
+    <Compile Include="PriorityQueues\ArrayPQBase.cs" />
+    <Compile Include="PriorityQueues\MaxPQ.cs" />
+    <Compile Include="PriorityQueues\MinPQ.cs" />
     <Compile Include="PriorityQueues\OrderedArrayMaxPQ.cs" />
     <Compile Include="PriorityQueues\UnorderedArrayMaxPQ.cs" />
     <Compile Include="SymbolTables\ArrayST.cs" />
@@ -199,11 +201,9 @@
     <Compile Include="Sorting\InsertionT.cs" />
     <Compile Include="PriorityQueues\IndexMaxPQ.cs" />
     <Compile Include="PriorityQueues\IndexPQBase.cs" />
-    <Compile Include="PriorityQueues\MaxPQ.cs" />
     <Compile Include="PriorityQueues\IndexMinPQ.cs" />
     <Compile Include="PriorityQueues\IPriorityQueue.cs" />
-    <Compile Include="PriorityQueues\MinPQ.cs" />
-    <Compile Include="PriorityQueues\PQBase.cs" />
+    <Compile Include="PriorityQueues\HeapPQBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

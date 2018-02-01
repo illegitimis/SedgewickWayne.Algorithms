@@ -67,7 +67,7 @@ namespace SedgewickWayne.Algorithms.MsTest
             "9" , "worst"
         };
 
-        string hamlet = "to be or not to - be - - that - - - is";
+       
 
         #endregion
         
@@ -219,77 +219,115 @@ namespace SedgewickWayne.Algorithms.MsTest
         [TestMethod]
         public void InsertAllAndDeleteAllMaxPQTest()
         {
-            // default ctor then insert
-            PQBase<string> pq = new MaxPQ<string>();
-            Assert.IsTrue(pq.IsEmpty);
-            var actual = InsertAllAndDeleteAll(pq).ToList();
-            CollectionAssert.AreEqual(topDown, actual);
-
-            // InsertAllConstructorAndIterate
-            pq = new MaxPQ<string>(array);
-            Assert.IsFalse(pq.IsEmpty);
-            CollectionAssert.AreEqual(topDown, pq.ToList());
+            InsertAllAndDeleteAll(new MaxPQ<string>(), topDown);
         }
 
         [TestMethod]
         public void InsertAllAndDeleteAllMinPQTest()
         {
-            var expected = topDown.Reverse().ToArray();
+            InsertAllAndDeleteAll(new MinPQ<string>(), topDown.Reverse().ToArray());
+        }
 
-            // default ctor then insert
-            PQBase<string> pq = new MinPQ<string>();
+        [TestMethod]
+        public void ConstructFromArrayMaxPQTest()
+        {
+            ConstructFromArrayAndIterate(new MaxPQ<string>(array), topDown);
+        }
+
+        [TestMethod]
+        public void ConstructFromArrayMinPQTest()
+        {
+            ConstructFromArrayAndIterate(new MinPQ<string>(array), topDown.Reverse().ToArray());
+        }
+
+
+        void InsertAllAndDeleteAll(ArrayPQBase<string> pq, string[] expected)
+        {
+            // default ctor, insert a bunch of values, then delete all
             Assert.IsTrue(pq.IsEmpty);
-            var actual = InsertAllAndDeleteAll(pq).ToList();
+            var actual = Strings(pq).ToList();
             CollectionAssert.AreEqual(expected, actual);
+        }
 
-            // InsertAllConstructorAndIterate
-            pq = new MinPQ<string>(array);
+        void ConstructFromArrayAndIterate (ArrayPQBase<string> pq, string[] expected)
+        {
             Assert.IsFalse(pq.IsEmpty);
             CollectionAssert.AreEqual(expected, pq.ToList());
         }
 
-        IEnumerable<string> InsertAllAndDeleteAll(PQBase<string> pq)
-        {
-            foreach (var s in array)
-                pq.Insert(s);
 
-            while (!pq.IsEmpty)
-                yield return pq.Delete();
+        IEnumerable<string> Strings(ArrayPQBase<string> pq)
+        {
+            foreach (var s in array) pq.Insert(s);
+
+            while (!pq.IsEmpty) yield return pq.Delete();
         }
 
-        /**
-         * insert and delete
-         * Unit tests the {@code MaxPQ} data type.         
-         * Unit tests the {@code MinPQ} data type.         
-         */
+        #region hamlet
+
+        const string hamlet = "to be or not to - be - - that - - - is";
+        static readonly string[] hamlet_tops = new[] { "to", "to", "or", "that", "not", "be" };
+        static readonly string[] hamlet_leftovers = new[] { "is", "be" };
+
         [TestMethod]
-        public void MaxPQHamlet()
+        public void Hamlet_MaxPQ()
         {
             // arrange
             var pq = new MaxPQ<string>();
-            // act
-            var tops = ActHamlet(pq).ToList();
-            // assert
-            Assert.IsFalse(pq.IsEmpty);
-            Assert.AreEqual(2, pq.Size);
-            CollectionAssert.AreEqual(new[] { "to", "to", "or", "that", "not", "be" }, tops, String.Join("|", tops));
-            CollectionAssert.AreEqual(new[] { "is", "be" }, pq.ToArray());
+            // act / assert
+            ArrayPQHamlet(pq, hamlet_tops, hamlet_leftovers);
+        }
+
+
+        [TestMethod]
+        public void Hamlet_UnorderedArrayMaxPQ()
+        {
+            ArrayPQHamlet(new UnorderedArrayMaxPQ<string>(), hamlet_tops, hamlet_leftovers);
         }
 
         [TestMethod]
-        public void MinPQHamlet()
+        public void Hamlet_OrderedArrayMaxPQ()
+        {
+            ArrayPQHamlet(new OrderedArrayMaxPQ<string>(), hamlet_tops, hamlet_leftovers);
+        }
+
+        [TestMethod]
+        public void Hamlet_MinPQ()
         {
             // arrange
             var pq = new MinPQ<string>();
             // act
-            var tops = ActHamlet(pq).ToList();
+            ArrayPQHamlet(pq, new[] { "be", "be", "not", "or", "that", "to" }, new[] { "is", "to" });
+        }
+
+
+        void ArrayPQHamlet(ArrayPQBase<string> pq, string[] expectedTops, string[] expectedLeftovers)
+        {
+            // arrange
+            // var pq = new MinPQ<string>();
+            Assert.IsTrue(pq.IsEmpty);
+
+            // act
+            var tops = Hamlet(pq).ToList();
+
             // assert
             Assert.IsFalse(pq.IsEmpty);
             Assert.AreEqual(2, pq.Size);
-            CollectionAssert.AreEqual(new[] { "be", "be", "not", "or", "that", "to" }, tops, String.Join("|", tops));
-            CollectionAssert.AreEqual(new[] { "is", "to" }, pq.ToArray());
+
+            CollectionAssert.AreEqual(expectedTops, tops, String.Join("|", tops));
+
+            var leftovers = pq.ToArray();
+            CollectionAssert.AreEqual(expectedLeftovers, leftovers, String.Join("|", leftovers));
+
+            CollectionAssert.AreEquivalent(
+                expectedLeftovers.Union(expectedTops).ToArray(), 
+                tops.Union(leftovers).ToArray(), 
+                "union");            
         }
-        private IEnumerable<string> ActHamlet(IPriorityQueue<string> pq)
+
+        #endregion
+
+        IEnumerable<string> Hamlet(IPriorityQueue<string> pq)
         {
             foreach (var s in hamlet.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
             {
@@ -306,14 +344,14 @@ namespace SedgewickWayne.Algorithms.MsTest
         public void UnorderedArrayMaxPQ_SimpleTest()
         {
             var pq = new UnorderedArrayMaxPQ<string>(10);
-            TestArrayMaxPQ(pq, ProduceArrayMax);
+            TestArrayMaxPQ(pq, ProduceArray);
         }
 
         [TestMethod]
         public void OrderedArrayMaxPQ_SimpleTest()
         {
             var pq = new OrderedArrayMaxPQ<string>(10);
-            TestArrayMaxPQ(pq, ProduceArrayMax);
+            TestArrayMaxPQ(pq, ProduceArray);
         }
 
         [TestMethod]
@@ -330,16 +368,16 @@ namespace SedgewickWayne.Algorithms.MsTest
             TestArrayMaxPQ(pq, EnumerateArrayMax, false);
         }
 
-        private void TestArrayMaxPQ(ArrayMaxPQBase<string> pq, ArrayMaxPQProducer f, bool IsConsumer = true)
+        void TestArrayMaxPQ(ArrayPQBase<string> pq, ArrayMaxPQProducer f, bool IsConsumer = true)
         {
             var maxes = f(pq).ToArray();
             if (IsConsumer) Assert.IsTrue(pq.IsEmpty);
             CollectionAssert.AreEqual(new string[] { "this", "test", "is", "a" }, maxes);
         }
 
-        delegate IEnumerable<string> ArrayMaxPQProducer(ArrayMaxPQBase<string> pq);
+        delegate IEnumerable<string> ArrayMaxPQProducer(ArrayPQBase<string> pq);
 
-        IEnumerable<string> EnumerateArrayMax(ArrayMaxPQBase<string> pq)
+        IEnumerable<string> EnumerateArrayMax(ArrayPQBase<string> pq)
         {
             pq.Insert("this");
             pq.Insert("is");
@@ -348,13 +386,13 @@ namespace SedgewickWayne.Algorithms.MsTest
             foreach(string s in pq) yield return s;
         }
 
-        IEnumerable<string> ProduceArrayMax(ArrayMaxPQBase<string> pq)
+        IEnumerable<string> ProduceArray(ArrayPQBase<string> pq)
         {
             pq.Insert("this");
             pq.Insert("is");
             pq.Insert("a");
             pq.Insert("test");
-            while (!pq.IsEmpty) yield return pq.DeleteMax();
+            while (!pq.IsEmpty) yield return pq.Delete();
         }
 
         // https://algs4.cs.princeton.edu/24pq/images/pq-array.png

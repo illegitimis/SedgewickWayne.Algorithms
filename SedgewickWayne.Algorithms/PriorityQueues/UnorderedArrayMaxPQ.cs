@@ -12,16 +12,18 @@
     /// - does not check for overflow or underflow.
     /// </remarks>
     /// <typeparam name="TKey"></typeparam>
-    public class UnorderedArrayMaxPQ<TKey> : ArrayMaxPQBase<TKey>
+    public class UnorderedArrayMaxPQ<TKey>
+        : ArrayPQBase<TKey>
+        , IMaxPriorityQueue<TKey>
         where TKey : IComparable<TKey>
 
     {
         /// <summary>
         /// set inititial size of heap to hold size elements
         /// </summary>
-        public UnorderedArrayMaxPQ(int capacity) : base(capacity) { }
+        public UnorderedArrayMaxPQ(int capacity=0) : base(capacity) { }
 
-        public override ArrayMaxPQBase<TKey> Clone()
+        public override ArrayPQBase<TKey> Clone()
         {
             var clone = new UnorderedArrayMaxPQ<TKey>(this.pq.Length);
             clone.pq = this.pq;
@@ -36,6 +38,9 @@
         /// <param name="key"></param>
         public override void Insert(TKey key)
         {
+            // double size of array if necessary
+            if (n == 0) resize(4);
+            else if (n == pq.Length) resize(2 * pq.Length);
             pq[n++] = key;
         }
 
@@ -55,8 +60,11 @@
         private void DeleteStep()
         {
             int max = 0;
+
             for (int i = 1; i < n; i++)
-                if (less(max, i)) max = i;
+                if (ComparePredicate(max, i))
+                    max = i;
+
             exch(max, n - 1);
         }
 
@@ -68,7 +76,9 @@
             }
         }
 
-        private bool less(int i, int j) { return pq[i].CompareTo(pq[j]) < 0; }
+        public TKey Max => Top;
+
+        public override bool ComparePredicate(int i, int j) => pq[i].CompareTo(pq[j]) < 0; 
 
         private void exch(int i, int j)
         {
@@ -76,7 +86,8 @@
             pq[i] = pq[j];
             pq[j] = swap;
         }
-               
+
+        public TKey DeleteMax() => Delete();
     }
 
 }

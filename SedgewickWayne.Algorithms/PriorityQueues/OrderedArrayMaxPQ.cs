@@ -4,7 +4,7 @@ namespace SedgewickWayne.Algorithms
 {
     using System;
 
-    
+
     /// <summary>
     /// Priority queue implementation with an ordered array.
     /// </summary>
@@ -13,13 +13,16 @@ namespace SedgewickWayne.Algorithms
     /// - no array resizing.
     /// - does not check for overflow or underflow.
     /// </remarks>
-    public class OrderedArrayMaxPQ<TKey> : ArrayMaxPQBase<TKey> where TKey : IComparable<TKey>
+    public class OrderedArrayMaxPQ<TKey>
+        : ArrayPQBase<TKey>
+        , IMaxPriorityQueue<TKey>
+        where TKey : IComparable<TKey>
     {
-        public OrderedArrayMaxPQ(int capacity) : base (capacity)
-        { 
+        public OrderedArrayMaxPQ(int capacity = 0) : base(capacity)
+        {
         }
 
-        public override ArrayMaxPQBase<TKey> Clone()
+        public override ArrayPQBase<TKey> Clone()
         {
             var clone = new OrderedArrayMaxPQ<TKey>(this.pq.Length);
             clone.n = this.n;
@@ -29,12 +32,17 @@ namespace SedgewickWayne.Algorithms
 
         public override TKey Top => pq[n];
 
+        public TKey Max => throw new NotImplementedException();
+
         /// <summary>
         /// the code for remove the maximum in the priority queue is the same as for pop in the stack.
         /// </summary>
         /// <returns></returns>
         public override TKey Delete()
         {
+            // half capacity if less than quarter
+            if ((n > 0) && (n == pq.Length / 4)) resize(pq.Length / 2);
+
             return pq[--n];
         }
 
@@ -46,20 +54,27 @@ namespace SedgewickWayne.Algorithms
         /// <param name="key"></param>
         public override void Insert(TKey key)
         {
+            // double size of array if necessary
+            if (n == 0) resize(4);
+            else if (n == pq.Length) resize(2 * pq.Length);
+
             int i = n - 1;
-            while (i >= 0 && less(key, pq[i]))
+            while (i >= 0 && predicate(key, pq[i]))
             {
                 pq[i + 1] = pq[i];
                 i--;
             }
             pq[i + 1] = key;
+
+
             n++;
         }
 
-        private bool less(TKey v, TKey w)
-        {
-            return v.CompareTo(w) < 0;
-        }
+        bool predicate(TKey v, TKey w) => v.CompareTo(w) < 0;
+
+        public override bool ComparePredicate(int i, int j) => pq[i].CompareTo(pq[j]) < 0;
+
+        public TKey DeleteMax() => Delete();
     }
 
 }
