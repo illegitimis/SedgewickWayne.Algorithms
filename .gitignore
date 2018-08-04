@@ -5,3 +5,6 @@ SedgewickWayne.Algorithms.MsTest/obj/
 *.cd
 SedgewickWayne.Algorithms/GraphOld/
 SedgewickWayne.Algorithms.MsTest/Txt/
+/SedgewickWayne.Algorithms/bin/Debug
+/ante/GraphOld
+/ante/UF java
