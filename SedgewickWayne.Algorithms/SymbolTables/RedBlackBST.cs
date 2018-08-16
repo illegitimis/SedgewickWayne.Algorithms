@@ -26,7 +26,7 @@ namespace SedgewickWayne.Algorithms
      *  values cannot be {@code null}—setting the
      *  value associated with a key to {@code null} is equivalent to deleting the key
      *  from the symbol table.
-     *  <p>
+     
      *  This implementation uses a left-leaning red-black BST. It requires that
      *  the key type implements the {@code Comparable} interface and calls the
      *  {@code compareTo()} and method to compare two keys. It does not call either
@@ -36,7 +36,7 @@ namespace SedgewickWayne.Algorithms
      *  logarithmic time in the worst case, if the tree becomes unbalanced.
      *  The <em>size</em>, and <em>is-empty</em> operations take constant time.
      *  Construction takes constant time.
-     *  <p>
+     
      <a href="http://algs4.cs.princeton.edu/33balanced">Section 3.3</a> of
      
      *  For other implementations of the same API, see {@link ST}, {@link BinarySearchST},

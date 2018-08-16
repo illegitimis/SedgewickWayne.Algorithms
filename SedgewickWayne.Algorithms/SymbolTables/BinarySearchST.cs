@@ -2,7 +2,7 @@
  *  
  *  BinarySearchST.java
  *  Symbol table implementation with binary search in an ordered array.
- *  
+ *  <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> 
  ******************************************************************************/
 
 
@@ -14,6 +14,7 @@ namespace SedgewickWayne.Algorithms
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.Contracts;
 
 
     /**
@@ -31,7 +32,7 @@ namespace SedgewickWayne.Algorithms
      *  values cannot be {@code null}—setting the
      *  value associated with a key to {@code null} is equivalent to deleting the key
      *  from the symbol table.
-     *  <p>
+     
      *  This implementation uses a sorted array. It requires that
      *  the key type implements the {@code Comparable} interface and calls the
      *  {@code compareTo()} and method to compare two keys. It does not call either
@@ -41,29 +42,26 @@ namespace SedgewickWayne.Algorithms
      *  and <em>rank</em> operations take logarithmic time; the <em>size</em>,
      *  <em>is-empty</em>, <em>minimum</em>, <em>maximum</em>, and <em>select</em>
      *  operations take constant time. Construction takes constant time.
-     *  <p>
-     <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> of
-     
      *  For other implementations, see {@link ST}, {@link BST},
      *  {@link SequentialSearchST}, {@link RedBlackBST},
      *  {@link SeparateChainingHashST}, and {@link LinearProbingHashST},
      
      */
-    public class BinarySearchST<Key, Value>
-        : IOrderedSymbolTable<Key, Value>
-        where Key : IComparable<Key>, IEquatable<Key>
-        where Value : IEquatable<Value>
+    public class BinarySearchST<TKey, TValue>
+        : IOrderedSymbolTable<TKey, TValue>
+        where TKey : IComparable<TKey>, IEquatable<TKey>
+        where TValue : IEquatable<TValue>
     {
         private const int INIT_CAPACITY = 2;
-        private Key[] keys;
-        private Value[] vals;
+        private TKey[] keys;
+        private TValue[] vals;
         private int N = 0;
 
 
         /**
          * Initializes an empty symbol table.
          */
-        public BinarySearchST() : this(2) { }
+        public BinarySearchST() : this(INIT_CAPACITY) { }
 
         /**
      * Initializes an empty symbol table with the specified initial capacity.
@@ -72,8 +70,8 @@ namespace SedgewickWayne.Algorithms
         public BinarySearchST(int capacity)
         {
             this.N = 0;
-            keys = new Key[capacity];
-            vals = new Value[capacity];
+            keys = new TKey[capacity];
+            vals = new TValue[capacity];
         }
 
 
@@ -85,13 +83,13 @@ namespace SedgewickWayne.Algorithms
  *         and {@code null} if the key is not in the symbol table
  * @throws ArgumentNullException if {@code key} is {@code null}
  */
-        public Value Get(Key key)
+        public TValue Get(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to get() is null");
-            if (IsEmpty) return default(Value);
+            ThrowException(key, nameof(Get));
+            if (IsEmpty) return default(TValue);
             int i = Rank(key);
             if (i < N && keys[i].CompareTo(key) == 0) return vals[i];
-            return default(Value);
+            return default(TValue);
         }
 
         /**
@@ -104,9 +102,9 @@ namespace SedgewickWayne.Algorithms
  * @param  val the value
  * @throws ArgumentNullException if {@code key} is {@code null}
  */
-        public void Put(Key key, Value val)
+        public void Put(TKey key, TValue val)
         {
-            if (key == null) throw new ArgumentNullException("first argument to put() is null");
+            ThrowException(key, nameof(Put));
 
             if (val == null)
             {
@@ -146,10 +144,10 @@ namespace SedgewickWayne.Algorithms
  *         {@code false} otherwise
  * @throws ArgumentNullException if {@code key} is {@code null}
  */
-        public bool Contains(Key key)
+        public bool Contains(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to contains() is null");
-            return Get(key).Equals(default(Value));
+            ThrowException(key, nameof(Contains));
+            return Get(key).Equals(default(TValue));
         }
 
         /**
@@ -166,7 +164,7 @@ namespace SedgewickWayne.Algorithms
   *         {@code false} otherwise
   */
         public bool IsEmpty { get { return this.N == 0; } }
-        
+
         /**
  * Removes the specified key and associated value from this symbol table
  * (if the key is in the symbol table).
@@ -174,9 +172,9 @@ namespace SedgewickWayne.Algorithms
  * @param  key the key
  * @throws ArgumentNullException if {@code key} is {@code null}
  */
-        public void Delete(Key key)
+        public void Delete(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to delete() is null");
+            ThrowException(key, nameof(Delete));
             if (IsEmpty) return;
 
             // compute rank
@@ -197,13 +195,13 @@ namespace SedgewickWayne.Algorithms
             N--;
 
             // to avoid loitering
-            keys[N] = default(Key);   //null;  
-            vals[N] = default(Value); // null;
+            keys[N] = default(TKey);
+            vals[N] = default(TValue);
 
             // resize if 1/4 full
             if (N > 0 && N == keys.Length / 4) resize(keys.Length / 2);
 
-            Debug.Assert(check());
+            Contract.Assert(check());
         }
 
         /**
@@ -213,9 +211,9 @@ namespace SedgewickWayne.Algorithms
          * @return the number of keys in the symbol table strictly less than {@code key}
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public int Rank(Key key)
+        public int Rank(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to Rank() is null");
+            ThrowException(key, nameof(Rank));
 
             int lo = 0, hi = N - 1;
             while (lo <= hi)
@@ -233,9 +231,10 @@ namespace SedgewickWayne.Algorithms
         // resize the underlying arrays
         private void resize(int capacity)
         {
-            //assert capacity >= n;
-            Key[] tempk = new Key[capacity];
-            Value[] tempv = new Value[capacity];
+            Contract.Assert(capacity >= N);
+            
+            TKey[] tempk = new TKey[capacity];
+            TValue[] tempv = new TValue[capacity];
             for (int i = 0; i < N; i++)
             {
                 tempk[i] = keys[i];
@@ -307,7 +306,7 @@ namespace SedgewickWayne.Algorithms
           * @return the smallest key in this symbol table
           * Throws <see cref="InvalidOperationException" /> if this symbol table is empty
           */
-        public Key Min
+        public TKey Min
         {
             get
             {
@@ -322,7 +321,7 @@ namespace SedgewickWayne.Algorithms
          * @return the largest key in this symbol table
          * Throws <see cref="InvalidOperationException" /> if this symbol table is empty
          */
-        public Key Max
+        public TKey Max
         {
             get
             {
@@ -339,7 +338,7 @@ namespace SedgewickWayne.Algorithms
          * @throws ArgumentNullException unless {@code k} is between 0 and
          *        <em>n</em>–1
          */
-        public Key Select(int k)
+        public TKey Select(int k)
         {
             if (k < 0 || k >= Size)
             {
@@ -356,12 +355,12 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="InvalidOperationException" /> if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public Key Floor(Key key)
+        public TKey Floor(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to floor() is null");
+            ThrowException(key, nameof(Floor));
             int i = Rank(key);
             if (i < N && key.CompareTo(keys[i]) == 0) return keys[i];
-            if (i == 0) return default(Key);
+            if (i == 0) return default(TKey);
             else return keys[i - 1];
         }
 
@@ -373,11 +372,11 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="InvalidOperationException" /> if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public Key Ceiling(Key key)
+        public TKey Ceiling(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to ceiling() is null");
+            ThrowException(key, nameof(Ceiling));
             int i = Rank(key);
-            if (i == N) return default(Key);
+            if (i == N) return default(TKey);
             else return keys[i];
         }
 
@@ -391,10 +390,10 @@ namespace SedgewickWayne.Algorithms
          * @throws ArgumentNullException if either {@code lo} or {@code hi}
          *         is {@code null}
          */
-        public int RangeSize(Key lo, Key hi)
+        public int RangeSize(TKey lo, TKey hi)
         {
-            if (lo == null) throw new ArgumentNullException("first argument to Size is null");
-            if (hi == null) throw new ArgumentNullException("second argument to Size is null");
+            ThrowException(lo, nameof(RangeSize));
+            ThrowException(hi, nameof(RangeSize));
 
             if (lo.CompareTo(hi) > 0) return 0;
             if (Contains(hi)) return Rank(hi) - Rank(lo) + 1;
@@ -412,12 +411,12 @@ namespace SedgewickWayne.Algorithms
          * @throws ArgumentNullException if either {@code lo} or {@code hi}
          *         is {@code null}
          */
-        public IEnumerable<Key> Keys(Key lo, Key hi)
+        public IEnumerable<TKey> Keys(TKey lo, TKey hi)
         {
-            if (lo == null) throw new ArgumentNullException("first argument to keys() is null");
-            if (hi == null) throw new ArgumentNullException("second argument to keys() is null");
+            ThrowException(lo, nameof(Keys));
+            ThrowException(hi, nameof(Keys));
 
-            Queue<Key> queue = new Queue<Key>();
+            Queue<TKey> queue = new Queue<TKey>();
             if (lo.CompareTo(hi) > 0) return queue;
 
             for (int i = Rank(lo); i < Rank(hi); i++) queue.Enqueue(keys[i]);
@@ -434,7 +433,7 @@ namespace SedgewickWayne.Algorithms
          *
          * @return all keys in this symbol table
          */
-        public IEnumerator<Key> GetEnumerator()
+        public IEnumerator<TKey> GetEnumerator()
         {
             return Keys(Min, Max).GetEnumerator();
         }
@@ -442,6 +441,15 @@ namespace SedgewickWayne.Algorithms
         IEnumerator IEnumerable.GetEnumerator()
         {
             return Keys(Min, Max).GetEnumerator();
-        }       
+        }
+
+
+        private void ThrowException(TKey key, string methodName)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException($"Argument {nameof(key)} to {methodName} is null");
+            }
+        }
     }
 }

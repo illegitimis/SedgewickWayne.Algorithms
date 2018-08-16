@@ -1,12 +1,12 @@
 ﻿
 /******************************************************************************
  *  SequentialSearchST.java
- *  Below is the syntax highlighted version of SequentialSearchST.java from §3.1 Elementary Symbol Tables. 
- *  
+ *  §3.1 Elementary Symbol Tables. 
+ *  <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a>
+ *  Sequential search in an unordered linked list
  *  Symbol table implementation with sequential search in an unordered linked list of key-value pairs.
- *  
- *    Copyright © 2000–2016, Robert Sedgewick and Kevin Wayne. 
- *    Last updated: Wed Nov 2 05:20:57 EDT 2016.
+ *  Copyright © 2000–2016, Robert Sedgewick and Kevin Wayne. 
+ *  Last updated: Wed Nov 2 05:20:57 EDT 2016.
  *  
  ******************************************************************************/
 
@@ -18,36 +18,26 @@ namespace SedgewickWayne.Algorithms
     using System.Collections.Generic;
 
     /**
-     *  The {@code SequentialSearchST} class represents an (unordered)
-     *  symbol table of generic key-value pairs.
+     *  The {@code SequentialSearchST} class represents an (unordered) symbol table of generic key-value pairs.
      *  It supports the usual <em>put</em>, <em>get</em>, <em>contains</em>,
      *  <em>delete</em>, <em>size</em>, and <em>is-empty</em> methods.
      *  It also provides a <em>keys</em> method for iterating over all of the keys.
      *  A symbol table implements the <em>associative array</em> abstraction:
      *  when associating a value with a key that is already in the symbol table,
      *  the convention is to replace the old value with the new value.
-     *  The class also uses the convention that values cannot be {@code null}. Setting the
-     *  value associated with a key to {@code null} is equivalent to deleting the key
-     *  from the symbol table.
-     *  <p>
+     *  The class also uses the convention that values cannot be {@code null}. 
+     *  Setting the value associated with a key to {@code null} is equivalent to deleting the key from the symbol table.     
      *  This implementation uses a singly-linked list and sequential search.
-     *  It relies on the {@code equals()} method to test whether two keys
-     *  are equal. It does not call either the {@code compareTo()} or
-     *  {@code hashCode()} method. 
-     *  The <em>put</em> and <em>delete</em> operations take linear time; the
-     *  <em>get</em> and <em>contains</em> operations takes linear time in the worst case.
+     *  It relies on the {@code equals()} method to test whether two keys are equal. 
+     *  It does not call either the {@code compareTo()} or {@code hashCode()} method. 
+     *  The <em>put</em> and <em>delete</em> operations take linear time; 
+     *  the <em>get</em> and <em>contains</em> operations takes linear time in the worst case.
      *  The <em>size</em>, and <em>is-empty</em> operations take constant time.
-     *  Construction takes constant time.
-     *  <p>
-     <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> of
-     
-     *
-     
-    
-     */
-    public class SequentialSearchST<Key, Value> 
-        : ISymbolTable<Key, Value>
-        where Key : IComparable<Key>, IEquatable<Key>
+     *  Construction takes constant time.    
+     **/
+    public class SequentialSearchST<TKey, TValue> 
+        : ISymbolTable<TKey, TValue>
+        where TKey : IComparable<TKey>, IEquatable<TKey>
     {
         private int n;           // number of key-value pairs
         private Node first;      // the linked list of key-value pairs
@@ -73,11 +63,11 @@ namespace SedgewickWayne.Algorithms
         // a helper linked list data type
         class Node
         {
-            internal Key key;
-            internal Value val;
+            internal TKey key;
+            internal TValue val;
             internal Node next;
 
-            public Node(Key key, Value val, Node next)
+            public Node(TKey key, TValue val, Node next)
             {
                 this.key = key;
                 this.val = val;
@@ -98,9 +88,9 @@ namespace SedgewickWayne.Algorithms
          *         {@code false} otherwise
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public bool Contains(Key key)
+        public bool Contains(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to contains() is null");
+            ThrowException(key, nameof(Contains));
             return Get(key) != null;
         }
 
@@ -111,9 +101,9 @@ namespace SedgewickWayne.Algorithms
          *
          * @return all keys in the symbol table
          */
-        public IEnumerable<Key> Keys()
+        public IEnumerable<TKey> Keys()
         {
-            Queue<Key> queue = new Queue<Key>();
+            Queue<TKey> queue = new Queue<TKey>();
             for (Node x = first; x != null; x = x.next)
                 queue.Enqueue(x.key);
             return queue;
@@ -128,15 +118,16 @@ namespace SedgewickWayne.Algorithms
      *     and {@code null} if the key is not in the symbol table
      * @throws ArgumentNullException if {@code key} is {@code null}
      */
-        public Value Get(Key key)
+        public TValue Get(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to get() is null");
+            ThrowException(key, nameof(Get));
+
             for (Node x = first; x != null; x = x.next)
             {
                 if (key.Equals(x.key))
                     return x.val;
             }
-            return default(Value);
+            return default(TValue);
         }
 
 
@@ -150,9 +141,9 @@ namespace SedgewickWayne.Algorithms
        * @param  val the value
        * @throws ArgumentNullException if {@code key} is {@code null}
        */
-        public void Put(Key key, Value val)
+        public void Put(TKey key, TValue val)
         {
-            if (key == null) throw new ArgumentNullException("first argument to put() is null");
+            ThrowException(key, nameof(Put));
             if (val == null)
             {
                 Delete(key);
@@ -178,15 +169,16 @@ namespace SedgewickWayne.Algorithms
        * @param  key the key
        * @throws ArgumentNullException if {@code key} is {@code null}
        */
-        public void Delete(Key key)
+        public void Delete(TKey key)
         {
-            if (key == null) throw new ArgumentNullException("argument to delete() is null");
+            ThrowException(key, nameof(Delete));
+
             first = Delete(first, key);
         }
 
         // delete key in linked list beginning at Node x
         // warning: function call stack too large if table is large
-        private Node Delete(Node x, Key key)
+        private Node Delete(Node x, TKey key)
         {
             if (x == null) return null;
             if (key.Equals(x.key))
@@ -198,7 +190,7 @@ namespace SedgewickWayne.Algorithms
             return x;
         }
 
-        public IEnumerator<Key> GetEnumerator()
+        public IEnumerator<TKey> GetEnumerator()
         {
             return Keys().GetEnumerator();
         }
@@ -206,6 +198,14 @@ namespace SedgewickWayne.Algorithms
         IEnumerator IEnumerable.GetEnumerator()
         {
             return Keys().GetEnumerator();
+        }
+
+        private void ThrowException(TKey key, string method)
+        {
+            if (key == null)
+            {
+                throw new ArgumentNullException($"Argument key to {method} is null");
+            }
         }
     }
 
