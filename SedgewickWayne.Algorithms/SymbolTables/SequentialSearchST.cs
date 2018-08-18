@@ -43,22 +43,10 @@ namespace SedgewickWayne.Algorithms
         private Node first;      // the linked list of key-value pairs
 
         /* Returns the number of key-value pairs in this symbol table. */
-        public int Size
-        {
-            get
-            {
-                return n;
-            }
-        }
+        public int Size => n;
 
         /* Returns true if this symbol table is empty. */
-        public bool IsEmpty
-        {
-            get
-            {
-                return n == 0;
-            }
-        }
+        public bool IsEmpty => n == 0;
 
         // a helper linked list data type
         class Node

@@ -21,6 +21,7 @@ namespace SedgewickWayne.Algorithms.MsTest
             var duplicateValues = r2050.Concat(r3080).ToArray();
 
             var setInts = new SetofInts(duplicateValues);
+            setInts.Rank(0);
         }
 
         [TestMethod]
@@ -95,6 +96,7 @@ namespace SedgewickWayne.Algorithms.MsTest
         }
         [TestMethod]
         [TestCategory("3Sum")]
+        [Ignore]
         public void ThreeSumFast32K()
         {
             ThreeSumFastCommon("32Kints.txt", "http://algs4.cs.princeton.edu/14analysis/32Kints.txt", 2052358);
@@ -135,7 +137,7 @@ namespace SedgewickWayne.Algorithms.MsTest
         [TestCategory("Parantheses")]
         public void ArithmeticExpressionEvaluateTest()
         {
-            //Assert.AreEqual(101, Parantheses.Evaluate("( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )"), 1E-6);
+            Assert.AreEqual(101, Parantheses.Evaluate("( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )"), 1E-6);
             Assert.AreEqual(1.618033988749895, Parantheses.Evaluate("( ( 1 + sqrt ( 5 ) ) / 2.0 )"), 1E-6);
         }
     }

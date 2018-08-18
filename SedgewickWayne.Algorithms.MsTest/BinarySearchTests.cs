@@ -46,6 +46,8 @@ namespace SedgewickWayne.Algorithms.MsTest
         const string larget = "largeT.txt";
 
         [TestMethod]
+        [Ignore()]
+        [TestCategory("performance")]
         public void BinarySearchLarge()
         {
             // 85.8 MB

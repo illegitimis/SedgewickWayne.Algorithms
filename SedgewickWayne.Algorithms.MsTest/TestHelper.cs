@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-
-namespace SedgewickWayne.Algorithms.MsTest
+﻿namespace SedgewickWayne.Algorithms.MsTest
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Net;
+
     public static class TestHelper
     {
         public static void DownloadFile(Uri u, string f)
@@ -36,6 +33,26 @@ namespace SedgewickWayne.Algorithms.MsTest
             Trace.WriteLine($"{name ?? nameof(f)}: {sw.ElapsedMilliseconds} ms");
 
             return new Tuple<int, long>(count, sw.ElapsedMilliseconds);
+        }
+
+        internal const string LINKED_LIST = "linked list";
+        internal const string UNORDERED_ARRAY = "unordered array";
+        internal const string BINARY_SEARCH = "binary search";
+
+        internal static ISymbolTable<TKey, TValue> Factory<TKey, TValue>(string symbolTableType)
+           where TKey : IComparable<TKey>, IEquatable<TKey>
+            where TValue : IEquatable<TValue>
+        {
+            switch (symbolTableType)
+            {
+                case LINKED_LIST:
+                case nameof(SequentialSearchST<TKey, TValue>):
+                    return new SequentialSearchST<TKey, TValue>();
+
+                case UNORDERED_ARRAY: return new ArrayST<TKey, TValue>();
+                case BINARY_SEARCH: return new BinarySearchST<TKey, TValue>();
+                default: return null;
+            }
         }
     }
 }

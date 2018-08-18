@@ -11,9 +11,9 @@ namespace SedgewickWayne.Algorithms
     ///  Symbol table implementation with unordered array. 
     ///  Uses repeated doubling to resize the array.
     /// </summary>
-    public class ArrayST<Key, Value>
-        : ISymbolTable<Key, Value>
-        where Key : IComparable<Key>, IEquatable<Key>
+    public class ArrayST<TKey, TValue>
+        : ISymbolTable<TKey, TValue>
+        where TKey : IComparable<TKey>, IEquatable<TKey>
     {
         private const int INIT_SIZE = 8;
         
@@ -22,11 +22,11 @@ namespace SedgewickWayne.Algorithms
         /// <summary>
         /// symbol table values
         /// </summary>
-        Value[] values;
+        TValue[] values;
         /// <summary>
         /// // symbol table keys
         /// </summary>
-        Key[] keys;
+        TKey[] keys;
         /// <summary>
         /// number of elements in symbol table
         /// </summary>
@@ -35,8 +35,8 @@ namespace SedgewickWayne.Algorithms
         #endregion
         public ArrayST()
         {
-            keys = new Key[INIT_SIZE];
-            values = new Value[INIT_SIZE];
+            keys = new TKey[INIT_SIZE];
+            values = new TValue[INIT_SIZE];
         }
 
         #region symbol table
@@ -45,7 +45,7 @@ namespace SedgewickWayne.Algorithms
 
         public int Size { get { return N; } }
 
-        public bool Contains(Key key)
+        public bool Contains(TKey key)
         {
             return keys.Contains(key);
         }
@@ -54,7 +54,7 @@ namespace SedgewickWayne.Algorithms
         /// remove given key (and associated value)
         /// </summary>
         /// <param name="key"></param>
-        public void Delete(Key key)
+        public void Delete(TKey key)
         {
             for (int i = 0; i < N; i++)
             {
@@ -62,56 +62,49 @@ namespace SedgewickWayne.Algorithms
                 {
                     keys[i] = keys[N - 1];
                     values[i] = values[N - 1];
-                    //keys[N - 1] = null;
-                    //values[N - 1] = null;
+
+                    keys[N - 1] = default(TKey);
+                    values[N - 1] = default(TValue);
+
                     N--;
-                    if (N > 0 && N == keys.Length / 4) resize(keys.Length / 2);
+                    if (N > 0 && N == keys.Length / 4) ResizeArrays(keys.Length / 2);
                     return;
                 }
             }
         }
 
-        public Value Get(Key key)
+        public TValue Get(TKey key)
         {
             for (int i = 0; i < N; i++)
                 if (keys[i].Equals(key)) return values[i];
 
-            //return null;
-            return default(Value);
+            return default(TValue);
         }
 
         #endregion
 
         #region IEnumerable / Iterator
 
-        IEnumerable<Key> GetYield()
-        {
-            for (int i = 0; i < N; i++)
-                yield return keys[i];
-        }
-
-        public IEnumerator<Key> GetEnumerator()
-        {
-            /*
-              Queue<TKey> queue = new Queue<TKey>();
-              for (int i = 0; i < N; i++) queue.enqueue(keys[i]);
-              return queue;
-             */
-            return GetYield().GetEnumerator();
-        }
+        /// <summary>
+        /// Queue<TKey> queue = new Queue<TKey>();
+        /// for (int i = 0; i<N; i++) queue.enqueue(keys[i]);
+        /// return queue;
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<TKey> GetEnumerator() => (keys as IEnumerable<TKey>).GetEnumerator();
 
         /// <summary>
         /// insert the key-value pair into the symbol table
         /// </summary>
         /// <param name="key"></param>
         /// <param name="val"></param>
-        public void Put(Key key, Value val)
+        public void Put(TKey key, TValue val)
         {
             // to deal with duplicates
             Delete(key);
 
             // double size of arrays if necessary
-            if (N >= values.Length) resize(2 * N);
+            if (N >= values.Length) ResizeArrays(2 * N);
 
             // add new key and value at the end of array
             values[N] = val;
@@ -119,10 +112,7 @@ namespace SedgewickWayne.Algorithms
             N++;
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetYield().GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => keys.GetEnumerator();
 
         #endregion
 
@@ -130,10 +120,10 @@ namespace SedgewickWayne.Algorithms
         /// resize the parallel arrays to the given capacity
         /// </summary>
         /// <param name="capacity"></param>
-        private void resize(int capacity)
+        private void ResizeArrays(int capacity)
         {
-            Key[] tempk = new Key[capacity];
-            Value[] tempv = new Value[capacity];
+            TKey[] tempk = new TKey[capacity];
+            TValue[] tempv = new TValue[capacity];
 
             for (int i = 0; i < N; i++)
             {

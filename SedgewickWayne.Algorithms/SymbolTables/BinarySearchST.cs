@@ -147,7 +147,7 @@ namespace SedgewickWayne.Algorithms
         public bool Contains(TKey key)
         {
             ThrowException(key, nameof(Contains));
-            return Get(key).Equals(default(TValue));
+            return !Get(key).Equals(default(TValue));
         }
 
         /**

@@ -61,7 +61,8 @@
     <Compile Include="PriorityQueueTests.cs" />
     <Compile Include="SortingTests.cs" />
     <Compile Include="BinarySearchTests.cs" />
-    <Compile Include="SymbolTableTests.cs" />
+    <Compile Include="SymbolTableFrequency.cs" />
+    <Compile Include="SymbolTableGPA.cs" />
     <Compile Include="MST_Tests.cs" />
     <Compile Include="FundamentalsTests.cs" />
     <Compile Include="TestHelper.cs" />
