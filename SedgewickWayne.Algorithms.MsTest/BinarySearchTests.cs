@@ -77,39 +77,6 @@ namespace SedgewickWayne.Algorithms.MsTest
 
 
 
-    public static class TestHelper
-    {
-        public static void DownloadFile(Uri u, string f)
-        {
-            if (File.Exists(f)) return;
-
-            using (var wc = new WebClient())
-            {
-                wc.DownloadProgressChanged += (object sender, DownloadProgressChangedEventArgs e) =>
-                {
-                    Console.WriteLine("{0}    downloaded {1} of {2} bytes. {3} % complete...{4}",
-                        (string)e.UserState, e.BytesReceived, e.TotalBytesToReceive, e.ProgressPercentage, f);
-                };
-                wc.DownloadFileCompleted += (object sender, System.ComponentModel.AsyncCompletedEventArgs e) => {
-                    Console.WriteLine("{0}    cancelled? {1} error? {2} ... {3}",
-                        (string)e.UserState, e.Cancelled, e.Error == null ? "N" : e.Error.Message, f);
-                };
-
-                wc.DownloadFile(u, f);
-            }
-        }
-
-        public static Tuple<int, long> Time (Func<int> f, string name)
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            int count = f();
-            sw.Stop();
-
-            Trace.WriteLine(name + ": " + count + ", " + sw.ElapsedMilliseconds + " ms");
-
-            return new Tuple<int, long>(count, sw.ElapsedMilliseconds);
-        }
-    }
+   
 
 }

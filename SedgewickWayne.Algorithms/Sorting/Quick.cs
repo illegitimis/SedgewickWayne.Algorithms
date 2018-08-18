@@ -40,7 +40,7 @@ namespace SedgewickWayne.Algorithms
     /// <returns>the key of rank k}</returns>
     public static T Select(T[] a, int k)
     {
-      if (k < 0 || k >= a.Length) throw new IndexOutOfRangeException("Selected element out of bounds");
+      if (k < 0 || k >= a.Length) throw new ArgumentOutOfRangeException(nameof(k), k, "out of bounds");
       StdRandom.shuffle(a);
 
       int lo = 0, hi = a.Length - 1;

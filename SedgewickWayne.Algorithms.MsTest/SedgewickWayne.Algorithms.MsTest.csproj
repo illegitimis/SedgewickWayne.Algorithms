@@ -64,6 +64,7 @@
     <Compile Include="SymbolTableTests.cs" />
     <Compile Include="MST_Tests.cs" />
     <Compile Include="FundamentalsTests.cs" />
+    <Compile Include="TestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SedgewickWayne.Algorithms\SedgewickWayne.Algorithms.csproj">

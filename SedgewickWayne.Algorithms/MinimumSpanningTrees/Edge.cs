@@ -25,7 +25,7 @@ namespace SedgewickWayne.Algorithms
    *  provides methods for accessing the two endpoints of the edge and
    *  the weight. The natural order for this data type is by
    *  ascending order of weight.
-   *  <p>
+   
    <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
    
    *

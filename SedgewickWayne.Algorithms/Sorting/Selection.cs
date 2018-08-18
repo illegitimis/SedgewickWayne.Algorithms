@@ -29,7 +29,7 @@ namespace SedgewickWayne.Algorithms
     /**
  *  The {@code Selection} class provides static methods 
  *  for sorting an array using selection sort.
- *  <p>
+ 
  <a href="http://algs4.cs.princeton.edu/21elementary">Section 2.1</a> 
  *  of <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *

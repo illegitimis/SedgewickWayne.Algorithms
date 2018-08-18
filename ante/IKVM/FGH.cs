@@ -930,55 +930,7 @@ public class FordFulkerson
 	}
 }
 
-public class FrequencyCounter
-{
-	
-	
-	public FrequencyCounter()
-	{
-	}
-	
-	
-	/**/public static void main(string[] strarr)
-	{
-		int num = 0;
-		int num2 = 0;
-		int num3 = Integer.parseInt(strarr[0]);
-		ST sT = new ST();
-		string text;
-		while (!StdIn.isEmpty())
-		{
-			text = StdIn.readString();
-			if (java.lang.String.instancehelper_length(text) >= num3)
-			{
-				num2++;
-				if (sT.contains(text))
-				{
-					sT.put(text, Integer.valueOf(((Integer)sT.get(text)).intValue() + 1));
-				}
-				else
-				{
-					sT.put(text, Integer.valueOf(1));
-					num++;
-				}
-			}
-		}
-		text = "";
-		sT.put(text, Integer.valueOf(0));
-		Iterator iterator = sT.keys().iterator();
-		while (iterator.hasNext())
-		{
-			string text2 = (string)iterator.next();
-			if (((Integer)sT.get(text2)).intValue() > ((Integer)sT.get(text)).intValue())
-			{
-				text = text2;
-			}
-		}
-		StdOut.println(new StringBuilder().append(text).append(" ").append(sT.get(text)).toString());
-		StdOut.println(new StringBuilder().append("distinct = ").append(num).toString());
-		StdOut.println(new StringBuilder().append("words    = ").append(num2).toString());
-	}
-}
+
 
 public class GabowSCC
 {

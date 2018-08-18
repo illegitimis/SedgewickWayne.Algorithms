@@ -49,14 +49,14 @@ namespace SedgewickWayne.Algorithms
    *  in each connected component. The {@code weight()} method returns the 
    *  weight of a minimum spanning tree and the {@code Edges} method
    *  returns its edges.
-   *  <p>
+   
    *  This implementation uses a LAZY version of <em>Prim's algorithm</em> with a BINARY HEAP OF EDGES.
    *  The constructor takes time proportional to <em>E</em> log <em>E</em>
    *  and extra space (not including the graph) proportional to <em>E</em>,
    *  where <em>V</em> is the number of vertices and <em>E</em> is the number of edges.
    *  Afterwards, the {@code weight()} method takes constant time
    *  and the {@code Edges} method takes time proportional to <em>V</em>.
-   *  <p>
+   
    *  For additional documentation,
    *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
    

@@ -1,0 +1,62 @@
+  //http://algs4.cs.princeton.edu/43mst/tinyEWG.txt
+    private static void PrincetonMST ( )
+    {
+      
+      var g = new EdgeWeightedGraph(V: 8, E: 16);
+      var edge07 = new Edge(0, 7, 0.16);
+      var edge17 = new Edge(1, 7, 0.19);
+      var edge23 = new Edge(2, 3, 0.17);
+      var edge45 = new Edge(4, 5, 0.35);
+      var edge57 = new Edge(5, 7, 0.28);
+      var edge26 = new Edge(6, 2, 0.40);
+      var edge02 = new Edge(0, 2, 0.26);
+      //
+      g.AddEdge(edge45);
+      g.AddEdge(new Edge(v: 4, w: 7, weight: 0.37));
+      g.AddEdge(edge57);
+      g.AddEdge(edge07);
+      g.AddEdge(new Edge(v: 1, w: 5, weight: 0.32));
+      g.AddEdge(new Edge(v: 0, w: 4, weight: 0.38));
+      g.AddEdge(edge23);
+      g.AddEdge(edge17);
+      g.AddEdge(edge02);
+      g.AddEdge(new Edge(v: 1, w: 2, weight: 0.36));
+      g.AddEdge(new Edge(v: 1, w: 3, weight: 0.29));
+      g.AddEdge(new Edge(v: 2, w: 7, weight: 0.34));
+      g.AddEdge(edge26);
+      g.AddEdge(new Edge(v: 3, w: 6, weight: 0.52));
+      g.AddEdge(new Edge(v: 6, w: 0, weight: 0.58));
+      g.AddEdge(new Edge(v: 6, w: 4, weight: 0.93));
+
+
+      /*    
+       *  tinyEWG.txt
+       *  %  EagerPrimMST    %  LazyPrimMST   % BoruvkaMST      %  KruskalMST 
+       *  1-7 0.19000        *  0-7 0.16000   *  0-2 0.26000    *  0-7 0.16000
+       *  0-2 0.26000        *  1-7 0.19000   *  6-2 0.40000    *  2-3 0.17000
+       *  2-3 0.17000        *  0-2 0.26000   *  5-7 0.28000    *  1-7 0.19000
+       *  4-5 0.35000        *  2-3 0.17000   *  4-5 0.35000    *  0-2 0.26000
+       *  5-7 0.28000        *  5-7 0.28000   *  2-3 0.17000    *  5-7 0.28000
+       *  6-2 0.40000        *  4-5 0.35000   *  1-7 0.19000    *  4-5 0.35000
+       *  0-7 0.16000        *  6-2 0.40000   *  0-7 0.16000    *  6-2 0.40000
+       *  1.81000            *  1.81000       *  1.81000        *  1.81000
+       */
+      IMinimumSpanningTreeAlgorithm[] algos = new IMinimumSpanningTreeAlgorithm[] {
+        //new BoruvkaMST(g),
+        //new LazyPrimMST(g),
+        new EagerPrimMST(g),
+        //new KruskalMST(g)
+      };
+      foreach (var algo in algos)
+      {
+        Console.WriteLine(algo.GetType().Name);
+        Contract.Assert(Math.Abs(algo.Weight - 1.81) < Constants.FLOATING_POINT_EPSILON);
+        Contract.Assert(algo.Edges.Contains(edge02), "edge02");
+        Contract.Assert(algo.Edges.Contains(edge07), "edge07");
+        Contract.Assert(algo.Edges.Contains(edge17), "edge17");
+        Contract.Assert(algo.Edges.Contains(edge23), "edge23");
+        Contract.Assert(algo.Edges.Contains(edge26), "edge26");
+        Contract.Assert(algo.Edges.Contains(edge45), "edge45");
+        Contract.Assert(algo.Edges.Contains(edge57), "edge57");
+      }
+    }

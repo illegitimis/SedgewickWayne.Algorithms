@@ -14,7 +14,7 @@ namespace SedgewickWayne.Algorithms
      *  It also supports methods for peeking at a maximum key,
      *  testing if the priority queue is empty, and iterating through
      *  the keys.
-     *  <p>
+     
      *  This implementation uses a binary heap along with an array to associate
      *  keys with integers in the given range.
      *  The <em>insert</em>, <em>delete-the-maximum</em>, <em>delete</em>,
@@ -23,7 +23,7 @@ namespace SedgewickWayne.Algorithms
      *  The <em>is-empty</em>, <em>size</em>, <em>max-index</em>, <em>max-key</em>,
      *  and <em>key-of</em> operations take constant time.
      *  Construction takes time proportional to the specified capacity.
-     *  <p>
+     
      <a href="http://algs4.cs.princeton.edu/24pq">Section 2.4</a> 
      ******************************************************************************/
 

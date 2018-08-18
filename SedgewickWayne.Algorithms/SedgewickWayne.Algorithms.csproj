@@ -66,6 +66,7 @@
     <Compile Include="Fundamentals\StaticSETofInts.cs" />
     <None Include="SymbolTables\SeparateChainingHashST.cs" />
     <Compile Include="SymbolTables\BST.cs" />
+    <Compile Include="SymbolTables\IOrderedSymbolTable.cs" />
     <Compile Include="SymbolTables\LinearProbingHashST.cs" />
     <Compile Include="SymbolTables\NonrecursiveBST.cs" />
     <Compile Include="SymbolTables\RandomizedBST.cs" />

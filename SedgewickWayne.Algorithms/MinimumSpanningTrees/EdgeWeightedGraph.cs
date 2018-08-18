@@ -38,13 +38,13 @@ using System.Text;
  *  iterate over all of the edges incident to a vertex. It also provides
  *  methods for returning the number of vertices <em>V</em> and the number
  *  of edges <em>E</em>. Parallel edges and self-loops are permitted.
- *  <p>
+ 
  *  This implementation uses an adjacency-lists representation, which 
  *  is a vertex-indexed array of @link{Bag} objects.
  *  All operations take constant time (in the worst case) except
  *  iterating over the edges incident to a given vertex, which takes
  *  time proportional to the number of such edges.
- *  <p>
+ 
  *  For additional documentation,
  *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
  
