@@ -1,6 +1,5 @@
 # Sorting
 
-
 Name | Princeton java link | Misc
 --- | --- | --- | ---
 BinaryInsertion | http://algs4.cs.princeton.edu/21elementary/BinaryInsertion.java.html | `BinaryInsertion<T> where T : IComparable<T>`
@@ -16,3 +15,5 @@ Quick3Way | http://algs4.cs.princeton.edu/23quicksort/Quick3way.java.html
 QuickX | http://algs4.cs.princeton.edu/23quicksort/QuickX.java.html
 Selection | http://algs4.cs.princeton.edu/21elementary/Selection.java.html
 Shell | http://algs4.cs.princeton.edu/21elementary/Shell.java.html
+
+[home](../README.md#pages)

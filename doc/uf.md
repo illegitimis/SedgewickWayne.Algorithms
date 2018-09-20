@@ -13,6 +13,8 @@ QuickFindUF | http://algs4.cs.princeton.edu/15uf/QuickFindUF.java.html
 QuickUnionUF | http://algs4.cs.princeton.edu/15uf/QuickUnionUF.java.html
 QuickUnionPathCompressionUF | https://algs4.cs.princeton.edu/15uf/QuickUnionPathCompressionUF.java.html 
 
-*Class diagram*
+## Class diagram
 
-![](./UnionFind.png)
+![UnionFind.png](./UnionFind.png)
+
+[home](../README.md#pages)

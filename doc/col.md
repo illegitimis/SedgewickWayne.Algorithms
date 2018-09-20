@@ -3,6 +3,7 @@
 Namespace: `SedgewickWayne.Algorithms`.
 
 ## Generic
+
 Based solely on **linked lists**.
 
 Class | Princeton java link
@@ -16,6 +17,7 @@ Below the class diagram for the generic queue.
 ![](IQueue{T}.png)
 
 ## Non Generic
+
 Based on linked lists and resizing arrays.
 
 Class | Princeton java link
@@ -36,10 +38,4 @@ Below the class diagram for the object based queue.
 [1]: https://algs4.cs.princeton.edu/13stacks/FixedCapacityStackOfStrings.java.html
 [2]: https://algs4.cs.princeton.edu/13stacks/FixedCapacityStack.java.html
 
-        
-      
-      
-
-               
-             
-             
+[home](../README.md#pages)
