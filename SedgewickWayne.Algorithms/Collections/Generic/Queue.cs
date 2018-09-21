@@ -52,8 +52,8 @@ namespace SedgewickWayne.Algorithms
 
       public bool MoveNext()
       {
-        bool hasNext = this.current != null;
         current = current.Next;
+        bool hasNext = this.current != null;
         return hasNext;
       }
 

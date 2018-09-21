@@ -48,6 +48,7 @@
     <None Include="SymbolTables\RedBlackBST.cs" />
     <Compile Include="Fundamentals\Parantheses.cs" />
     <Compile Include="DynamicConnectivity\IUnionFind.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MinimumSpanningTrees\BoruvkaMST.cs" />
     <Compile Include="MinimumSpanningTrees\Constants.cs" />
     <Compile Include="MinimumSpanningTrees\EagerPrimMST.cs" />

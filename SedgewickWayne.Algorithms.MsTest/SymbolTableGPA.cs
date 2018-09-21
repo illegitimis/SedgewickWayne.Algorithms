@@ -47,9 +47,10 @@ namespace SedgewickWayne.Algorithms.MsTest
         /// Create a symbol table mapping letter grades to numerical scores
         /// A- B+ B+ B- | GPA = 3.25
         /// </summary>
-        [TestMethod] public void linked_list() => GPA(LINKED_LIST);
-        [TestMethod] public void unordered_array() => GPA(UNORDERED_ARRAY);
-        [TestMethod] public void binary_search() => GPA(BINARY_SEARCH);
+        [TestMethod] public void LinkedListGpa() => GPA(LINKED_LIST);
+        [TestMethod] public void UnorderedArrayGpa() => GPA(UNORDERED_ARRAY);
+        [TestMethod] public void BinarySearchGpa() => GPA(BINARY_SEARCH);
+        [TestMethod] public void BstGpa() => GPA(BST);
 
         void GPA(string st)
         {

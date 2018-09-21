@@ -20,6 +20,7 @@ namespace SedgewickWayne.Algorithms.MsTest
         [TestMethod] public void SequentialSearch() => FrequencyCounter(LINKED_LIST);
         [TestMethod] public void Array() => FrequencyCounter(UNORDERED_ARRAY);
         [TestMethod] public void BinarySearch() => FrequencyCounter(BINARY_SEARCH);
+        [TestMethod] public void Bst() => FrequencyCounter(BST);
 
 
         void FrequencyCounter(string symbolTableType)

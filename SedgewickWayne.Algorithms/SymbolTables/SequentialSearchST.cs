@@ -7,6 +7,7 @@
  *  Symbol table implementation with sequential search in an unordered linked list of key-value pairs.
  *  Copyright © 2000–2016, Robert Sedgewick and Kevin Wayne. 
  *  Last updated: Wed Nov 2 05:20:57 EDT 2016.
+ *  https://algs4.cs.princeton.edu/31elementary/SequentialSearchST.java.html
  *  
  ******************************************************************************/
 

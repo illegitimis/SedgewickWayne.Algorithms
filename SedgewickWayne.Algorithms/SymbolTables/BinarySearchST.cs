@@ -3,6 +3,8 @@
  *  BinarySearchST.java
  *  Symbol table implementation with binary search in an ordered array.
  *  <a href="http://algs4.cs.princeton.edu/31elementary">Section 3.1</a> 
+ *  https://algs4.cs.princeton.edu/31elementary/BinarySearchST.java.html
+ *  
  ******************************************************************************/
 
 
