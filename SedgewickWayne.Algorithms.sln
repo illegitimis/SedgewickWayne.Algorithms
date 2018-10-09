@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms", "SedgewickWayne.Algorithms\SedgewickWayne.Algorithms.csproj", "{B53D86FD-7548-4BFF-B388-11ACDF8D6083}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms.MsTest", "SedgewickWayne.Algorithms.MsTest\SedgewickWayne.Algorithms.MsTest.csproj", "{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms.Performance", "SedgewickWayne.Algorithms.Performance\SedgewickWayne.Algorithms.Performance.csproj", "{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9DE43E90-DEBC-46B8-B508-9BE79303A89F}
 	EndGlobalSection
 EndGlobal

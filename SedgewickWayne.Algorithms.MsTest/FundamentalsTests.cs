@@ -39,8 +39,6 @@ namespace SedgewickWayne.Algorithms.MsTest
             Assert.IsFalse(setInts.Contains(100));
         }
 
-        #region 3sum
-
         [TestMethod]
         [TestCategory("3Sum")]
         [ExpectedException(typeof(ArgumentException))]
@@ -53,76 +51,7 @@ namespace SedgewickWayne.Algorithms.MsTest
             ThreeSumFast.Count(duplicateValues);
         }
 
-        /// <summary>
-        ///  Data files:   
-        ///  http://algs4.cs.princeton.edu/14analysis/1Kints.txt    *  70
-        ///  http://algs4.cs.princeton.edu/14analysis/2Kints.txt    *  528
-        ///  http://algs4.cs.princeton.edu/14analysis/4Kints.txt    *  4039
-        ///  http://algs4.cs.princeton.edu/14analysis/8Kints.txt    *  32074
-        ///  http://algs4.cs.princeton.edu/14analysis/16Kints.txt   *  255181
-        ///  http://algs4.cs.princeton.edu/14analysis/32Kints.txt   *  2052358
-        ///  http://algs4.cs.princeton.edu/14analysis/1Mints.txt
-        /// </summary>
-        [TestMethod]
-        [TestCategory("3Sum")]
-        public void ThreeSumFast1K()
-        {
-            ThreeSumFastCommon("1Kints.txt", "http://algs4.cs.princeton.edu/14analysis/1Kints.txt", 70, true);
-        }
-        [TestMethod]
-        [TestCategory("3Sum")]
-        public void ThreeSumFast2K()
-        {
-            ThreeSumFastCommon("2Kints.txt", "http://algs4.cs.princeton.edu/14analysis/2Kints.txt", 528);
-        }
-        [TestMethod]
-        [TestCategory("3Sum")]
-        public void ThreeSumFast4K()
-        {
-            ThreeSumFastCommon("4Kints.txt", "http://algs4.cs.princeton.edu/14analysis/4Kints.txt", 4039);
-        }
-        [TestMethod]
-        [TestCategory("3Sum")]
-        public void ThreeSumFast8K()
-        {
-            ThreeSumFastCommon("8Kints.txt", "http://algs4.cs.princeton.edu/14analysis/8Kints.txt", 32074);
-        }
-
-        [TestMethod]
-        [TestCategory("3Sum")]
-        public void ThreeSumFast16K()
-        {
-            ThreeSumFastCommon("16Kints.txt", "http://algs4.cs.princeton.edu/14analysis/16Kints.txt", 255181);
-        }
-        [TestMethod]
-        [TestCategory("3Sum")]
-        [Ignore]
-        public void ThreeSumFast32K()
-        {
-            ThreeSumFastCommon("32Kints.txt", "http://algs4.cs.princeton.edu/14analysis/32Kints.txt", 2052358);
-        }
-
-        void ThreeSumFastCommon(
-            string file = "1Kints.txt",
-            string uri = "http://algs4.cs.princeton.edu/14analysis/1Kints.txt",
-            int expectedCount = 70,
-            bool b = false)
-        {
-            TestHelper.DownloadFile(new Uri(uri), file);
-
-            int[] intArray = File.ReadAllLines(file).Select(s => int.Parse(s)).ToArray();
-
-            var fast = TestHelper.Time(() => ThreeSumFast.Count(intArray), "3SumFast");
-            Assert.AreEqual(expectedCount, fast.Item1);
-
-            if (b)
-            {
-                var slow = TestHelper.Time(() => ThreeSum.Count(intArray), "3SumSlow");
-                Assert.AreEqual(expectedCount, slow.Item1);
-                Assert.IsTrue(fast.Item2 < slow.Item2);
-            }
-        } 
-        #endregion
+   
 
         [TestMethod]
         [TestCategory("Parantheses")]

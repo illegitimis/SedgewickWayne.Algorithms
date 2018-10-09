@@ -28,7 +28,7 @@ namespace SedgewickWayne.Algorithms
     /// Java has <code>public boolean hasNext()</code> and <code>public Item next()</code>.
     /// .NET uses <see cref="MoveNext"/> and <see cref="current"/>.
     /// </remarks>
-    internal sealed class QueueEnumerator : IEnumerator, G.IEnumerator<TQueue>
+    internal sealed class QueueEnumerator : G.IEnumerator<TQueue>
     {
       private Node current;
 

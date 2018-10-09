@@ -1,13 +1,7 @@
 ﻿
 namespace SedgewickWayne.Algorithms.MsTest
 {
-    using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Net;
-    using System.Threading.Tasks;
-    using System.IO;
-    using System.Linq;
-    using System.Diagnostics;
 
     [TestClass]
     public class BinarySearchTests
@@ -39,46 +33,5 @@ namespace SedgewickWayne.Algorithms.MsTest
             Assert.AreEqual(17, r17);
         }
 
-        static readonly Uri uriw = new Uri("http://algs4.cs.princeton.edu/11model/largeW.txt");
-        static readonly Uri urit = new Uri("http://algs4.cs.princeton.edu/11model/largeT.txt");
-
-        const string largew = "largeW.txt";
-        const string larget = "largeT.txt";
-
-        [TestMethod]
-        [Ignore()]
-        [TestCategory("performance")]
-        public void BinarySearchLarge()
-        {
-            // 85.8 MB
-            var t1 = Task.Factory.StartNew(() => TestHelper.DownloadFile (urit, larget));
-            
-            // 6.6MB  [367, 966 total values]
-            var t2 = Task.Factory.StartNew(() => TestHelper.DownloadFile(uriw, largew));
-            
-            // run download tasks in parallel
-            Task.WaitAll(t1, t2);
-
-            int[] ts = File.ReadAllLines(larget).Select(s => int.Parse(s)).ToArray();
-            int[] ws = File.ReadAllLines(largew).Select(s => int.Parse(s)).ToArray();
-
-            Quick3Way<int>.Sort(ts);
-            Quick3Way<int>.Sort(ws);
-                        
-            foreach (int i in new[] { 499569, 984875, 295754, 207807, 140925, 161828 })
-            {
-                Assert.AreNotEqual(-1, BinarySearch.Rank(i, ts), "ts" + i);
-                Assert.AreEqual(-1, BinarySearch.Rank(i, ws), "ws" + i);
-
-                // 4812246 9486211 2849977 2004447 1357203 1561507    
-                //Console.WriteLine("{0} {1}",BinarySearch.Rank(i, ts), BinarySearch.Rank(i, ws));
-            }
-        }
-
     }
-
-
-
-   
-
 }
