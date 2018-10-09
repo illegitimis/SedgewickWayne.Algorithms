@@ -9,3 +9,6 @@ SedgewickWayne.Algorithms.MsTest/Txt/
 /ante/GraphOld
 /ante/UF java
 packages/
+SedgewickWayne.Algorithms.Performance/bin/
+SedgewickWayne.Algorithms.Performance/data/
+SedgewickWayne.Algorithms.Performance/obj/
