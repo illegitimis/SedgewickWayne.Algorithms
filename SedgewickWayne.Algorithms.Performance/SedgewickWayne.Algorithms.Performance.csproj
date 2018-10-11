@@ -67,7 +67,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="ThreeSumTests.cs" />
-    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

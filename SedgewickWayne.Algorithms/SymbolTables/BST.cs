@@ -40,7 +40,7 @@ namespace SedgewickWayne.Algorithms
     using System.Collections;
     using System.Collections.Generic;
 
-        
+
     public class BST<TKey, TValue>
         : IOrderedSymbolTable<TKey, TValue>
       where TKey : IComparable<TKey>, IEquatable<TKey>
@@ -70,7 +70,7 @@ namespace SedgewickWayne.Algorithms
 
         private Node Maximum(Node x) => (x.right == null) ? x : Maximum(x.right);
 
-        public TKey Min => IsEmpty? throw new InvalidOperationException("empty symbol table") : Minimum(root).key;
+        public TKey Min => IsEmpty ? throw new InvalidOperationException("empty symbol table") : Minimum(root).key;
 
         private Node Minimum(Node x) => (x.left == null) ? x : Minimum(x.left);
 
@@ -78,7 +78,7 @@ namespace SedgewickWayne.Algorithms
         /// Returns the number of key-value pairs in this symbol table.
         /// </summary>
         public int Size => NodeSize(root);
-       
+
         public TKey Ceiling(TKey key)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
@@ -196,8 +196,8 @@ namespace SedgewickWayne.Algorithms
         ///             else return x.key;
         ///             }
         /// </code>
-    /// </example>
-    public TKey Floor(TKey key)
+        /// </example>
+        public TKey Floor(TKey key)
         {
             if (key == null) throw new ArgumentNullException(nameof(key));
             if (IsEmpty) throw new InvalidOperationException("empty symbol table");
@@ -278,7 +278,7 @@ namespace SedgewickWayne.Algorithms
         {
             if (k < 0 || k >= Size)
             {
-                throw new ArgumentOutOfRangeException (nameof(k), k, "argument to Select() is out of range");
+                throw new ArgumentOutOfRangeException(nameof(k), k, "argument to Select() is out of range");
             }
             Node x = SelectKey(root, k);
             return x.key;
@@ -293,7 +293,7 @@ namespace SedgewickWayne.Algorithms
             else return x;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() =>  Keys().GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => Keys().GetEnumerator();
 
         public IEnumerator<TKey> GetEnumerator() => Keys().GetEnumerator();
 
@@ -398,7 +398,7 @@ namespace SedgewickWayne.Algorithms
         // does this binary tree satisfy symmetric order?
         // Note: this test also ensures that data structure is a binary tree since order is strict
         private bool IsBST => IsBinarySearchTree(root, default(TKey), default(TKey));
-        
+
 
         // is the tree rooted at x a BST with all keys strictly between min and max
         // (if min or max is null, treat as empty constraint)
