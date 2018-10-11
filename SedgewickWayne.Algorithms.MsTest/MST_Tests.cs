@@ -22,15 +22,15 @@
   ******************************************************************************/
 
 
-namespace SedgewickWayne.Algorithms.MsTest
+namespace SedgewickWayne.Algorithms.UnitTests
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
 
-    [TestClass]
+    
     public class MinimumSpanningTreesTests
     {
-        [TestMethod]
+        [Fact]
         public void Todo()
         {
         }

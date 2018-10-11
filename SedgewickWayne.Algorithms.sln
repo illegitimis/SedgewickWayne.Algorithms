@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms", "SedgewickWayne.Algorithms\SedgewickWayne.Algorithms.csproj", "{B53D86FD-7548-4BFF-B388-11ACDF8D6083}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms.MsTest", "SedgewickWayne.Algorithms.MsTest\SedgewickWayne.Algorithms.MsTest.csproj", "{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms.UnitTests", "SedgewickWayne.Algorithms.MsTest\SedgewickWayne.Algorithms.UnitTests.csproj", "{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms.Performance", "SedgewickWayne.Algorithms.Performance\SedgewickWayne.Algorithms.Performance.csproj", "{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}"
 EndProject

@@ -31,15 +31,15 @@
  *  S 0
  */
 
-namespace SedgewickWayne.Algorithms.MsTest
+namespace SedgewickWayne.Algorithms.UnitTests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using static SedgewickWayne.Algorithms.MsTest.TestHelper;
+    using Xunit;
+    using static SedgewickWayne.Algorithms.UnitTests.TestHelper;
 
-    [TestClass]
+    
     public class SymbolTableBasic
     {
         /// <summary>
@@ -47,16 +47,16 @@ namespace SedgewickWayne.Algorithms.MsTest
         /// Create a symbol table mapping letter grades to numerical scores
         /// A- B+ B+ B- | GPA = 3.25
         /// </summary>
-        [TestMethod] public void LinkedListGpa() => GPA(LINKED_LIST);
-        [TestMethod] public void UnorderedArrayGpa() => GPA(UNORDERED_ARRAY);
-        [TestMethod] public void BinarySearchGpa() => GPA(BINARY_SEARCH);
-        [TestMethod] public void BstGpa() => GPA(BST);
+        [Fact] public void LinkedListGpa() => GPA(LINKED_LIST);
+        [Fact] public void UnorderedArrayGpa() => GPA(UNORDERED_ARRAY);
+        [Fact] public void BinarySearchGpa() => GPA(BINARY_SEARCH);
+        [Fact] public void BstGpa() => GPA(BST);
 
         void GPA(string st)
         {
             ISymbolTable<String, Double> grades = GetGrades(st);
             var values = new[] { grades.Get("A-"), grades.Get("A+"), grades.Get("B-"), grades.Get("B+") };
-            Assert.AreEqual(3.5, values.Average());
+            Assert.Equal(3.5, values.Average());
         }
 
         ISymbolTable<String, Double> GetGrades(string st)

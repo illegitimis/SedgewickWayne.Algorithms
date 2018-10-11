@@ -1,14 +1,14 @@
 ﻿
-namespace SedgewickWayne.Algorithms.MsTest
+namespace SedgewickWayne.Algorithms.UnitTests
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using System;
     using SedgewickWayne.Algorithms;
 
 
     internal delegate void SortDelegate<T>(T[] a);
 
-    [TestClass]
+    
     public class SortingTests
     {
         static readonly char[] tiny = new char[] { 'S', 'O', 'R', 'T', 'E', 'X', 'A', 'M', 'P', 'L', 'E' };
@@ -41,7 +41,7 @@ namespace SedgewickWayne.Algorithms.MsTest
         ///  S O R T E X A M P L E
         ///  A E E L M O P R S T X
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void TinySort()
         {
             var characterArraySorters = new SortDelegate<char>[]
@@ -69,8 +69,9 @@ namespace SedgewickWayne.Algorithms.MsTest
             Array.Copy(tiny, copy, 11);
 
             characterArraySorter(copy);
-            Assert.IsNotNull(copy);
-            CollectionAssert.AreEqual(inty, copy, characterArraySorter.Method.DeclaringType.Name);
+            Assert.NotNull(copy);
+            // characterArraySorter.Method.DeclaringType.Name
+            Assert.Equal(inty, copy);
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace SedgewickWayne.Algorithms.MsTest
         ///  bed bug dad yes zoo ... all bad yet
         ///  all bad bed bug dad ... yes yet zoo    [ one string per line ] 
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ThreeLetterWordsSort()
         {
             foreach (var sorter in new SortDelegate<string>[]
@@ -101,8 +102,9 @@ namespace SedgewickWayne.Algorithms.MsTest
                 Array.Copy(words3, copy, 35);
 
                 sorter(copy);
-                Assert.IsNotNull(copy);
-                CollectionAssert.AreEqual(dorsw, copy, sorter.Method.DeclaringType.Name);
+                Assert.NotNull(copy);
+                // , sorter.Method.DeclaringType.Name
+                Assert.Equal(dorsw, copy);
             }
         }
     }

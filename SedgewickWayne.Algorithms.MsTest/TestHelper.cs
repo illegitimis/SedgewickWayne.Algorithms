@@ -1,9 +1,6 @@
-﻿namespace SedgewickWayne.Algorithms.MsTest
+﻿namespace SedgewickWayne.Algorithms.UnitTests
 {
     using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Net;
 
     public static class TestHelper
     {

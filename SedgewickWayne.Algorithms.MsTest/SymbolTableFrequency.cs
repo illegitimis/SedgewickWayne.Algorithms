@@ -5,22 +5,22 @@
  * https://algs4.cs.princeton.edu/31elementary/leipzig1M.txt government 24763
  */
 
-namespace SedgewickWayne.Algorithms.MsTest
+namespace SedgewickWayne.Algorithms.UnitTests
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using static SedgewickWayne.Algorithms.MsTest.TestHelper;
+    using static SedgewickWayne.Algorithms.UnitTests.TestHelper;
 
-    [TestClass]
+    
     public class SymbolTableFrequency
     {
-        [TestMethod] public void SequentialSearch() => FrequencyCounter(LINKED_LIST);
-        [TestMethod] public void Array() => FrequencyCounter(UNORDERED_ARRAY);
-        [TestMethod] public void BinarySearch() => FrequencyCounter(BINARY_SEARCH);
-        [TestMethod] public void Bst() => FrequencyCounter(BST);
+        [Fact] public void SequentialSearch() => FrequencyCounter(LINKED_LIST);
+        [Fact] public void Array() => FrequencyCounter(UNORDERED_ARRAY);
+        [Fact] public void BinarySearch() => FrequencyCounter(BINARY_SEARCH);
+        [Fact] public void Bst() => FrequencyCounter(BST);
 
 
         void FrequencyCounter(string symbolTableType)
@@ -28,8 +28,8 @@ namespace SedgewickWayne.Algorithms.MsTest
             ISymbolTable<string, int> st = Factory<string, int>(symbolTableType);
             var strings = new string[] { "S", "E", "A", "R", "C", "H", "E", "X", "A", "M", "P", "L", "E" };
             FrequencyCounter(st, strings);
-            Assert.AreEqual(2, st.Get("A"));
-            Assert.AreEqual(3, st.Get("E"));
+            Assert.Equal(2, st.Get("A"));
+            Assert.Equal(3, st.Get("E"));
         }
 
 

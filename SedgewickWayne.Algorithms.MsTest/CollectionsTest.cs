@@ -1,66 +1,66 @@
 ﻿
 
-namespace SedgewickWayne.Algorithms.MsTest
+namespace SedgewickWayne.Algorithms.UnitTests
 {
   using System;
-  using Microsoft.VisualStudio.TestTools.UnitTesting;
+  using Xunit;
   using System.Threading;
   using System.Globalization;
 
-  [TestClass]
+  
   public class CollectionsTest
   {
-    [TestMethod]
-    [TestCategory("Stack")]
-    [TestCategory("LinkedList")]
-    [TestCategory("NonGeneric")]
-    [TestCategory("to be or not to - be - - that - - - is")]
+    [Fact]
+    [Trait("Type", "Stack")]
+    [Trait("SupportingType", "LinkedList")]
+    [Trait("Generic", "No")]
+    [Trait("TestType", "to be or not to - be - - that - - - is")]
     public void  LinkedStackToBeTxt()
     {
       var stack = new LinkedStack();
       ToBeTxt(stack);
     }
 
-    [TestMethod]
-    [TestCategory("Stack")]
-    [TestCategory("ResizingArray")]
-    [TestCategory("NonGeneric")]
-    [TestCategory("to be or not to - be - - that - - - is")]
+    [Fact]
+    [Trait("Type", "Stack")]
+    [Trait("SupportingType", "ResizingArray")]
+    [Trait("Generic", "No")]
+    [Trait("TestType", "to be or not to - be - - that - - - is")]
     public void ResizingArrayStackToBeTxt()
     {
       var stack = new ResizingArrayStack();
       ToBeTxt(stack);
     }
 
-    [TestMethod]
-    [TestCategory("Stack")]
-    [TestCategory("Generic")]
-    [TestCategory("LinkedList")]
-    [TestCategory("to be or not to - be - - that - - - is")]
+    [Fact]    
+    [Trait("Type", "Stack")]
+    [Trait("Generic", "Yes")]
+    [Trait("SupportingType", "LinkedList")]
+    [Trait("TestType", "to be or not to - be - - that - - - is")]
     public void StackToBeTxt()
     {
       var stack = new Stack<string>();
       ToBeTxt(stack);
     }
 
-    [TestMethod]
-    [TestCategory("Stack")]
+    [Fact]
+    [Trait("Type", "Stack")]
     public void StackToString ()
     {
       //var stack = new Stack();
       //StackIterateToString(stack);
     }
 
-    [TestMethod]
-    [TestCategory("Stack")]
+    [Fact]
+    [Trait("Type", "Stack")]
     public void LinkedStackToString()
     {
       var stack = new LinkedStack();
       StackIterateToString(stack);
     }
 
-    [TestMethod]
-    [TestCategory("Stack")]
+    [Fact]
+    [Trait("Type", "Stack")]
     public void ResizingArrayToString()
     {
       var stack = new ResizingArrayStack();
@@ -70,7 +70,7 @@ namespace SedgewickWayne.Algorithms.MsTest
     void StackIterateToString(IStack stack)
     {
       // Arrange: stack empty to start with
-      Assert.IsTrue(stack.IsEmpty);
+      Assert.True(stack.IsEmpty);
 
       // Act
       stack.Push(1);
@@ -79,7 +79,7 @@ namespace SedgewickWayne.Algorithms.MsTest
       var s = stack.ToString();
       
       // Assert
-      Assert.AreEqual("three 2 1", s);
+      Assert.Equal("three 2 1", s);
     }
 
     
@@ -114,22 +114,22 @@ namespace SedgewickWayne.Algorithms.MsTest
       }
 
       //
-      if (nstack != null) Assert.IsFalse(nstack.IsEmpty);
-      else if (gstack != null) Assert.IsFalse(gstack.IsEmpty);
+      if (nstack != null) Assert.False(nstack.IsEmpty);
+      else if (gstack != null) Assert.False(gstack.IsEmpty);
 
       if (nstack != null)
       {
         while (!nstack.IsEmpty) strings.Add(nstack.Pop() as string);
-        Assert.IsTrue(nstack.IsEmpty);
+        Assert.True(nstack.IsEmpty);
       }
       else if (gstack != null)
       {
         while (!gstack.IsEmpty) strings.Add(gstack.Pop());
-        Assert.IsTrue(gstack.IsEmpty);
+        Assert.True(gstack.IsEmpty);
       }
 
       //
-      CollectionAssert.AreEqual(new[] { "to", "be", "not", "that", "or", "be", "is", "to" }, strings);
+      Assert.Equal(new[] { "to", "be", "not", "that", "or", "be", "is", "to" }, strings);
     }
   }
 }

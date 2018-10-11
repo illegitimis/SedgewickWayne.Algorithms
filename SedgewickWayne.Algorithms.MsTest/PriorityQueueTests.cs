@@ -1,13 +1,13 @@
 ﻿
 
-namespace SedgewickWayne.Algorithms.MsTest
+namespace SedgewickWayne.Algorithms.UnitTests
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Xunit;
     using System.Collections.Generic;
     using System.Linq;
 
-    [TestClass]
+    
     public class PriorityQueueTests
     {
         #region defines
@@ -72,19 +72,19 @@ namespace SedgewickWayne.Algorithms.MsTest
         #endregion
         
         // increase or decrease the key
-        [TestMethod]
+        [Fact]
         public void IndexedMaxPQIncreaseKeyTest()
         {
             // arrange 
             var pq = new IndexMaxPQ<string>(array);
 
             // act + assert initial
-            Assert.IsFalse(pq.IsEmpty);
-            Assert.AreEqual(10, pq.Size);
-            Assert.AreEqual(9, pq.Index);
-            Assert.AreEqual(9, pq.MaxIndex);
-            Assert.AreEqual("worst", pq.Max);
-            Assert.AreEqual("worst", pq.TopKey);
+            Assert.False(pq.IsEmpty);
+            Assert.Equal(10, pq.Size);
+            Assert.Equal(9, pq.Index);
+            Assert.Equal(9, pq.MaxIndex);
+            Assert.Equal("worst", pq.Max);
+            Assert.Equal("worst", pq.TopKey);
 
             // act + assert ex
             try
@@ -93,29 +93,29 @@ namespace SedgewickWayne.Algorithms.MsTest
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-                Assert.AreEqual("Calling increaseKey() with given argument would not strictly increase the key", ex.Message);
+                Assert.IsType<ArgumentException>(ex);
+                Assert.Equal("Calling increaseKey() with given argument would not strictly increase the key", ex.Message);
             }
 
             // act + assert increase
             pq.increaseKey(9, "worst even");
-            Assert.AreEqual("worst even", pq.Max);
-            Assert.AreEqual("worst even", pq.TopKey);
+            Assert.Equal("worst even", pq.Max);
+            Assert.Equal("worst even", pq.TopKey);
         }
 
-        [TestMethod]
+        [Fact]
         public void IndexedMinPQDecreaseKeyTest()
         {
             // arrange 
             var pq = new IndexMinPQ<string>(array);
 
             // act + assert initial
-            Assert.IsFalse(pq.IsEmpty);
-            Assert.AreEqual(10, pq.Size);
-            Assert.AreEqual(3, pq.Index);
-            Assert.AreEqual(3, pq.MinIndex);
-            Assert.AreEqual("best", pq.Min);
-            Assert.AreEqual("best", pq.TopKey);
+            Assert.False(pq.IsEmpty);
+            Assert.Equal(10, pq.Size);
+            Assert.Equal(3, pq.Index);
+            Assert.Equal(3, pq.MinIndex);
+            Assert.Equal("best", pq.Min);
+            Assert.Equal("best", pq.TopKey);
 
             // act + assert ex
             try
@@ -124,7 +124,7 @@ namespace SedgewickWayne.Algorithms.MsTest
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentOutOfRangeException));             
+                Assert.IsType<ArgumentOutOfRangeException>(ex);
             }
 
             try
@@ -133,7 +133,7 @@ namespace SedgewickWayne.Algorithms.MsTest
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentOutOfRangeException));
+                Assert.IsType<ArgumentOutOfRangeException>(ex);
             }
             
             // act + assert decrease
@@ -143,26 +143,26 @@ namespace SedgewickWayne.Algorithms.MsTest
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(ArgumentException));
-                Assert.AreEqual("Calling decreaseKey() with given argument would not strictly decrease the key", ex.Message);
+                Assert.IsType<ArgumentException>(ex);
+                Assert.Equal("Calling decreaseKey() with given argument would not strictly decrease the key", ex.Message);
             }
 
             pq.decreaseKey(5, "aaa");
-            Assert.AreEqual("aaa", pq.Min);
-            Assert.AreEqual("aaa", pq.TopKey);
-            Assert.AreEqual(5, pq.Index);
-            Assert.AreEqual(5, pq.MinIndex);
+            Assert.Equal("aaa", pq.Min);
+            Assert.Equal("aaa", pq.TopKey);
+            Assert.Equal(5, pq.Index);
+            Assert.Equal(5, pq.MinIndex);
         }
 
         // insert a bunch of strings
         // delete and print each key
-        [TestMethod]
+        [Fact]
         public void IndexPQDeleteAtIndexTest()
         {
             var pq = new IndexMaxPQ<String>(array);
-            Assert.IsTrue(pq.Contains(5));
+            Assert.True(pq.Contains(5));
             pq.Delete(5);
-            Assert.IsFalse(pq.Contains(5));
+            Assert.False(pq.Contains(5));
 
             try
             {
@@ -170,26 +170,26 @@ namespace SedgewickWayne.Algorithms.MsTest
             }
             catch (Exception ex)
             {
-                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException));
-                Assert.AreEqual("index is not in the priority queue", ex.Message);
+                Assert.IsType<InvalidOperationException>(ex);
+                Assert.Equal("index is not in the priority queue", ex.Message);
             }
         }
 
         // print each key using the iterator
-        [TestMethod]
+        [Fact]
         public void IndexMaxPQIteratorTest()
         {
             var pq = new IndexMaxPQ<String>(array);
             var actual = Strings(pq).ToList();
-            CollectionAssert.AreEqual(indexedMax, actual, String.Join("|",actual));            
+            Assert.Equal(indexedMax, actual);            
         }        
 
-        [TestMethod]
+        [Fact]
         public void IndexMinPQIteratorTest()
         {
             var pq = new IndexMinPQ<String>(array);
             var actual = Strings(pq).ToList();
-            CollectionAssert.AreEqual(indexedMin, actual, String.Join("|", actual));
+            Assert.Equal(indexedMin, actual);
         }
 
         IEnumerable<Tuple<int,string>> Tuples (IndexPQBase<string> pq)
@@ -216,25 +216,25 @@ namespace SedgewickWayne.Algorithms.MsTest
         * delete and print each key
         * print each key using the iterator
         */
-        [TestMethod]
+        [Fact]
         public void InsertAllAndDeleteAllMaxPQTest()
         {
             InsertAllAndDeleteAll(new MaxPQ<string>(), topDown);
         }
 
-        [TestMethod]
+        [Fact]
         public void InsertAllAndDeleteAllMinPQTest()
         {
             InsertAllAndDeleteAll(new MinPQ<string>(), topDown.Reverse().ToArray());
         }
 
-        [TestMethod]
+        [Fact]
         public void ConstructFromArrayMaxPQTest()
         {
             ConstructFromArrayAndIterate(new MaxPQ<string>(array), topDown);
         }
 
-        [TestMethod]
+        [Fact]
         public void ConstructFromArrayMinPQTest()
         {
             ConstructFromArrayAndIterate(new MinPQ<string>(array), topDown.Reverse().ToArray());
@@ -244,15 +244,15 @@ namespace SedgewickWayne.Algorithms.MsTest
         void InsertAllAndDeleteAll(ArrayPQBase<string> pq, string[] expected)
         {
             // default ctor, insert a bunch of values, then delete all
-            Assert.IsTrue(pq.IsEmpty);
+            Assert.True(pq.IsEmpty);
             var actual = Strings(pq).ToList();
-            CollectionAssert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         void ConstructFromArrayAndIterate (ArrayPQBase<string> pq, string[] expected)
         {
-            Assert.IsFalse(pq.IsEmpty);
-            CollectionAssert.AreEqual(expected, pq.ToList());
+            Assert.False(pq.IsEmpty);
+            Assert.Equal(expected, pq.ToList());
         }
 
 
@@ -269,7 +269,7 @@ namespace SedgewickWayne.Algorithms.MsTest
         static readonly string[] hamlet_tops = new[] { "to", "to", "or", "that", "not", "be" };
         static readonly string[] hamlet_leftovers = new[] { "is", "be" };
 
-        [TestMethod]
+        [Fact]
         public void Hamlet_MaxPQ()
         {
             // arrange
@@ -279,19 +279,19 @@ namespace SedgewickWayne.Algorithms.MsTest
         }
 
 
-        [TestMethod]
+        [Fact]
         public void Hamlet_UnorderedArrayMaxPQ()
         {
             ArrayPQHamlet(new UnorderedArrayMaxPQ<string>(), hamlet_tops, hamlet_leftovers);
         }
 
-        [TestMethod]
+        [Fact]
         public void Hamlet_OrderedArrayMaxPQ()
         {
             ArrayPQHamlet(new OrderedArrayMaxPQ<string>(), hamlet_tops, hamlet_leftovers);
         }
 
-        [TestMethod]
+        [Fact]
         public void Hamlet_MinPQ()
         {
             // arrange
@@ -305,24 +305,23 @@ namespace SedgewickWayne.Algorithms.MsTest
         {
             // arrange
             // var pq = new MinPQ<string>();
-            Assert.IsTrue(pq.IsEmpty);
+            Assert.True(pq.IsEmpty);
 
             // act
             var tops = Hamlet(pq).ToList();
 
             // assert
-            Assert.IsFalse(pq.IsEmpty);
-            Assert.AreEqual(2, pq.Size);
+            Assert.False(pq.IsEmpty);
+            Assert.Equal(2, pq.Size);
 
-            CollectionAssert.AreEqual(expectedTops, tops, String.Join("|", tops));
+            // , String.Join("|", tops)
+            Assert.Equal(expectedTops, tops);
 
+            // , String.Join("|", leftovers)
             var leftovers = pq.ToArray();
-            CollectionAssert.AreEqual(expectedLeftovers, leftovers, String.Join("|", leftovers));
+            Assert.Equal(expectedLeftovers, leftovers);
 
-            CollectionAssert.AreEquivalent(
-                expectedLeftovers.Union(expectedTops).ToArray(), 
-                tops.Union(leftovers).ToArray(), 
-                "union");            
+            Assert.Equal(expectedLeftovers.Union(expectedTops).OrderBy(x => x), tops.Union(leftovers).OrderBy(x => x));
         }
 
         #endregion
@@ -340,28 +339,28 @@ namespace SedgewickWayne.Algorithms.MsTest
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void UnorderedArrayMaxPQ_SimpleTest()
         {
             var pq = new UnorderedArrayMaxPQ<string>(10);
             TestArrayMaxPQ(pq, ProduceArray);
         }
 
-        [TestMethod]
+        [Fact]
         public void OrderedArrayMaxPQ_SimpleTest()
         {
             var pq = new OrderedArrayMaxPQ<string>(10);
             TestArrayMaxPQ(pq, ProduceArray);
         }
 
-        [TestMethod]
+        [Fact]
         public void UnorderedArrayMaxPQ_Enumerate()
         {
             var pq = new UnorderedArrayMaxPQ<string>(10);
             TestArrayMaxPQ(pq, EnumerateArrayMax, false);
         }
 
-        [TestMethod]
+        [Fact]
         public void OrderedArrayMaxPQ_Enumerate()
         {
             var pq = new OrderedArrayMaxPQ<string>(10);
@@ -371,8 +370,8 @@ namespace SedgewickWayne.Algorithms.MsTest
         void TestArrayMaxPQ(ArrayPQBase<string> pq, ArrayMaxPQProducer f, bool IsConsumer = true)
         {
             var maxes = f(pq).ToArray();
-            if (IsConsumer) Assert.IsTrue(pq.IsEmpty);
-            CollectionAssert.AreEqual(new string[] { "this", "test", "is", "a" }, maxes);
+            if (IsConsumer) Assert.True(pq.IsEmpty);
+            Assert.Equal(new string[] { "this", "test", "is", "a" }, maxes);
         }
 
         delegate IEnumerable<string> ArrayMaxPQProducer(ArrayPQBase<string> pq);
@@ -401,32 +400,32 @@ namespace SedgewickWayne.Algorithms.MsTest
             pq.Insert('P');
             pq.Insert('Q');
             pq.Insert('E');
-            Assert.AreEqual(pq.Delete(), 'Q');
+            Assert.Equal(pq.Delete(), 'Q');
             pq.Insert('X');
             pq.Insert('A');
             pq.Insert('M');
-            Assert.AreEqual(pq.Delete(), 'X');
+            Assert.Equal(pq.Delete(), 'X');
             pq.Insert('P');
             pq.Insert('L');
             pq.Insert('E');
-            Assert.AreEqual(pq.Delete(), 'P');
-            Assert.AreEqual(pq.Size, 6);
-            CollectionAssert.AreEqual(new char[] { 'P', 'M', 'L', 'E', 'E', 'A' }, pq.ToArray());
+            Assert.Equal(pq.Delete(), 'P');
+            Assert.Equal(pq.Size, 6);
+            Assert.Equal(new char[] { 'P', 'M', 'L', 'E', 'E', 'A' }, pq.ToArray());
         }
 
-        [TestMethod]
+        [Fact]
         void SequenceOfOperations_MaxPQ()
         {
             var pq = new MaxPQ<char>(10);
             SequenceOfOperations(pq);
         }
-        [TestMethod]
+        [Fact]
         void SequenceOfOperations_OrderedArrayMaxPQ()
         {
             var pq = new OrderedArrayMaxPQ<char>(10);
             SequenceOfOperations(pq);
         }
-        [TestMethod]
+        [Fact]
         void SequenceOfOperations_UnOrderedArrayMaxPQ()
         {
             var pq = new UnorderedArrayMaxPQ<char>(10);
