@@ -1,14 +1,14 @@
-SedgewickWayne.Algorithms/obj/
-SedgewickWayne.Algorithms.MsTest/bin/
 .vs/
-SedgewickWayne.Algorithms.MsTest/obj/
 *.cd
-SedgewickWayne.Algorithms/GraphOld/
-SedgewickWayne.Algorithms.MsTest/Txt/
-/SedgewickWayne.Algorithms/bin/Debug
+*.csproj.user
 /ante/GraphOld
 /ante/UF java
+src/SedgewickWayne.Algorithms/obj/
+src/SedgewickWayne.Algorithms/bin/
+src/SedgewickWayne.Algorithms.UnitTests/bin/
+src/SedgewickWayne.Algorithms.UnitTests/obj/
+src/SedgewickWayne.Algorithms.Performance/bin/
+src/SedgewickWayne.Algorithms.Performance/data/
+src/SedgewickWayne.Algorithms.Performance/obj/
 packages/
-SedgewickWayne.Algorithms.Performance/bin/
-SedgewickWayne.Algorithms.Performance/data/
-SedgewickWayne.Algorithms.Performance/obj/
+
