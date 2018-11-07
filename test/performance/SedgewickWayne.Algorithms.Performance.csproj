@@ -71,7 +71,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SedgewickWayne.Algorithms\SedgewickWayne.Algorithms.csproj">
+    <ProjectReference Include="..\..\src\SedgewickWayne.Algorithms.csproj">
       <Project>{b53d86fd-7548-4bff-b388-11acdf8d6083}</Project>
       <Name>SedgewickWayne.Algorithms</Name>
     </ProjectReference>
