@@ -8,12 +8,12 @@ Link: https://algs4.cs.princeton.edu/24pq/
 
 Name | Princeton java link | Misc
 --- | --- | ---
-IndexMaxPQ | https://algs4.cs.princeton.edu/24pq/IndexMaxPQ.java.html | Y
-IndexMinPQ | https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html | Y
-MaxPQ | http://algs4.cs.princeton.edu/24pq/MaxPQ.java.html | Y
-MinPQ | http://algs4.cs.princeton.edu/24pq/MinPQ.java.html | Y
-UnorderedArrayMaxPQ | https://algs4.cs.princeton.edu/24pq/UnorderedArrayMaxPQ.java.html | N
-OrderedArrayMaxPQ | https://algs4.cs.princeton.edu/24pq/OrderedArrayMaxPQ.java.html | N
+IndexMaxPQ | [IndexMaxPQ.java](https://algs4.cs.princeton.edu/24pq/IndexMaxPQ.java.html) | [IndexMaxPQ.cs](../src/PriorityQueues/IndexMaxPQ.cs)
+IndexMinPQ | [IndexMinPQ.java](https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html) | [IndexMinPQ.cs](../src/PriorityQueues/IndexMinPQ.cs)
+MaxPQ | [MaxPQ.java](http://algs4.cs.princeton.edu/24pq/MaxPQ.java.html) | [MaxPQ.cs](../src/PriorityQueues/MaxPQ.cs)
+MinPQ | [MinPQ.java](http://algs4.cs.princeton.edu/24pq/MinPQ.java.html) | [MinPQ.cs](../src/PriorityQueues/MinPQ.cs)
+UnorderedArrayMaxPQ | [UnorderedArrayMaxPQ.java](https://algs4.cs.princeton.edu/24pq/UnorderedArrayMaxPQ.java.html) | [UnorderedArrayMaxPQ.cs](../src/PriorityQueues/UnorderedArrayMaxPQ.cs)
+OrderedArrayMaxPQ | [OrderedArrayMaxPQ.java](https://algs4.cs.princeton.edu/24pq/OrderedArrayMaxPQ.java.html) | [OrderedArrayMaxPQ.cs](../src/PriorityQueues/OrderedArrayMaxPQ.cs)
 
 ![IQueue{T}.png](IQueue{T}.png)
 
