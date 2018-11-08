@@ -21,8 +21,14 @@ namespace SedgewickWayne.Algorithms.UnitTests
         [Fact] public void Array() => FrequencyCounter(UNORDERED_ARRAY);
         [Fact] public void BinarySearch() => FrequencyCounter(BINARY_SEARCH);
         [Fact] public void Bst() => FrequencyCounter(BST);
+        [Fact] public void LinearProbing() => FrequencyCounter(LINEAR_PROBING);
 
+        [Fact] public void NonRecursiveBst() => FrequencyCounter(NON_RECURSIVE_BST);
 
+        /// <summary>
+        /// https://algs4.cs.princeton.edu/34hash/tinyST.txt
+        /// </summary>
+        /// <param name="symbolTableType"></param>
         void FrequencyCounter(string symbolTableType)
         {
             ISymbolTable<string, int> st = Factory<string, int>(symbolTableType);

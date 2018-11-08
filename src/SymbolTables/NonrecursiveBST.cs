@@ -7,18 +7,24 @@ namespace SedgewickWayne.Algorithms
     using System.Collections;
     using System.Collections.Generic;
 
-    /// <summary>
-    /// Nonrecursive BST implementation
-    /// </summary>
+    /// <summary>Nonrecursive BST implementation</summary>
     /// <typeparam name="TKey">comparable and equatable key type</typeparam>
     /// <typeparam name="TValue"></typeparam>
     /// <remarks>incomplete</remarks>
     public class NonrecursiveBST<TKey, TValue> :
         ISymbolTable<TKey, TValue>
         where TKey : IComparable<TKey>, IEquatable<TKey>
+        where TValue : IEquatable<TValue>
     {
         // root of BST
         private Node root;
+        private int size;
+
+        public NonrecursiveBST()
+        {
+            size = 0;
+            root = null;
+        }
 
         private class Node
         {
@@ -34,21 +40,9 @@ namespace SedgewickWayne.Algorithms
         }
 
 
-        public bool IsEmpty
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public int Size
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public bool IsEmpty => root == null;
+        
+        public int Size => size;
 
         public bool Contains(TKey key)
         {
@@ -92,6 +86,7 @@ namespace SedgewickWayne.Algorithms
             if (root == null)
             {
                 root = z;
+                size = 1;
                 return;
             }
 
@@ -112,6 +107,7 @@ namespace SedgewickWayne.Algorithms
             cmp = key.CompareTo(parent.key);
             if (cmp < 0) parent.left = z;
             else parent.right = z;
+            size++;
         }
 
 

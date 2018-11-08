@@ -8,6 +8,8 @@
         internal const string UNORDERED_ARRAY = "unordered array";
         internal const string BINARY_SEARCH = "binary search";
         internal const string BST = "binary search tree";
+        internal const string LINEAR_PROBING = "linear probing";
+        internal const string NON_RECURSIVE_BST = "non recursive bst";
 
         internal static ISymbolTable<TKey, TValue> Factory<TKey, TValue>(string symbolTableType)
            where TKey : IComparable<TKey>, IEquatable<TKey>
@@ -20,8 +22,15 @@
                     return new SequentialSearchST<TKey, TValue>();
 
                 case UNORDERED_ARRAY: return new ArrayST<TKey, TValue>();
+
                 case BINARY_SEARCH: return new BinarySearchST<TKey, TValue>();
+
                 case BST: return new BST<TKey, TValue>();
+
+                case LINEAR_PROBING: return new LinearProbingHashST<TKey, TValue>();
+
+                case NON_RECURSIVE_BST: return new NonrecursiveBST<TKey, TValue>();
+
                 default: return null;
             }
         }

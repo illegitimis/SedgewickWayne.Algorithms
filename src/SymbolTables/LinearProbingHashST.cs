@@ -1,234 +1,244 @@
 ﻿// http://algs4.cs.princeton.edu/34hash/LinearProbingHashST.java.html
 
-namespace SedgewickWayne.Algorithms.SymbolTables
+namespace SedgewickWayne.Algorithms
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
 
-    class LinearProbingHashST
+    /// <summary>
+    /// Symbol-table implementation with linear-probing hash table.
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    /// <remarks>
+    /// Supports the usual <see cref="Put(TKey, TValue)"/>, <see cref="Get(TKey)"/>, <see cref="Contains(TKey)"/>,
+    /// <see cref="Delete(TKey)"/>, <see cref="Size"/>, <see cref="IsEmpty"/> methods.
+    /// It also provides keys enumeration.
+    /// A symbol table implements the associative array> abstraction: when associating a value with a key 
+    /// that is already in the symbol table, the convention is to replace the old value with the new value.
+    /// Setting the value associated with a key to null is equivalent to deleting the key from the symbol table.
+    /// 
+    /// This implementation uses a linear probing hash table.It requires that the key type overrides the 
+    /// <see cref="IEquatable{TKey}.Equals(TKey)"/> and <see cref="object.GetHashCode()"/> methods. 
+    /// 
+    /// The expected time per put, contains or remove is constant, subject to the uniform hashing assumption.
+    /// The size and is-empty</em> operations take constant time.
+    /// Construction takes constant time.
+    /// </remarks>
+    public class LinearProbingHashST<TKey, TValue> :
+        ISymbolTable<TKey, TValue>
+        where TKey : IComparable<TKey>, IEquatable<TKey>
+        where TValue : IEquatable<TValue>
     {
+        private const int INIT_CAPACITY = 4;
+
+        private int n;           // number of key-value pairs in the symbol table
+        private int m;           // size of linear probing table
+        private TKey[] keys;      // the keys
+        private TValue[] vals;    // the values
+
+        /// <summary>
+        /// Initializes an empty symbol table.
+        /// </summary>
+        public LinearProbingHashST() : this(INIT_CAPACITY)
+        {
+        }
+
+        /// <summary>
+        ///  Initializes an empty symbol table with the specified initial capacity.
+        /// </summary>
+        /// <param name="capacity">the initial capacity</param>
+        public LinearProbingHashST(int capacity)
+        {
+            m = capacity;
+            n = 0;
+            keys = new TKey[m];
+            vals = new TValue[m];
+        }
+
+        /// <summary>
+        /// Returns the number of key-value pairs in this symbol table.
+        /// </summary>
+        public int Size => n;
+
+        /// <summary>
+        /// Returns true if this symbol table is empty.
+        /// </summary>
+        public bool IsEmpty => Size == 0;
+
+        /// <summary>
+        /// Returns true if this symbol table contains the specified key.
+        /// </summary>
+        /// <param name="key">the key</param>
+        /// <returns>True if this symbol table contains <paramref name="key"/>, false otherwise.</returns>
+        public bool Contains(TKey key)
+        {
+            AssertKey(key);
+            return !Get(key).Equals(default(TValue));
+        }
+
+        /// <summary>
+        /// Removes the specified key and its associated value from this symbol table (if the key is in this symbol table).
+        /// </summary>
+        /// <param name="key">the key</param>
+        public void Delete(TKey key)
+        {
+            if (!Contains(key)) { return; }
+
+            // find position i of key
+            int i = hash(key);
+            while (!key.Equals(keys[i]))
+            {
+                i = (i + 1) % m;
+            }
+
+            // delete key and associated value
+            keys[i] = default(TKey);
+            vals[i] = default(TValue);
+
+            // rehash all keys in same cluster
+            i = (i + 1) % m;
+
+            while (keys[i] != null)
+            {
+                // delete keys[i] an vals[i] and reinsert
+                TKey keyToRehash = keys[i];
+                TValue valToRehash = vals[i];
+                keys[i] = default(TKey);
+                vals[i] = default(TValue);
+                n--;
+                Put(keyToRehash, valToRehash);
+                i = (i + 1) % m;
+            }
+
+            n--;
+
+            // halves size of array if it's 12.5% full or less
+            if (n > 0 && n <= m / 8) resize(m / 2);
+
+            AssertIntegrity();
+        }
+
+        /// <summary>
+        /// resizes the hash table to the given capacity by re-hashing all of the keys
+        /// </summary>
+        /// <param name="capacity"></param>
+        private void resize(int capacity)
+        {
+            LinearProbingHashST<TKey, TValue> temp = new LinearProbingHashST<TKey, TValue>(capacity);
+            for (int i = 0; i < m; i++)
+            {
+                if (keys[i] != null)
+                {
+                    temp.Put(keys[i], vals[i]);
+                }
+            }
+
+            keys = temp.keys;
+            vals = temp.vals;
+            m = temp.m;
+
+            // this = temp;
+        }
+
+        /// <summary>Returns the value associated with the specified key.</summary>
+        /// <param name="key">the key</param>
+        /// <returns>the value associated with {@code key}; {@code null} if no such value</returns>
+        public TValue Get(TKey key)
+        {
+            AssertKey(key);
+            for (int i = hash(key); keys[i] != null; i = (i + 1) % m)
+                if (keys[i].Equals(key))
+                    return vals[i];
+            return default(TValue);
+        }
+
+        /// <summary>
+        /// Inserts the specified key-value pair into the symbol table, 
+        /// overwriting the old value with the new value if the symbol table already contains the specified key.
+        /// Deletes the specified key (and its associated value) from this symbol table if the specified value is null.
+        /// </summary>
+        /// <param name="key">the key</param>
+        /// <param name="val">the value</param>
+        public void Put(TKey key, TValue val)
+        {
+            AssertKey(key);
+
+            if (val == null)
+            {
+                Delete(key);
+                return;
+            }
+
+            // double table size if 50% full
+            if (n >= m / 2)
+            {
+                resize(2 * m);
+            }
+            
+
+            int i;
+            for (i = hash(key); keys[i] != null; i = (i + 1) % m)
+            {
+                if (keys[i].Equals(key))
+                {
+                    vals[i] = val;
+                    return;
+                }
+            }
+            keys[i] = key;
+            vals[i] = val;
+            n++;
+        }
+
+        /// <summary>hash function for keys - returns value between 0 and M-1</summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private int hash(TKey key)
+        {
+            return (key.GetHashCode() & 0x7fffffff) % m;
+        }
+
+        private static void AssertKey(TKey key)
+        {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+        }
+
+        /// <summary>
+        /// don't check after each put() because integrity not maintained during a delete()
+        /// </summary>
+        private void AssertIntegrity()
+        {
+            // check that hash table is at most 50% full
+            if (m < 2 * n)
+            {
+                throw new ArgumentOutOfRangeException(nameof(this.m), $"Hash table size: {m} array size: {n}");
+            }
+
+            // check that each key in table can be found by get()
+            for (int i = 0; i < m; i++)
+            {
+                TKey keyi = keys[i];
+                TValue vali = vals[i];
+                TValue geti = Get(keyi);
+
+                if (!geti.Equals(vali))
+                {
+                    throw new InvalidOperationException($"{keyi} {geti} {vali}");
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IEnumerator<TKey> GetEnumerator()
+        {
+            var queue = new SedgewickWayne.Algorithms.Queue<TKey>();
+            for (int i = 0; i < m; i++)
+                if (keys[i] != null) queue.Enqueue(keys[i]);
+            return queue.GetEnumerator();
+        }
     }
 }
-
-
-
-////[Signature("<TKey:Ljava/lang/Object;Value:Ljava/lang/Object;>Ljava/lang/Object;")]
-//public class LinearProbingHashST
-//{
-//    private const int INIT_CAPACITY = 4;
-//    private int N;
-//    private int M;
-//    //[Signature("[TKey;")]
-//    private object[] keys;
-//    //[Signature("[TValue;")]
-//    private object[] vals;
-//    //[Modifiers(Modifiers.Static | Modifiers.Final | Modifiers.Synthetic)]
-//    internal static bool s_assertionsDisabled;
-
-
-
-
-//    public LinearProbingHashST(int i)
-//    {
-//        this.M = i;
-//        this.keys = (object[])new object[this.M];
-//        this.vals = (object[])new object[this.M];
-//    }
-//    public virtual int size()
-//    {
-//        return this.N;
-//    }
-//    /*	[Signature("(TKey;)TValue;")]*/
-
-//    public virtual object get(object obj)
-//    {
-//        int num = this.hash(obj);
-//        while (this.keys[num] != null)
-//        {
-//            if (java.lang.Object.instancehelper_equals(this.keys[num], obj))
-//            {
-//                return this.vals[num];
-//            }
-//            int expr_2D = num + 1;
-//            int expr_34 = this.M;
-//            num = ((expr_34 != -1) ? (expr_2D % expr_34) : 0);
-//        }
-//        return null;
-//    }
-//    /*	[Signature("(TKey;TValue;)V")]*/
-
-//    public virtual void put(object obj1, object obj2)
-//    {
-//        if (obj2 == null)
-//        {
-//            this.delete(obj1);
-//        }
-//        if (this.N >= this.M / 2)
-//        {
-//            this.resize(2 * this.M);
-//        }
-//        int num = this.hash(obj1);
-//        while (this.keys[num] != null)
-//        {
-//            if (java.lang.Object.instancehelper_equals(this.keys[num], obj1))
-//            {
-//                this.vals[num] = obj2;
-//                return;
-//            }
-//            int expr_56 = num + 1;
-//            int expr_5D = this.M;
-//            num = ((expr_5D != -1) ? (expr_56 % expr_5D) : 0);
-//        }
-//        this.keys[num] = obj1;
-//        this.vals[num] = obj2;
-//        this.N++;
-//    }
-//    /*	[Signature("(TKey;)V")]*/
-
-//    public virtual void delete(object obj)
-//    {
-//        if (!this.contains(obj))
-//        {
-//            return;
-//        }
-//        int num = this.hash(obj);
-//        while (!java.lang.Object.instancehelper_equals(obj, this.keys[num]))
-//        {
-//            int expr_24 = num + 1;
-//            int expr_2B = this.M;
-//            num = ((expr_2B != -1) ? (expr_24 % expr_2B) : 0);
-//        }
-//        this.keys[num] = null;
-//        this.vals[num] = null;
-//        int expr_4C = num + 1;
-//        int expr_53 = this.M;
-//        num = ((expr_53 != -1) ? (expr_4C % expr_53) : 0);
-//        while (this.keys[num] != null)
-//        {
-//            object obj2 = this.keys[num];
-//            object obj3 = this.vals[num];
-//            this.keys[num] = null;
-//            this.vals[num] = null;
-//            this.N--;
-//            this.put(obj2, obj3);
-//            int expr_A4 = num + 1;
-//            int expr_AB = this.M;
-//            num = ((expr_AB != -1) ? (expr_A4 % expr_AB) : 0);
-//        }
-//        this.N--;
-//        if (this.N > 0 && this.N <= this.M / 8)
-//        {
-//            this.resize(this.M / 2);
-//        }
-//        if (!LinearProbingHashST.s_assertionsDisabled && !this.check())
-//        {
-
-//            throw new AssertionError();
-//        }
-//    }
-
-
-//    private void resize(int i)
-//    {
-//        LinearProbingHashST linearProbingHashST = new LinearProbingHashST(i);
-//        for (int j = 0; j < this.M; j++)
-//        {
-//            if (this.keys[j] != null)
-//            {
-//                linearProbingHashST.put(this.keys[j], this.vals[j]);
-//            }
-//        }
-//        this.keys = linearProbingHashST.keys;
-//        this.vals = linearProbingHashST.vals;
-//        this.M = linearProbingHashST.M;
-//    }
-//    /*	[LineNumberTable(54), Signature("(TKey;)I")]*/
-
-//    private int hash(object this2)
-//    {
-//        int expr_0B = java.lang.Object.instancehelper_hashCode(this2) & 2147483647;
-//        int expr_12 = this.M;
-//        return (expr_12 != -1) ? (expr_0B % expr_12) : 0;
-//    }
-//    /*	[LineNumberTable(49), Signature("(TKey;)Z")]*/
-
-//    public virtual bool contains(object obj)
-//    {
-//        return this.get(obj) != null;
-//    }
-
-
-//    private bool check()
-//    {
-//        if (this.M < 2 * this.N)
-//        {
-//            System.err.println(new StringBuilder().append("Hash table size M = ").append(this.M).append("; array size N = ").append(this.N).toString());
-//            return false;
-//        }
-//        for (int i = 0; i < this.M; i++)
-//        {
-//            if (this.keys[i] != null)
-//            {
-//                if (this.get(this.keys[i]) != this.vals[i])
-//                {
-//                    System.err.println(new StringBuilder().append("get[").append(this.keys[i]).append("] = ").append(this.get(this.keys[i])).append("; vals[i] = ").append(this.vals[i]).toString());
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
-
-
-//    public LinearProbingHashST() : this(4)
-//    {
-//    }
-//    /*	[Signature("()Ljava/lang/Iterable<TKey;>;")]*/
-
-//    public virtual Iterable keys()
-//    {
-//        Queue queue = new Queue();
-//        for (int i = 0; i < this.M; i++)
-//        {
-//            if (this.keys[i] != null)
-//            {
-//                queue.enqueue(this.keys[i]);
-//            }
-//        }
-//        return queue;
-//    }
-
-
-//    public virtual bool isEmpty()
-//    {
-//        return this.size() == 0;
-//    }
-
-
-//    /**/
-//    public static void main(string[] strarr)
-//    {
-//        LinearProbingHashST linearProbingHashST = new LinearProbingHashST();
-//        int num = 0;
-//        while (!StdIn.isEmpty())
-//        {
-//            string text = StdIn.readString();
-//            linearProbingHashST.put(text, Integer.valueOf(num));
-//            num++;
-//        }
-//        Iterator iterator = linearProbingHashST.keys().iterator();
-//        while (iterator.hasNext())
-//        {
-//            string text = (string)iterator.next();
-//            StdOut.println(new StringBuilder().append(text).append(" ").append(linearProbingHashST.get(text)).toString());
-//        }
-//    }
-
-//    static LinearProbingHashST()
-//    {
-//        LinearProbingHashST.s_assertionsDisabled = !ClassLiteral<LinearProbingHashST>.Value.desiredAssertionStatus();
-//    }
-//}

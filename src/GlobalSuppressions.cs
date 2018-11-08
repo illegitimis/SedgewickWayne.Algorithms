@@ -6,4 +6,6 @@
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in camel case", Justification = "<Pending>", Scope = "type", Target = "~T:SedgewickWayne.Algorithms.BST`2")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in camel case", Justification = "<Pending>", Scope = "type", Target = "~T:SedgewickWayne.Algorithms.NonrecursiveBST`2")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~M:SedgewickWayne.Algorithms.SymbolTables.LinearProbingHashST`2.hash(`0)~System.Int32")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3928:Parameter names used into ArgumentException constructors should match an existing one ", Justification = "<Pending>", Scope = "member", Target = "~M:SedgewickWayne.Algorithms.SymbolTables.LinearProbingHashST`2.AssertIntegrity")]
 
