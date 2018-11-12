@@ -53,69 +53,69 @@ namespace SedgewickWayne.Algorithms.UnitTests
         {
           case 0:
             Assert.True(uF.Connected(4, 3));
-            Assert.Equal(uF.Ids[3],4);
-            Assert.Equal(uF.Ranks[4], 1);
-            Assert.Equal(uF.Ranks[3], 0);
+            Assert.Equal(4,uF.Ids[3]);
+            Assert.Equal(1, uF.Ranks[4]);
+            Assert.Equal(0, uF.Ranks[3]);
             break;
 
           case 1:
             Assert.True(uF.Connected(8, 3));
             Assert.True(uF.Connected(8, 4));
-            Assert.Equal(uF.Ids[3], 4);
-            Assert.Equal(uF.Ids[8], 4);
-            Assert.Equal(uF.Ranks[4], 1);
-            Assert.Equal(uF.Ranks[8], 0);
+            Assert.Equal(4, uF.Ids[3]);
+            Assert.Equal(4, uF.Ids[8]);
+            Assert.Equal(1, uF.Ranks[4]);
+            Assert.Equal(0, uF.Ranks[8]);
             break;
 
           case 2:
             Assert.True(uF.Connected(6, 5));            
-            Assert.Equal(uF.Ids[5], 6);            
-            Assert.Equal(uF.Ranks[6], 1);
-            Assert.Equal(uF.Ranks[5], 0);
+            Assert.Equal(6, uF.Ids[5]);            
+            Assert.Equal(1, uF.Ranks[6]);
+            Assert.Equal(0, uF.Ranks[5]);
             break;
 
           case 3:
             Assert.True(uF.Connected(4, 9));
-            Assert.Equal(uF.Ids[9], 4);
-            Assert.Equal(uF.Ranks[4], 1);
-            Assert.Equal(uF.Ranks[9], 0);
+            Assert.Equal(4, uF.Ids[9]);
+            Assert.Equal(1, uF.Ranks[4]);
+            Assert.Equal(0, uF.Ranks[9]);
             break;
 
           case 4:
             Assert.True(uF.Connected(2, 1));
-            Assert.Equal(uF.Ids[1], 2);
-            Assert.Equal(uF.Ranks[2], 1);
-            Assert.Equal(uF.Ranks[1], 0);
+            Assert.Equal(2, uF.Ids[1]);
+            Assert.Equal(1, uF.Ranks[2]);
+            Assert.Equal(0, uF.Ranks[1]);
             break;
 
           case 5:
             Assert.True(uF.Connected(8, 9));
-            Assert.Equal(uF.Ids[9], 4);
-            Assert.Equal(uF.Ids[8], 4);
+            Assert.Equal(4, uF.Ids[9]);
+            Assert.Equal(4, uF.Ids[8]);
             break;
 
           case 6:
             Assert.True(uF.Connected(5, 0));
-            Assert.Equal(uF.Ids[5], 6);
-            Assert.Equal(uF.Ids[0], 6);
+            Assert.Equal(6, uF.Ids[5]);
+            Assert.Equal(6, uF.Ids[0]);
             break;
 
           case 7:
             Assert.True(uF.Connected(7, 2));
-            Assert.Equal(uF.Ids[7], 2);
+            Assert.Equal(2, uF.Ids[7]);
             break;
 
           case 8:
             Assert.True(uF.Connected(6, 1));
-            Assert.Equal(uF.Ids[1], 6);
-            Assert.Equal(uF.Ranks[6], 2);
+            Assert.Equal(6, uF.Ids[1]);
+            Assert.Equal(2, uF.Ranks[6]);
             break;
 
           case 9:
             Assert.True(uF.Connected(7, 3));
-            Assert.Equal(uF.Ids[4], 6);
-            Assert.Equal(uF.Ids[7], 6);
-            Assert.Equal(uF.Ids[3], 6);
+            Assert.Equal(6, uF.Ids[4]);
+            Assert.Equal(6, uF.Ids[7]);
+            Assert.Equal(6, uF.Ids[3]);
             break;
           
           default: break;
@@ -125,7 +125,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
       // at the end
       Assert.Equal(new byte[] { 0, 0, 1, 0, 1, 0, 2, 0, 0, 0 }, uF.Ranks);
       Assert.Equal(new[] { 6, 6, 6, 6, 6, 6, 6, 6, 4, 4 }, uF.Ids);
-      Assert.Equal(uF.Count, 1);
+      Assert.Equal(1, uF.Count);
     }
 
     [Fact]
@@ -133,40 +133,40 @@ namespace SedgewickWayne.Algorithms.UnitTests
     {
       IUnionFind qf = new QuickFindUF(10);
       qf.Union(4, 3);
-      Assert.Equal(qf.Ids[3], 3);
-      Assert.Equal(qf.Ids[4], 3);
+      Assert.Equal(3, qf.Ids[3]);
+      Assert.Equal(3, qf.Ids[4]);
 
       qf.Union(3, 8);
-      Assert.Equal(qf.Ids[3], 8);
-      Assert.Equal(qf.Ids[4], 8);
-      Assert.Equal(qf.Ids[8], 8);
+      Assert.Equal(8, qf.Ids[3]);
+      Assert.Equal(8, qf.Ids[4]);
+      Assert.Equal(8, qf.Ids[8]);
 
       qf.Union(6, 5);
-      Assert.Equal(qf.Ids[6], 5);
-      Assert.Equal(qf.Ids[5], 5);
+      Assert.Equal(5, qf.Ids[6]);
+      Assert.Equal(5, qf.Ids[5]);
 
       qf.Union(9, 4);
-      Assert.Equal(qf.Ids[9], 8);
-      Assert.Equal(qf.Ids[4], 8);
+      Assert.Equal(8, qf.Ids[9]);
+      Assert.Equal(8, qf.Ids[4]);
 
       qf.Union(2, 1);
-      Assert.Equal(qf.Ids[2], 1);
-      Assert.Equal(qf.Ids[1], 1);
+      Assert.Equal(1, qf.Ids[2]);
+      Assert.Equal(1, qf.Ids[1]);
 
       Assert.True(qf.Connected(8, 9));
       qf.Union(8, 9);
 
       qf.Union(5, 0);
-      Assert.Equal(qf.Ids[6], 0);
-      Assert.Equal(qf.Ids[5], 0);
+      Assert.Equal(0, qf.Ids[6]);
+      Assert.Equal(0, qf.Ids[5]);
 
       qf.Union(7, 2);
-      Assert.Equal(qf.Ids[7], 1);
+      Assert.Equal(1, qf.Ids[7]);
 
       qf.Union(6, 1);
-      Assert.Equal(qf.Ids[5], 1);
-      Assert.Equal(qf.Ids[6], 1);
-      Assert.Equal(qf.Ids[0], 1);
+      Assert.Equal(1, qf.Ids[5]);
+      Assert.Equal(1, qf.Ids[6]);
+      Assert.Equal(1, qf.Ids[0]);
       Assert.True(qf.Connected(1, 0));
 
       qf.Union(1, 0);
@@ -175,7 +175,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
       qf.Union(6, 7);
 
       Assert.Equal(new int[] { 1, 1, 1, 8, 8, 1, 1, 1, 8, 8 }, qf.Ids);
-      Assert.Equal(qf.Count, 2);
+      Assert.Equal(2, qf.Count);
     }
 
     [Fact]
@@ -184,24 +184,24 @@ namespace SedgewickWayne.Algorithms.UnitTests
       IUnionFind qu = new QuickUnionUF(10);
 
       qu.Union(4, 3);
-      Assert.Equal(qu.Ids[3], 3);
-      Assert.Equal(qu.Ids[4], 3);
+      Assert.Equal(3, qu.Ids[3]);
+      Assert.Equal(3, qu.Ids[4]);
      
 
       qu.Union(3, 8);
-      Assert.Equal(qu.Ids[3], 8);
-      Assert.Equal(qu.Ids[8], 8);
+      Assert.Equal(8, qu.Ids[3]);
+      Assert.Equal(8, qu.Ids[8]);
       // this does not propagate
-      Assert.Equal(qu.Ids[4], 3);      
+      Assert.Equal(3, qu.Ids[4]);      
 
       qu.Union(6, 5);
-      Assert.Equal(qu.Ids[6], 5);
+      Assert.Equal(5, qu.Ids[6]);
       
       qu.Union(9, 4);
-      Assert.Equal(qu.Ids[9], 8);
+      Assert.Equal(8, qu.Ids[9]);
       
       qu.Union(2, 1);
-      Assert.Equal(qu.Ids[2], 1);
+      Assert.Equal(1, qu.Ids[2]);
       
       Assert.True(qu.Connected(8, 9));
       qu.Union(8, 9);
@@ -211,17 +211,17 @@ namespace SedgewickWayne.Algorithms.UnitTests
 
       qu.Union(5, 0);
       // 0 becomes root of 5, 6 child of 5
-      Assert.Equal(qu.Ids[6], 5);
-      Assert.Equal(qu.Ids[5], 0);
+      Assert.Equal(5, qu.Ids[6]);
+      Assert.Equal(0, qu.Ids[5]);
 
       qu.Union(7, 2);
-      Assert.Equal(qu.Ids[7], 1);
-      Assert.Equal(qu.Ids[2], 1);
+      Assert.Equal(1, qu.Ids[7]);
+      Assert.Equal(1, qu.Ids[2]);
 
       qu.Union(6, 1);
-      Assert.Equal(qu.Ids[5], 0);
-      Assert.Equal(qu.Ids[6], 5);
-      Assert.Equal(qu.Ids[0], 1);
+      Assert.Equal(0, qu.Ids[5]);
+      Assert.Equal(5, qu.Ids[6]);
+      Assert.Equal(1, qu.Ids[0]);
 
       Assert.True(qu.Connected(1, 0));
       //wqu.Union(1, 0);
@@ -231,13 +231,13 @@ namespace SedgewickWayne.Algorithms.UnitTests
 
       Assert.False(qu.Connected(7, 3));
       qu.Union(7, 3);
-      Assert.Equal(qu.Ids[7], 1);
-      Assert.Equal(qu.Ids[3], 8);
-      Assert.Equal(qu.Ids[1], 8);
+      Assert.Equal(1, qu.Ids[7]);
+      Assert.Equal(8, qu.Ids[3]);
+      Assert.Equal(8, qu.Ids[1]);
 
       Assert.Equal(new int[] { 1, 8, 1, 8, 3, 0, 5, 1, 8, 8 }, qu.Ids);
       
-      Assert.Equal(qu.Count, 1);
+      Assert.Equal(1, qu.Count);
     }
 
 
@@ -248,53 +248,53 @@ namespace SedgewickWayne.Algorithms.UnitTests
 
       // first time else branch
       wqu.Union(4, 3);
-      Assert.Equal(wqu.Ids[3], 4);
-      Assert.Equal(wqu.Ids[4], 4);      
-      Assert.Equal(wqu.Sizes[3], 1);
-      Assert.Equal(wqu.Sizes[4], 2);
+      Assert.Equal(4, wqu.Ids[3]);
+      Assert.Equal(4, wqu.Ids[4]);      
+      Assert.Equal(1, wqu.Sizes[3]);
+      Assert.Equal(2, wqu.Sizes[4]);
 
       // make 8 point to 4
       wqu.Union(3, 8);
-      Assert.Equal(wqu.Ids[3], 4);
-      Assert.Equal(wqu.Ids[8], 4);
-      Assert.Equal(wqu.Ids[4], 4);
-      Assert.Equal(wqu.Sizes[4], 3);
+      Assert.Equal(4, wqu.Ids[3]);
+      Assert.Equal(4, wqu.Ids[8]);
+      Assert.Equal(4, wqu.Ids[4]);
+      Assert.Equal(3, wqu.Sizes[4]);
 
       wqu.Union(6, 5);
-      Assert.Equal(wqu.Ids[6], 6);
-      Assert.Equal(wqu.Ids[5], 6);
-      Assert.Equal(wqu.Sizes[6], 2);
+      Assert.Equal(6, wqu.Ids[6]);
+      Assert.Equal(6, wqu.Ids[5]);
+      Assert.Equal(2, wqu.Sizes[6]);
 
       // make 9 point to 4
       wqu.Union(9, 4);
-      Assert.Equal(wqu.Sizes[4], 4);
-      Assert.Equal(wqu.Ids[9], 4);
+      Assert.Equal(4, wqu.Sizes[4]);
+      Assert.Equal(4, wqu.Ids[9]);
 
       wqu.Union(2, 1);
-      Assert.Equal(wqu.Ids[1], 2);
-      Assert.Equal(wqu.Sizes[2], 2);
+      Assert.Equal(2, wqu.Ids[1]);
+      Assert.Equal(2, wqu.Sizes[2]);
 
       Assert.True(wqu.Connected(8, 9));
       Assert.False(wqu.Connected(5, 4));
 
       // 0 points to 6, root of 5
       wqu.Union(5, 0);      
-      Assert.Equal(wqu.Ids[0], 6);
-      Assert.Equal(wqu.Ids[5], 6);
-      Assert.Equal(wqu.Sizes[6], 3);
+      Assert.Equal(6, wqu.Ids[0]);
+      Assert.Equal(6, wqu.Ids[5]);
+      Assert.Equal(3, wqu.Sizes[6]);
 
       // 2 in the bigger tree, 7 goes below
       wqu.Union(7, 2);
-      Assert.Equal(wqu.Ids[7], 2);
-      Assert.Equal(wqu.Ids[1], 2);
-      Assert.Equal(wqu.Sizes[2], 3);
+      Assert.Equal(2, wqu.Ids[7]);
+      Assert.Equal(2, wqu.Ids[1]);
+      Assert.Equal(3, wqu.Sizes[2]);
 
       // roots have equal sizes, else branch
       wqu.Union(6, 1);
-      Assert.Equal(wqu.Ids[2], 6);
-      Assert.Equal(wqu.Ids[6], 6);
-      Assert.Equal(wqu.Ids[1], 2);
-      Assert.Equal(wqu.Sizes[6], 6);
+      Assert.Equal(6, wqu.Ids[2]);
+      Assert.Equal(6, wqu.Ids[6]);
+      Assert.Equal(2, wqu.Ids[1]);
+      Assert.Equal(6, wqu.Sizes[6]);
 
       Assert.True(wqu.Connected(1, 0));
       Assert.True(wqu.Connected(6, 7));
@@ -302,14 +302,14 @@ namespace SedgewickWayne.Algorithms.UnitTests
 
       // 3 in the smaller tree, make root of 3 point to root of 7, 4 poins to 6
       wqu.Union(7, 3);
-      Assert.Equal(wqu.Ids[4], 6);
-      Assert.Equal(wqu.Ids[3], 4);
+      Assert.Equal(6, wqu.Ids[4]);
+      Assert.Equal(4, wqu.Ids[3]);
       // Assert.Equal(wqu.Ids[7], 2);
 
       //Assert.Equal(new int[] { 6, 2, 6, 4, 6, 6, 6 , 2, 4, 4 }, wqu.Ids);
       Assert.Equal(new int[] { 1, 1, 3, 1, 4, 1, 10, 1, 1, 1 }, wqu.Sizes);
 
-      Assert.Equal(wqu.Count, 1);
+      Assert.Equal(1, wqu.Count);
     }
 
     [Fact]

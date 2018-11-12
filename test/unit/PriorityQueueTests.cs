@@ -400,16 +400,16 @@ namespace SedgewickWayne.Algorithms.UnitTests
             pq.Insert('P');
             pq.Insert('Q');
             pq.Insert('E');
-            Assert.Equal(pq.Delete(), 'Q');
+            Assert.Equal('Q', pq.Delete());
             pq.Insert('X');
             pq.Insert('A');
             pq.Insert('M');
-            Assert.Equal(pq.Delete(), 'X');
+            Assert.Equal('X', pq.Delete());
             pq.Insert('P');
             pq.Insert('L');
             pq.Insert('E');
-            Assert.Equal(pq.Delete(), 'P');
-            Assert.Equal(pq.Size, 6);
+            Assert.Equal('P', pq.Delete());
+            Assert.Equal(6, pq.Size);
             Assert.Equal(new char[] { 'P', 'M', 'L', 'E', 'E', 'A' }, pq.ToArray());
         }
 
