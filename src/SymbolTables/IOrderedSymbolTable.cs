@@ -37,12 +37,14 @@ namespace SedgewickWayne.Algorithms
         /// largest key
         /// </summary>
         TKey Max { get; }
+        
         /// <summary>
         /// find the key with a given rank
         /// </summary>
         /// <param name="k">rank</param>
         /// <returns>key with rank</returns>
         TKey Select(int k);
+        
         /// <summary>
         /// find the number of keys less than a given key
         /// </summary>
@@ -56,6 +58,7 @@ namespace SedgewickWayne.Algorithms
         /// <param name="key">given key</param>
         /// <returns>largest key that is less than or equal to the given key</returns>        
         TKey Floor(TKey key);
+        
         /// <summary>
         /// find the smallest key that is greater than or equal to the given key
         /// </summary>

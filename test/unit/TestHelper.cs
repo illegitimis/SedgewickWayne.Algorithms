@@ -10,6 +10,7 @@
         internal const string BST = "binary search tree";
         internal const string LINEAR_PROBING = "linear probing";
         internal const string NON_RECURSIVE_BST = "non recursive bst";
+        internal const string RANDOMIZED_BST = "randomized bst";
 
         internal static ISymbolTable<TKey, TValue> Factory<TKey, TValue>(string symbolTableType)
            where TKey : IComparable<TKey>, IEquatable<TKey>
@@ -30,6 +31,10 @@
                 case LINEAR_PROBING: return new LinearProbingHashST<TKey, TValue>();
 
                 case NON_RECURSIVE_BST: return new NonrecursiveBST<TKey, TValue>();
+
+                case RANDOMIZED_BST:
+                case nameof(RandomizedBST<TKey, TValue>):
+                    return new RandomizedBST<TKey, TValue>();
 
                 default: return null;
             }

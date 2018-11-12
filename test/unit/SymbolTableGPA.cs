@@ -52,8 +52,8 @@ namespace SedgewickWayne.Algorithms.UnitTests
         [Fact] public void BinarySearchGpa() => GPA(BINARY_SEARCH);
         [Fact] public void BstGpa() => GPA(BST);
         [Fact] public void LinearProbingHashGpa() => GPA(LINEAR_PROBING);
-
         [Fact] public void NonRecursiveGpa() => GPA(NON_RECURSIVE_BST);
+        [Fact] public void RandomizedBstGpa() => GPA(RANDOMIZED_BST);
 
 
         void GPA(string st)

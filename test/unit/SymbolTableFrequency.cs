@@ -22,8 +22,8 @@ namespace SedgewickWayne.Algorithms.UnitTests
         [Fact] public void BinarySearch() => FrequencyCounter(BINARY_SEARCH);
         [Fact] public void Bst() => FrequencyCounter(BST);
         [Fact] public void LinearProbing() => FrequencyCounter(LINEAR_PROBING);
-
         [Fact] public void NonRecursiveBst() => FrequencyCounter(NON_RECURSIVE_BST);
+        [Fact] public void RandomizedBst() => FrequencyCounter(RANDOMIZED_BST);
 
         /// <summary>
         /// https://algs4.cs.princeton.edu/34hash/tinyST.txt
