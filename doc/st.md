@@ -12,7 +12,7 @@ SequentialSearchST | [SequentialSearchST.java](https://algs4.cs.princeton.edu/31
 BST | [BST.java](http://algs4.cs.princeton.edu/32bst/BST.java.html )| [Binary Search Tree](../src/SymbolTables/BST.cs)
 LinearProbingHashST | [LinearProbingHashST.java](http://algs4.cs.princeton.edu/34hash/LinearProbingHashST.java.html) | associative array based [LinearProbingHashST.cs](../src/SymbolTables/LinearProbingHashST.cs)
 NonrecursiveBST | [NonrecursiveBST.java](http://algs4.cs.princeton.edu/32bst/NonrecursiveBST.java.html) | [NonrecursiveBST](../src/SymbolTables/NonrecursiveBST.cs) incomplete, `delete` not implemented
-RandomizedBST | [RandomizedBST.java](http://algs4.cs.princeton.edu/33balanced/RandomizedBST.java.html) | -
+RandomizedBST | [RandomizedBST.java](http://algs4.cs.princeton.edu/33balanced/RandomizedBST.java.html) | [RandomizedBST](../src/SymbolTables/RandomizedBST.cs)
 RedBlackBST | [RedBlackBST.java](http://algs4.cs.princeton.edu/33balanced/RedBlackBST.java.html) | -
 SeparateChainingHashST | - | -
 SplayTree | [SplayBST.java](http://algs4.cs.princeton.edu/33balanced/SplayBST.java.html) | -
