@@ -14,4 +14,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "<Pending>", Scope = "member", Target = "~M:SedgewickWayne.Algorithms.RandomizedBST`2.ceiling2(`0)~`0")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3358:Ternary operators should not be nested", Justification = "<Pending>", Scope = "member", Target = "~M:SedgewickWayne.Algorithms.RandomizedBST`2.Floor(SedgewickWayne.Algorithms.RandomizedBST`2.Node`0,`0,SedgewickWayne.Algorithms.RandomizedBST`2.Node`0)~SedgewickWayne.Algorithms.RandomizedBST`2.Node`0")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3881:\"IDisposable\" should be implemented correctly", Justification = "<Pending>", Scope = "type", Target = "~T:SedgewickWayne.Algorithms.RandomizedBST`2.BstEnumerator")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "<Pending>", Scope = "type", Target = "~T:SedgewickWayne.Algorithms.RedBlackBST`2")]
 

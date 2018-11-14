@@ -7,68 +7,40 @@ namespace SedgewickWayne.Algorithms
     using System.Collections;
     using System.Collections.Generic;
 
-    public class RandomizedBST<TKey, TValue> :
-        IOrderedSymbolTable<TKey, TValue>
+    public class RandomizedBST<TKey, TValue>
+        : TreeSTBase<TKey, TValue>
         where TKey : IComparable<TKey>, IEquatable<TKey>
         where TValue : IEquatable<TValue>
     {
 
-        // root of the BST
-        private Node root;   
-
-        public TKey Min
+        internal override BaseNode<TKey, TValue> MaximumNode(BaseNode<TKey, TValue> node)
         {
-            get
-            {
-                TKey key = default(TKey);
-                for (Node x = root; x != null; x = x.left)
-                    key = x.key;
-                return key;
-            }
+            BaseNode<TKey, TValue> max = null;
+            for (BaseNode<TKey, TValue> x = node; x != null; x = x.right)
+                max = x;
+            return max;
         }
 
-        public TKey Max
+        internal override BaseNode<TKey, TValue> MinimumNode(BaseNode<TKey, TValue> node)
         {
-            get
-            {
-                TKey key = default(TKey);
-                for (Node x = root; x != null; x = x.right)
-                    key = x.key;
-                return key;
-            }
+            BaseNode<TKey, TValue> min = null;
+            for (BaseNode<TKey, TValue> x = node; x != null; x = x.left)
+                min = x;
+            return min;
         }
-
-        #region size
-
-        public int Size => NodeSize(root);
-
-        /// <summary>NumberOfNodesInSubtreeRootedAt</summary>
-        /// <param name="x">node</param>
-        /// <returns></returns>
-        private int NodeSize(Node x) => (x == null) ? 0 : x.size;
-
-        private void FixSubtreeCountField(Node x)
-        {
-            if (x == null) return;
-            x.size = 1 + NodeSize(x.left) + NodeSize(x.right);
-        }
-
-        public bool IsEmpty => Size == 0;
-
-        #endregion
 
         #region inequality
 
         /// <summary />
         /// <param name="key"></param>
         /// <returns>the smallest key >= query key; if no such key return null</returns>
-        public TKey Ceiling(TKey key)
+        public override TKey Ceiling(TKey key)
         {
-            Node best = Ceiling(root, key, null);
+            BaseNode<TKey, TValue> best = Ceiling(root, key, null);
             return (best == null) ? default(TKey) : best.key;
         }
 
-        private Node Ceiling(Node x, TKey key, Node best) =>
+        private BaseNode<TKey, TValue> Ceiling(BaseNode<TKey, TValue> x, TKey key, BaseNode<TKey, TValue> best) =>
             (x == null)
                 ? best
                 : key.Equals(x.key)
@@ -80,8 +52,8 @@ namespace SedgewickWayne.Algorithms
         // iterative ceiling?
         private TKey ceiling2(TKey key)
         {
-            Node best = null;
-            Node x = root;
+            BaseNode<TKey, TValue> best = null;
+            BaseNode<TKey, TValue> x = root;
             while (x != null)
             {
                 int cmp = key.CompareTo(x.key);
@@ -103,13 +75,13 @@ namespace SedgewickWayne.Algorithms
             return best.key;
         }
 
-        public TKey Floor(TKey key)
+        public override TKey Floor(TKey key)
         {
-            Node best = Floor(root, key, null);
+            BaseNode<TKey, TValue> best = Floor(root, key, null);
             return (best == null) ? default(TKey) : best.key;
         }
 
-        private Node Floor(Node x, TKey key, Node best) =>        
+        private BaseNode<TKey, TValue> Floor(BaseNode<TKey, TValue> x, TKey key, BaseNode<TKey, TValue> best) =>        
             (x == null)
               ? best
               : key.Equals(x.key)
@@ -120,26 +92,18 @@ namespace SedgewickWayne.Algorithms
 
         #endregion
 
-        #region get
-
-        public TValue Get(TKey key) => Get(root, key);
-
         /// <summary>if multiple such values, return first one on path from root</summary>
         /// <param name="x"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        private TValue Get(Node x, TKey key)
+        internal override TValue GetKey(BaseNode<TKey, TValue> x, TKey key)
         {
             if (x == null) return default(TValue);
             int cmp = key.CompareTo(x.key);
             if (cmp == 0) return x.val;
-            else if (cmp < 0) return Get(x.left, key);
-            else return Get(x.right, key);
+            else if (cmp < 0) return GetKey(x.left, key);
+            else return GetKey(x.right, key);
         }
-
-        public bool Contains(TKey key) => !Get(key).Equals(default(TValue));
-
-        #endregion
 
         #region delete
 
@@ -147,20 +111,20 @@ namespace SedgewickWayne.Algorithms
         /// remove and return value associated with given key; if no such key, exit
         /// </summary>
         /// <param name="key"></param>
-        public void Delete(TKey key)
+        public override void Delete(TKey key)
         {
             if (!Contains(key)) return;
             root = Remove(root, key);
         }
 
-        private Node Remove(Node x, TKey key)
+        private BaseNode<TKey, TValue> Remove(BaseNode<TKey, TValue> x, TKey key)
         {
             if (x == null) return null;
             int cmp = key.CompareTo(x.key);
             if (cmp == 0) x = joinLR(x.left, x.right);
             else if (cmp < 0) x.left = Remove(x.left, key);
             else x.right = Remove(x.right, key);
-            FixSubtreeCountField(x);
+            x.UpdateSizeFromChildren();
             return x;
         }
 
@@ -170,7 +134,7 @@ namespace SedgewickWayne.Algorithms
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        private Node joinLR(Node a, Node b)
+        private BaseNode<TKey, TValue> joinLR(BaseNode<TKey, TValue> a, BaseNode<TKey, TValue> b)
         {
             if (a == null) return b;
             if (b == null) return a;
@@ -180,45 +144,36 @@ namespace SedgewickWayne.Algorithms
             if (StdRandom.bernoulli((double)sizea / (sizea + sizeb)))
             {
                 a.right = joinLR(a.right, b);
-                FixSubtreeCountField(a);
+                a.UpdateSizeFromChildren();
                 return a;
             }
             else
             {
                 b.left = joinLR(a, b.left);
-                FixSubtreeCountField(b);
+                b.UpdateSizeFromChildren();
                 return b;
             }
         }
 
-        public void DeleteMax() => Delete(Max);
+        public override void DeleteMax() => Delete(Max);
 
-        public void DeleteMin() => Delete(Min);
+        public override void DeleteMin() => Delete(Min);
 
         #endregion
 
         #region insert
-
+ 
         /// <summary>
         /// Randomized insertion.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="val"></param>
-        public void Put(TKey key, TValue val)
-        {
-            root = Put(root, key, val);
-        }
-
-        /// <summary>
         /// make new node the root with uniform probability
         /// </summary>
         /// <param name="x"></param>
         /// <param name="key"></param>
         /// <param name="val"></param>
         /// <returns></returns>
-        private Node Put(Node x, TKey key, TValue val)
+        internal override BaseNode<TKey, TValue> PutKey(BaseNode<TKey, TValue> x, TKey key, TValue val)
         {
-            if (x == null) return new Node(key, val);
+            if (x == null) return new BaseNode<TKey, TValue>(key, val, 1);
             int cmp = key.CompareTo(x.key);
             if (cmp == 0)
             {
@@ -228,16 +183,16 @@ namespace SedgewickWayne.Algorithms
 
             int sizex = NodeSize(x);
             if (StdRandom.bernoulli(1.0 / (sizex + 1.0))) return PutRoot(x, key, val);
-            if (cmp < 0) x.left = Put(x.left, key, val);
-            else x.right = Put(x.right, key, val);
-            
-            FixSubtreeCountField(x);
+            if (cmp < 0) x.left = PutKey(x.left, key, val);
+            else x.right = PutKey(x.right, key, val);
+
+            x.UpdateSizeFromChildren();
             return x;
         }
 
-        private Node PutRoot(Node x, TKey key, TValue val)
+        private BaseNode<TKey, TValue> PutRoot(BaseNode<TKey, TValue> x, TKey key, TValue val)
         {
-            if (x == null) return new Node(key, val);
+            if (x == null) return new BaseNode<TKey, TValue>(key, val, 1);
             int cmp = key.CompareTo(x.key);
             if (cmp < 0)
             {
@@ -256,23 +211,23 @@ namespace SedgewickWayne.Algorithms
             return x;
         }
 
-        private Node RotateRight(Node h)
+        private BaseNode<TKey, TValue> RotateRight(BaseNode<TKey, TValue> h)
         {
-            Node x = h.left;
+            var x = h.left;
             h.left = x.right;
             x.right = h;
-            FixSubtreeCountField(h);
-            FixSubtreeCountField(x);
+            h.UpdateSizeFromChildren();
+            x.UpdateSizeFromChildren();
             return x;
         }
 
-        private Node RotateLeft(Node h)
+        private BaseNode<TKey, TValue> RotateLeft(BaseNode<TKey, TValue> h)
         {
-            Node x = h.right;
+            var x = h.right;
             h.right = x.left;
             x.left = h;
-            FixSubtreeCountField(h);
-            FixSubtreeCountField(x);
+            h.UpdateSizeFromChildren();
+            x.UpdateSizeFromChildren();
             return x;
         }
 
@@ -280,9 +235,7 @@ namespace SedgewickWayne.Algorithms
 
         #region enumerable
 
-        public IEnumerator<TKey> GetEnumerator() => new BstEnumerator(root);
-
-        IEnumerator IEnumerable.GetEnumerator() => new BstEnumerator(root);
+        public override IEnumerator<TKey> GetEnumerator() => new BstEnumerator(root);
 
         /// <summary>
         /// Iterate using inorder traversal using a stack.
@@ -290,9 +243,9 @@ namespace SedgewickWayne.Algorithms
         /// <remarks>Iterating through N elements takes O(N) time.</remarks>
         private class BstEnumerator : IEnumerator<TKey>
         {
-            private readonly Stack<Node> stack = new Stack<Node>();
+            private readonly Stack<BaseNode<TKey, TValue>> stack = new Stack<BaseNode<TKey, TValue>>();
 
-            public BstEnumerator(RandomizedBST<TKey, TValue>.Node root)
+            public BstEnumerator(BaseNode<TKey, TValue> root)
             {
                 while (root != null)
                 {
@@ -305,7 +258,7 @@ namespace SedgewickWayne.Algorithms
             {
                 get
                 {
-                    Node x = stack.Pop();
+                    BaseNode<TKey, TValue> x = stack.Pop();
                     TKey key = x.key;
                     x = x.right;
                     while (x != null)
@@ -330,69 +283,6 @@ namespace SedgewickWayne.Algorithms
         }
 
         #endregion
-
-        /// <summary>
-        /// Return the key in the symbol table whose rank is <paramref name="k"/>.
-        /// </summary>
-        /// <param name="k">the order statistic</param>
-        /// <returns>the key in the symbol table of rank <paramref name="k"/></returns>
-        public TKey Select(int k)
-        {
-            Node x = Select(root, k);
-            return x.key;
-        }
-
-        private Node Select(Node x, int k)
-        {
-            if (x == null) return null;
-            int t = NodeSize(x.left);
-            if (t > k) return Select(x.left, k);
-            else if (t < k) return Select(x.right, k - t - 1);
-            else return x;
-        }
-
-        public int RangeSize(TKey lo, TKey hi)
-        {
-            if (lo == null) throw new ArgumentNullException(nameof(lo));
-            if (hi == null) throw new ArgumentNullException(nameof(hi));
-
-            if (lo.CompareTo(hi) > 0) return 0;
-            if (Contains(hi)) return Rank(hi) - Rank(lo) + 1;
-            else return Rank(hi) - Rank(lo);
-        }
-
-        public int Rank(TKey key)
-        {
-            if (key == null) throw new ArgumentNullException(nameof(key));
-            return KeyRank(key, root);
-        }
-
-        private int KeyRank(TKey key, Node x)
-        {
-            if (x == null) return 0;
-            int cmp = key.CompareTo(x.key);
-            if (cmp < 0) return KeyRank(key, x.left);
-            else if (cmp > 0) return 1 + NodeSize(x.left) + KeyRank(key, x.right);
-            else return NodeSize(x.left);
-        }
-
-
-
-        #region BST helper node data type
-        private class Node
-        {
-            internal TKey key;           // key
-            internal TValue val;         // associated data
-            internal Node left, right;   // left and right subtrees
-            internal int size;           // node count of descendents
-
-            public Node(TKey key, TValue val)
-            {
-                this.key = key;
-                this.val = val;
-                this.size = 1;
-            }
-        }
-        #endregion
+       
     }
 }

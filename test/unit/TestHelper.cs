@@ -11,6 +11,7 @@
         internal const string LINEAR_PROBING = "linear probing";
         internal const string NON_RECURSIVE_BST = "non recursive bst";
         internal const string RANDOMIZED_BST = "randomized bst";
+        internal const string RED_BLACK_BST = "red black bst";
 
         internal static ISymbolTable<TKey, TValue> Factory<TKey, TValue>(string symbolTableType)
            where TKey : IComparable<TKey>, IEquatable<TKey>
@@ -33,8 +34,10 @@
                 case NON_RECURSIVE_BST: return new NonrecursiveBST<TKey, TValue>();
 
                 case RANDOMIZED_BST:
-                case nameof(RandomizedBST<TKey, TValue>):
-                    return new RandomizedBST<TKey, TValue>();
+                case nameof(RandomizedBST<TKey, TValue>): return new RandomizedBST<TKey, TValue>();
+
+                case RED_BLACK_BST:
+                case nameof(RedBlackBST<TKey, TValue>): return new RedBlackBST<TKey, TValue>();
 
                 default: return null;
             }

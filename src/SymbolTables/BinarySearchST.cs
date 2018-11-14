@@ -50,7 +50,7 @@ namespace SedgewickWayne.Algorithms
      
      */
     public class BinarySearchST<TKey, TValue>
-        : IOrderedSymbolTable<TKey, TValue>
+        : OrderedSTBase<TKey, TValue>
         where TKey : IComparable<TKey>, IEquatable<TKey>
         where TValue : IEquatable<TValue>
     {
@@ -59,10 +59,9 @@ namespace SedgewickWayne.Algorithms
         private TValue[] vals;
         private int N = 0;
 
-
-        /**
-         * Initializes an empty symbol table.
-         */
+        /// <summary>
+        /// Initializes an empty symbol table.
+        /// </summary>
         public BinarySearchST() : this(INIT_CAPACITY) { }
 
         /**
@@ -76,23 +75,19 @@ namespace SedgewickWayne.Algorithms
             vals = new TValue[capacity];
         }
 
-
-        /**
- * Returns the value associated with the given key in this symbol table.
- *
- * @param  key the key
- * @return the value associated with the given key if the key is in the symbol table
- *         and {@code null} if the key is not in the symbol table
- * @throws ArgumentNullException if {@code key} is {@code null}
- */
-        public TValue Get(TKey key)
+        /// <summary>
+        /// Returns the value associated with the given key in this symbol table.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="key">the key</param>
+        /// <returns>the value associated with the given key if the key is in the symbol table; null if the key is not in the symbol table</returns>
+        public override TValue Get(TKey key)
         {
-            ThrowException(key, nameof(Get));
             if (IsEmpty) return default(TValue);
             int i = Rank(key);
             if (i < N && keys[i].CompareTo(key) == 0) return vals[i];
             return default(TValue);
-        }
+        }        
 
         /**
  * Inserts the specified key-value pair into the symbol table, overwriting the old 
@@ -104,9 +99,9 @@ namespace SedgewickWayne.Algorithms
  * @param  val the value
  * @throws ArgumentNullException if {@code key} is {@code null}
  */
-        public void Put(TKey key, TValue val)
+        public override void Put(TKey key, TValue val)
         {
-            ThrowException(key, nameof(Put));
+            KeyArgumentNull(key, nameof(Put));
 
             if (val == null)
             {
@@ -137,35 +132,14 @@ namespace SedgewickWayne.Algorithms
 
             Debug.Assert(check());
         }
+ 
 
-        /**
- * Does this symbol table contain the given key?
- *
- * @param  key the key
- * @return {@code true} if this symbol table contains {@code key} and
- *         {@code false} otherwise
- * @throws ArgumentNullException if {@code key} is {@code null}
- */
-        public bool Contains(TKey key)
-        {
-            ThrowException(key, nameof(Contains));
-            return !Get(key).Equals(default(TValue));
-        }
+            /// <summary>
+            /// Returns the number of key-value pairs in this symbol table.
+            /// </summary>
+        public override int Size => N;
 
-        /**
- * Returns the number of key-value pairs in this symbol table.
- *
- * @return the number of key-value pairs in this symbol table
- */
-        public int Size { get { return this.N; } }
-
-        /**
-  * Returns true if this symbol table is empty.
-  *
-  * @return {@code true} if this symbol table is empty;
-  *         {@code false} otherwise
-  */
-        public bool IsEmpty { get { return this.N == 0; } }
+  
 
         /**
  * Removes the specified key and associated value from this symbol table
@@ -174,9 +148,9 @@ namespace SedgewickWayne.Algorithms
  * @param  key the key
  * @throws ArgumentNullException if {@code key} is {@code null}
  */
-        public void Delete(TKey key)
+        public override void Delete(TKey key)
         {
-            ThrowException(key, nameof(Delete));
+            KeyArgumentNull(key, nameof(Delete));
             if (IsEmpty) return;
 
             // compute rank
@@ -213,9 +187,9 @@ namespace SedgewickWayne.Algorithms
          * @return the number of keys in the symbol table strictly less than {@code key}
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public int Rank(TKey key)
+        public override int Rank(TKey key)
         {
-            ThrowException(key, nameof(Rank));
+            KeyArgumentNull(key, nameof(Rank));
 
             int lo = 0, hi = N - 1;
             while (lo <= hi)
@@ -278,7 +252,7 @@ namespace SedgewickWayne.Algorithms
  *
  * Throws <see cref="InvalidOperationException" /> if the symbol table is empty
  */
-        public void DeleteMin()
+        public override void DeleteMin()
         {
             if (IsEmpty) throw new InvalidOperationException("Symbol table underflow error");
             Delete(Min);
@@ -289,7 +263,7 @@ namespace SedgewickWayne.Algorithms
          *
          * Throws <see cref="InvalidOperationException" /> if the symbol table is empty
          */
-        public void DeleteMax()
+        public override void DeleteMax()
         {
             if (IsEmpty) throw new InvalidOperationException("Symbol table underflow error");
             Delete(Max);
@@ -308,11 +282,11 @@ namespace SedgewickWayne.Algorithms
           * @return the smallest key in this symbol table
           * Throws <see cref="InvalidOperationException" /> if this symbol table is empty
           */
-        public TKey Min
+        public override TKey Min
         {
             get
             {
-                if (IsEmpty) throw new InvalidOperationException("called Min with empty symbol table");
+                SymbolTableUnderflow();
                 return keys[0];
             }
         }
@@ -323,11 +297,11 @@ namespace SedgewickWayne.Algorithms
          * @return the largest key in this symbol table
          * Throws <see cref="InvalidOperationException" /> if this symbol table is empty
          */
-        public TKey Max
+        public override TKey Max
         {
             get
             {
-                if (IsEmpty) throw new InvalidOperationException("called Max with empty symbol table");
+                SymbolTableUnderflow();
                 return keys[N - 1];
             }
         }
@@ -340,12 +314,9 @@ namespace SedgewickWayne.Algorithms
          * @throws ArgumentNullException unless {@code k} is between 0 and
          *        <em>n</em>–1
          */
-        public TKey Select(int k)
+        public override TKey Select(int k)
         {
-            if (k < 0 || k >= Size)
-            {
-                throw new ArgumentNullException("called select() with invalid argument: " + k);
-            }
+            SelectOutOfRange(k);
             return keys[k];
         }
 
@@ -357,9 +328,9 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="InvalidOperationException" /> if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public TKey Floor(TKey key)
+        public override TKey Floor(TKey key)
         {
-            ThrowException(key, nameof(Floor));
+            KeyArgumentNull(key, nameof(Floor));
             int i = Rank(key);
             if (i < N && key.CompareTo(keys[i]) == 0) return keys[i];
             if (i == 0) return default(TKey);
@@ -374,32 +345,12 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="InvalidOperationException" /> if there is no such key
          * @throws ArgumentNullException if {@code key} is {@code null}
          */
-        public TKey Ceiling(TKey key)
+        public override TKey Ceiling(TKey key)
         {
-            ThrowException(key, nameof(Ceiling));
+            KeyArgumentNull(key, nameof(Ceiling));
             int i = Rank(key);
             if (i == N) return default(TKey);
             else return keys[i];
-        }
-
-        /**
-         * Returns the number of keys in this symbol table in the specified range.
-         *
-         * @param lo minimum endpoint
-         * @param hi maximum endpoint
-         * @return the number of keys in this symbol table between {@code lo} 
-         *         (inclusive) and {@code hi} (inclusive)
-         * @throws ArgumentNullException if either {@code lo} or {@code hi}
-         *         is {@code null}
-         */
-        public int RangeSize(TKey lo, TKey hi)
-        {
-            ThrowException(lo, nameof(RangeSize));
-            ThrowException(hi, nameof(RangeSize));
-
-            if (lo.CompareTo(hi) > 0) return 0;
-            if (Contains(hi)) return Rank(hi) - Rank(lo) + 1;
-            else return Rank(hi) - Rank(lo);
         }
 
         /**
@@ -415,8 +366,8 @@ namespace SedgewickWayne.Algorithms
          */
         public IEnumerable<TKey> Keys(TKey lo, TKey hi)
         {
-            ThrowException(lo, nameof(Keys));
-            ThrowException(hi, nameof(Keys));
+            KeyArgumentNull(lo, nameof(Keys));
+            KeyArgumentNull(hi, nameof(Keys));
 
             Queue<TKey> queue = new Queue<TKey>();
             if (lo.CompareTo(hi) > 0) return queue;
@@ -435,23 +386,6 @@ namespace SedgewickWayne.Algorithms
          *
          * @return all keys in this symbol table
          */
-        public IEnumerator<TKey> GetEnumerator()
-        {
-            return Keys(Min, Max).GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return Keys(Min, Max).GetEnumerator();
-        }
-
-
-        private void ThrowException(TKey key, string methodName)
-        {
-            if (key == null)
-            {
-                throw new ArgumentNullException($"Argument {nameof(key)} to {methodName} is null");
-            }
-        }
+        public override IEnumerator<TKey> GetEnumerator() => Keys(Min, Max).GetEnumerator();
     }
 }

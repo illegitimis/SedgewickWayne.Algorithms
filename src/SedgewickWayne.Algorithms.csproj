@@ -45,7 +45,9 @@
     <Compile Include="DynamicConnectivity\WeightedQuickUnionUF.cs" />
     <Compile Include="Fundamentals\3Sum.cs" />
     <Compile Include="Fundamentals\3SumFast.cs" />
-    <None Include="SymbolTables\RedBlackBST.cs" />
+    <Compile Include="SymbolTables\BaseNode.cs" />
+    <Compile Include="SymbolTables\OrderedSTBase.cs" />
+    <Compile Include="SymbolTables\RedBlackBST.cs" />
     <Compile Include="Fundamentals\Parantheses.cs" />
     <Compile Include="DynamicConnectivity\IUnionFind.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Sorting\QuickX.cs" />
     <Compile Include="StdRandom.cs" />
     <None Include="SymbolTables\SplayTree.cs" />
+    <Compile Include="SymbolTables\TreeSTBase.cs" />
     <Compile Include="SymbolTables\TrieST.cs" />
     <Compile Include="Sorting\Merge.cs" />
     <Compile Include="Sorting\BinaryInsertion.cs" />
