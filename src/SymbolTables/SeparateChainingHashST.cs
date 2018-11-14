@@ -1,154 +1,150 @@
-﻿
-namespace SedgewickWayne.Algorithms.SymbolTables
+﻿// https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/SeparateChainingHashST.java.html
+// https://algs4.cs.princeton.edu/34hash/SeparateChainingHashST.java.html
+// https://algs4.cs.princeton.edu/code/javadoc/edu/princeton/cs/algs4/SeparateChainingHashST.html
+// https://algs4.cs.princeton.edu/34hash/images/separate-chaining.png
+
+namespace SedgewickWayne.Algorithms
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
-    //[Signature("<Key:Ljava/lang/Object;Value:Ljava/lang/Object;>Ljava/lang/Object;")]
-    public class SeparateChainingHashST
+    /// <summary>
+    ///  a symbol table of generic key-value pairs.
+    /// This implementation uses a separate chaining hash table. 
+    /// </summary>
+    /// <remarks>
+    /// It requires that the key type overrides the equals() and hashCode() methods. 
+    /// The expected time per put, contains, or remove operation is constant, subject to the uniform hashing assumption.
+    /// The size, and is-empty operations take constant time. 
+    /// Construction takes constant time. 
+    /// </remarks>
+    public class SeparateChainingHashST<TKey, TValue>
+        : ISymbolTable<TKey, TValue>
+        where TKey : IComparable<TKey>, IEquatable<TKey>
+        where TValue : IEquatable<TValue>
     {
         private const int INIT_CAPACITY = 4;
+
+        /// <summary>
+        /// number of key-value pairs
+        /// </summary>
         private int N;
+
+        /// <summary>
+        /// hash table size
+        /// </summary>
         private int M;
-        //[Signature("[LSequentialSearchST<TKey;TValue;>;")]
-        private SequentialSearchST[] st;
+
+        /// <summary>
+        /// array of linked-list symbol tables
+        /// </summary>
+        private SequentialSearchST<TKey, TValue>[] st;
 
 
-        public SeparateChainingHashST(int i)
+        public SeparateChainingHashST(int initialNumberOfChains)
         {
-            this.M = i;
-            this.st = (SequentialSearchST[])new SequentialSearchST[i];
-            for (int j = 0; j < i; j++)
-            {
-                this.st[j] = new SequentialSearchST();
-            }
+            M = initialNumberOfChains;
+            st = new SequentialSearchST<TKey, TValue>[initialNumberOfChains];
+            for (int j = 0; j < initialNumberOfChains; st[j++] = new SequentialSearchST<TKey, TValue>());
         }
-        /*	[Signature("(TKey;TValue;)V")]*/
 
-        public virtual void put(object obj1, object obj2)
+        public SeparateChainingHashST() : this(INIT_CAPACITY)
         {
-            if (obj2 == null)
+        }
+
+        public int Size => N;
+
+        public bool IsEmpty => Size == 0;
+
+        private void resize(int chains)
+        {
+            var temp = new SeparateChainingHashST<TKey, TValue>(chains);
+            for (int i = 0; i < M; i++)
             {
-                this.delete(obj1);
+                foreach (TKey key in st[i].Keys())
+                {
+                    temp.Put(key, st[i].Get(key));
+                }
+            }
+
+            M = temp.M;
+            N = temp.N;
+            st = temp.st;
+        }
+        
+        public TValue Get(TKey key)
+        {
+            int num = hash(key);
+            return st[num].Get(key);
+        }
+
+        public void Put(TKey key, TValue val)
+        {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+
+            if (val == null)
+            {
+                Delete(key);
                 return;
             }
-            if (this.N >= 10 * this.M)
-            {
-                this.resize(2 * this.M);
-            }
-            int num = this.hash(obj1);
-            if (!this.st[num].contains(obj1))
-            {
-                this.N++;
-            }
-            this.st[num].put(obj1, obj2);
-        }
-        public virtual int Size
-        {
-		return this.N;
-        }
-        /*	[Signature("(TKey;)TValue;")]*/
 
-        public virtual object get(object obj)
-        {
-            int num = this.hash(obj);
-            return this.st[num].get(obj);
-        }
-        /*	[LineNumberTable(56), Signature("(TKey;)I")]*/
-
-        private int hash(object this2)
-        {
-            int expr_0B = java.lang.Object.instancehelper_hashCode(this2) & 2147483647;
-            int expr_12 = this.M;
-            return (expr_12 != -1) ? (expr_0B % expr_12) : 0;
-        }
-        /*	[Signature("(TKey;)V")]*/
-
-        public virtual void delete(object obj)
-        {
-            int num = this.hash(obj);
-            if (this.st[num].contains(obj))
+            if (N >= 10 * M)
             {
-                this.N--;
+                resize(2 * M);
             }
-            this.st[num].delete(obj);
-            if (this.M > 4 && this.N <= 2 * this.M)
+
+            int num = this.hash(key);
+
+            if (!st[num].Contains(key))
+            {
+                N++;
+            }
+
+            st[num].Put(key, val);
+        }
+
+        public void Delete(TKey key)
+        {
+            int num = hash(key);
+            if (st[num].Contains(key))
+            {
+                N--;
+            }
+
+            st[num].Delete(key);
+
+            if (this.M > INIT_CAPACITY && this.N <= 2 * this.M)
             {
                 this.resize(this.M / 2);
             }
         }
 
+        public bool Contains(TKey key) => !Get(key).Equals(default(TValue));
 
-        private void resize(int i)
+        public IEnumerator<TKey> GetEnumerator() => Keys().GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();               
+
+        /// <summary>
+        /// hash value between 0 and m-1
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        private int hash(TKey key) => (key.GetHashCode() & 0x7fffffff) % M;        
+
+       
+        public IEnumerable<TKey> Keys()
         {
-            SeparateChainingHashST separateChainingHashST = new SeparateChainingHashST(i);
-            for (int j = 0; j < this.M; j++)
+            var queue = new Queue<TKey>();
+            for (int i = 0; i < M; i++)
             {
-                Iterator iterator = this.st[j].keys().iterator();
-                while (iterator.hasNext())
+                foreach(var key in st[i].Keys())
                 {
-                    object obj = iterator.next();
-                    separateChainingHashST.put(obj, this.st[j].get(obj));
-                }
-            }
-            this.M = separateChainingHashST.M;
-            this.N = separateChainingHashST.N;
-            this.st = separateChainingHashST.st;
-        }
-
-
-        public SeparateChainingHashST() : this(4)
-        {
-        }
-        /*	[Signature("()Ljava/lang/Iterable<TKey;>;")]*/
-
-        public virtual Iterable keys()
-        {
-            Queue queue = new Queue();
-            for (int i = 0; i < this.M; i++)
-            {
-                Iterator iterator = this.st[i].keys().iterator();
-                while (iterator.hasNext())
-                {
-                    object obj = iterator.next();
-                    queue.enqueue(obj);
+                    queue.Enqueue(key);
                 }
             }
             return queue;
-        }
-
-
-        public virtual bool IsEmpty
-        {
-		return this.Size == 0;
-        }
-        /*	[LineNumberTable(71), Signature("(TKey;)Z")]*/
-
-        public virtual bool contains(object obj)
-        {
-            return this.get(obj) != null;
-        }
-
-
-        /**/
-        public static void main(string[] strarr)
-        {
-            SeparateChainingHashST separateChainingHashST = new SeparateChainingHashST();
-            int num = 0;
-            while (!StdIn.IsEmpty)
-            {
-                string text = StdIn.readString();
-                separateChainingHashST.put(text, Integer.valueOf(num));
-                num++;
-            }
-            Iterator iterator = separateChainingHashST.keys().iterator();
-            while (iterator.hasNext())
-            {
-                string text = (string)iterator.next();
-                StdOut.println(new StringBuilder().append(text).append(" ").append(separateChainingHashST.get(text)).toString());
-            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿// http://algs4.cs.princeton.edu/34hash/LinearProbingHashST.java.html
+// https://algs4.cs.princeton.edu/34hash/images/linear-probing.png
 
 namespace SedgewickWayne.Algorithms
 {
@@ -235,7 +236,7 @@ namespace SedgewickWayne.Algorithms
 
         public IEnumerator<TKey> GetEnumerator()
         {
-            var queue = new SedgewickWayne.Algorithms.Queue<TKey>();
+            var queue = new Queue<TKey>();
             for (int i = 0; i < m; i++)
                 if (keys[i] != null) queue.Enqueue(keys[i]);
             return queue.GetEnumerator();

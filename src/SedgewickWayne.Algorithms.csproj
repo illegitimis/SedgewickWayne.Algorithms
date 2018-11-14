@@ -67,7 +67,7 @@
     <Compile Include="SymbolTables\ArrayST.cs" />
     <Compile Include="SymbolTables\BinarySearchST.cs" />
     <Compile Include="Fundamentals\StaticSETofInts.cs" />
-    <None Include="SymbolTables\SeparateChainingHashST.cs" />
+    <Compile Include="SymbolTables\SeparateChainingHashST.cs" />
     <Compile Include="SymbolTables\BST.cs" />
     <Compile Include="SymbolTables\IOrderedSymbolTable.cs" />
     <Compile Include="SymbolTables\LinearProbingHashST.cs" />

@@ -12,6 +12,7 @@
         internal const string NON_RECURSIVE_BST = "non recursive bst";
         internal const string RANDOMIZED_BST = "randomized bst";
         internal const string RED_BLACK_BST = "red black bst";
+        internal const string SEPARATE_CHAINING_HASH = "separate chaining hash";
 
         internal static ISymbolTable<TKey, TValue> Factory<TKey, TValue>(string symbolTableType)
            where TKey : IComparable<TKey>, IEquatable<TKey>
@@ -38,6 +39,9 @@
 
                 case RED_BLACK_BST:
                 case nameof(RedBlackBST<TKey, TValue>): return new RedBlackBST<TKey, TValue>();
+
+                case SEPARATE_CHAINING_HASH:
+                case nameof(SeparateChainingHashST<TKey, TValue>): return new SeparateChainingHashST<TKey, TValue>();
 
                 default: return null;
             }
