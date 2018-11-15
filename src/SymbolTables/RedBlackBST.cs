@@ -36,8 +36,6 @@ namespace SedgewickWayne.Algorithms
 
         internal RedBlackNode<Key, Value> Root => root as RedBlackNode<Key, Value>;
 
-        private void UpdateSize(RedBlackNode<Key, Value> h) => h.size = NodeSize(h.left) + NodeSize(h.right) + 1;
-
         /// <summary>
         /// Standard BST search.
         /// </summary>
@@ -80,7 +78,7 @@ namespace SedgewickWayne.Algorithms
                 if (IsRed(hh.left) && IsRed(hh.left.left)) h = RotateRight(hh);
                 if (IsRed(hh.left) && IsRed(hh.right)) FlipColors(hh);
 
-                UpdateSize(hh);
+                hh.UpdateSize();
                 return h;
             }
             else throw new TypeLoadException(h.GetType().FullName);
@@ -111,8 +109,8 @@ namespace SedgewickWayne.Algorithms
             x.left = h;
             x.color = x.Left.color;
             x.Left.color = NodeColor.RED;
-            x.size = h.size;
-            UpdateSize(h);
+            x.SetSize (h.Size);
+            h.UpdateSize();
             return x;
         }
 
@@ -130,8 +128,8 @@ namespace SedgewickWayne.Algorithms
             x.right = h;
             x.color = x.Right.color;
             x.Right.color = NodeColor.RED;
-            x.size = h.size;
-            UpdateSize(h);
+            x.SetSize(h.Size);
+            h.UpdateSize();
             return x;
         }
 
@@ -263,7 +261,7 @@ namespace SedgewickWayne.Algorithms
             if (IsRed(h.left) && IsRed(h.left.left)) h = RotateRight(h);
             if (IsRed(h.left) && IsRed(h.right)) FlipColors(h);
 
-            UpdateSize(h);
+            h.UpdateSize();
             return h;
         }
 

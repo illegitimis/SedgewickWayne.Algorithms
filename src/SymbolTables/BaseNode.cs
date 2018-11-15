@@ -9,8 +9,12 @@
     {
         internal TKey key;           // sorted by key
         internal TValue val;         // associated data
-        internal int size;          // number of nodes in subtree / subtree count
         internal BaseNode<TKey, TValue> left, right;  // links to left and right subtrees
+
+        /// <summary>
+        /// number of nodes in subtree / subtree count
+        /// </summary>
+        private int size;
 
         public BaseNode(TKey key, TValue val, int size)
         {
@@ -19,10 +23,20 @@
             this.size = size;
         }
 
-        internal void UpdateSizeFromChildren()
-        {
-            size = 1 + ((left == null) ? 0 : left.size) + ((right == null) ? 0 : right.size);
-        }
+        /// <summary>
+        /// update size only on explicit request
+        /// </summary>
+        internal int Size => size;
+        /// <summary>
+        /// Number of key-value pairs in BST rooted at x
+        /// </summary>
+        private int ConsistentSize => 1 + LeftSize + RightSize;
+        internal int LeftSize => (left == null) ? 0 : left.size;
+        internal int RightSize => (right == null) ? 0 : right.size;
+        
+        internal void UpdateSize() => size = ConsistentSize;
+
+        internal void SetSize(int newSize) => size = newSize;
     }
 
     public enum NodeColor { RED, BLACK }

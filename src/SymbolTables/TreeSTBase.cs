@@ -22,7 +22,7 @@
         /// <summary>
         /// Returns the number of key-value pairs in this symbol table.
         /// </summary>
-        public override int Size => NodeSize(root);
+        public override int Size => root.Size;
 
         /// <summary>
         /// Returns the largest key in the symbol table.
@@ -101,13 +101,6 @@
         #region protected
 
         /// <summary>
-        /// Number of key-value pairs in BST rooted at x
-        /// </summary>
-        /// <param name="x">tree node</param>
-        /// <returns>Number of nodes in subtree rooted at x</returns>
-        protected int NodeSize(BaseNode<TKey, TValue> x) => (x == null) ? 0 : x.size;
-
-        /// <summary>
         /// Number of keys in the subtree less than key.
         /// </summary>
         /// <param name="key"></param>
@@ -118,14 +111,14 @@
             if (x == null) return 0;
             int cmp = key.CompareTo(x.key);
             if (cmp < 0) return NodeRank(key, x.left);
-            else if (cmp > 0) return 1 + NodeSize(x.left) + NodeRank(key, x.right);
-            else return NodeSize(x.left);
+            else if (cmp > 0) return 1 + x.LeftSize + NodeRank(key, x.right);
+            else return x.LeftSize;
         }
 
         protected BaseNode<TKey, TValue> SelectKey(BaseNode<TKey, TValue> x, int k)
         {
             if (x == null) return null;
-            int t = NodeSize(x.left);
+            int t = x.LeftSize;
             if (t > k) return SelectKey(x.left, k);
             else if (t < k) return SelectKey(x.right, k - t - 1);
             else return x;

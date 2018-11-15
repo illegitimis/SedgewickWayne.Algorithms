@@ -111,7 +111,7 @@ namespace SedgewickWayne.Algorithms
                 x.right = DeleteMinimum(t.right);
                 x.left = t.left;
             }
-            x.size = NodeSize(x.left) + NodeSize(x.right) + 1;
+            x.UpdateSize();
             return x;
         }
 
@@ -131,7 +131,7 @@ namespace SedgewickWayne.Algorithms
         {
             if (x.right == null) return x.left;
             x.right = DeleteMaximum(x.right);
-            x.size = NodeSize(x.left) + NodeSize(x.right) + 1;
+            x.UpdateSize();
             return x;
         }
 
@@ -146,7 +146,7 @@ namespace SedgewickWayne.Algorithms
         {
             if (x.left == null) return x.right;
             x.left = DeleteMinimum(x.left);
-            x.size = NodeSize(x.left) + NodeSize(x.right) + 1;
+            x.UpdateSize();
             return x;
         }
 
@@ -267,7 +267,7 @@ namespace SedgewickWayne.Algorithms
             if (cmp < 0) x.left = PutKey(x.left, key, val);
             else if (cmp > 0) x.right = PutKey(x.right, key, val);
             else x.val = val;
-            x.size = 1 + NodeSize(x.left) + NodeSize(x.right);
+            x.UpdateSize();
             return x;
         }
 
@@ -308,7 +308,7 @@ namespace SedgewickWayne.Algorithms
         private bool IsNodeSizeConsistent(BaseNode<TKey, TValue> x)
         {
             if (x == null) return true;
-            if (x.size != NodeSize(x.left) + NodeSize(x.right) + 1) return false;
+            if (x.Size != x.LeftSize + x.RightSize + 1) return false;
             return IsNodeSizeConsistent(x.left) && IsNodeSizeConsistent(x.right);
         }
 

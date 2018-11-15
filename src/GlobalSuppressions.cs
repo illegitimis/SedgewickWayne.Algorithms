@@ -18,4 +18,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S108:Nested blocks of code should not be left empty", Justification = "<Pending>", Scope = "member", Target = "~M:SedgewickWayne.Algorithms.SymbolTables.SeparateChainingHashST`2.#ctor(System.Int32)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S1116:Empty statements should be removed", Justification = "<Pending>", Scope = "member", Target = "~M:SedgewickWayne.Algorithms.SymbolTables.SeparateChainingHashST`2.#ctor(System.Int32)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "<Pending>", Scope = "type", Target = "~T:SedgewickWayne.Algorithms.SplayBST`2")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S3440:Variables should not be checked against the values they're about to be assigned", Justification = "<Pending>", Scope = "member", Target = "~M:SedgewickWayne.Algorithms.BaseNode`2.UpdateSizeFromChildren")]
 

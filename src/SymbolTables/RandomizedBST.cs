@@ -124,7 +124,7 @@ namespace SedgewickWayne.Algorithms
             if (cmp == 0) x = joinLR(x.left, x.right);
             else if (cmp < 0) x.left = Remove(x.left, key);
             else x.right = Remove(x.right, key);
-            x.UpdateSizeFromChildren();
+            x.UpdateSize();
             return x;
         }
 
@@ -139,18 +139,16 @@ namespace SedgewickWayne.Algorithms
             if (a == null) return b;
             if (b == null) return a;
 
-            int sizea = NodeSize(a);
-            int sizeb = NodeSize(b);
-            if (StdRandom.bernoulli((double)sizea / (sizea + sizeb)))
+            if (StdRandom.bernoulli((double)a.Size / (a.Size + b.Size)))
             {
                 a.right = joinLR(a.right, b);
-                a.UpdateSizeFromChildren();
+                a.UpdateSize();
                 return a;
             }
             else
             {
                 b.left = joinLR(a, b.left);
-                b.UpdateSizeFromChildren();
+                b.UpdateSize();
                 return b;
             }
         }
@@ -181,12 +179,11 @@ namespace SedgewickWayne.Algorithms
                 return x;
             }
 
-            int sizex = NodeSize(x);
-            if (StdRandom.bernoulli(1.0 / (sizex + 1.0))) return PutRoot(x, key, val);
+            if (StdRandom.bernoulli(1.0 / (x.Size + 1.0))) return PutRoot(x, key, val);
             if (cmp < 0) x.left = PutKey(x.left, key, val);
             else x.right = PutKey(x.right, key, val);
 
-            x.UpdateSizeFromChildren();
+            x.UpdateSize();
             return x;
         }
 
@@ -216,8 +213,8 @@ namespace SedgewickWayne.Algorithms
             var x = h.left;
             h.left = x.right;
             x.right = h;
-            h.UpdateSizeFromChildren();
-            x.UpdateSizeFromChildren();
+            h.UpdateSize();
+            x.UpdateSize();
             return x;
         }
 
@@ -226,8 +223,8 @@ namespace SedgewickWayne.Algorithms
             var x = h.right;
             h.right = x.left;
             x.left = h;
-            h.UpdateSizeFromChildren();
-            x.UpdateSizeFromChildren();
+            h.UpdateSize();
+            x.UpdateSize();
             return x;
         }
 
