@@ -97,6 +97,7 @@
     <Compile Include="Sorting\QuickX.cs" />
     <Compile Include="StdRandom.cs" />
     <Compile Include="SymbolTables\SplayBST.cs" />
+    <Compile Include="SymbolTables\STBase.cs" />
     <Compile Include="SymbolTables\TreeSTBase.cs" />
     <Compile Include="SymbolTables\TrieST.cs" />
     <Compile Include="Sorting\Merge.cs" />

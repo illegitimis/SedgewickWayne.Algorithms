@@ -21,9 +21,12 @@ namespace SedgewickWayne.Algorithms
        where TKey : IComparable<TKey>, IEquatable<TKey>
        where TValue : IEquatable<TValue>
     {
-        public int Size => throw new NotImplementedException();
+        // root of the BST
+        private BaseNode<TKey, TValue> root;
 
-        public bool IsEmpty => throw new NotImplementedException();
+        public int Size => root.Size;
+
+        public bool IsEmpty => root == null;
 
         public bool Contains(TKey key)
         {
@@ -60,25 +63,11 @@ namespace SedgewickWayne.Algorithms
 
 //    public class SplayBST<Key extends Comparable<Key>, Value>  {
 
-//    private Node root;   // root of the BST
 
-//    // BST helper node data type
-//    private class Node
-//    {
-//        private Key key;            // key
-//        private Value value;        // associated data
-//        private Node left, right;   // left and right subtrees
-
-//        public Node(Key key, Value value)
-//        {
-//            this.key = key;
-//            this.value = value;
-//        }
-//    }
 
 //    public boolean contains(Key key)
 //    {
-//        return get(key) != null;
+//        return 
 //    }
 
 //    // return value associated with the given key
@@ -251,16 +240,6 @@ namespace SedgewickWayne.Algorithms
 //    }
 
 
-//    public int size()
-//    {
-//        return size(root);
-//    }
-
-//    private int size(Node x)
-//    {
-//        if (x == null) return 0;
-//        else return 1 + size(x.left) + size(x.right);
-//    }
 
 //    // right rotate
 //    private Node rotateRight(Node h)
