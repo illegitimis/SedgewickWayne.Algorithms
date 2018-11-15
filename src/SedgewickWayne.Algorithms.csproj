@@ -96,7 +96,7 @@
     <Compile Include="Collections\NonGeneric\LinkedStack.cs" />
     <Compile Include="Sorting\QuickX.cs" />
     <Compile Include="StdRandom.cs" />
-    <None Include="SymbolTables\SplayTree.cs" />
+    <Compile Include="SymbolTables\SplayBST.cs" />
     <Compile Include="SymbolTables\TreeSTBase.cs" />
     <Compile Include="SymbolTables\TrieST.cs" />
     <Compile Include="Sorting\Merge.cs" />
