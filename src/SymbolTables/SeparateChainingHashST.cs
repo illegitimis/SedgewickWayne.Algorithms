@@ -20,7 +20,7 @@ namespace SedgewickWayne.Algorithms
     /// Construction takes constant time. 
     /// </remarks>
     public class SeparateChainingHashST<TKey, TValue>
-        : ISymbolTable<TKey, TValue>
+        : STBase<TKey, TValue>
         where TKey : IComparable<TKey>, IEquatable<TKey>
         where TValue : IEquatable<TValue>
     {
@@ -53,9 +53,7 @@ namespace SedgewickWayne.Algorithms
         {
         }
 
-        public int Size => N;
-
-        public bool IsEmpty => Size == 0;
+        public override int Size => N;
 
         private void resize(int chains)
         {
@@ -73,15 +71,15 @@ namespace SedgewickWayne.Algorithms
             st = temp.st;
         }
         
-        public TValue Get(TKey key)
+        public override TValue Get(TKey key)
         {
             int num = hash(key);
             return st[num].Get(key);
         }
 
-        public void Put(TKey key, TValue val)
+        public override void Put(TKey key, TValue val)
         {
-            if (key == null) throw new ArgumentNullException(nameof(key));
+            KeyArgumentNull(key, nameof(Put));
 
             if (val == null)
             {
@@ -104,7 +102,7 @@ namespace SedgewickWayne.Algorithms
             st[num].Put(key, val);
         }
 
-        public void Delete(TKey key)
+        public override void Delete(TKey key)
         {
             int num = hash(key);
             if (st[num].Contains(key))
@@ -120,11 +118,7 @@ namespace SedgewickWayne.Algorithms
             }
         }
 
-        public bool Contains(TKey key) => !Get(key).Equals(default(TValue));
-
-        public IEnumerator<TKey> GetEnumerator() => Keys().GetEnumerator();
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();               
+        public override IEnumerator<TKey> GetEnumerator() => Keys().GetEnumerator();     
 
         /// <summary>
         /// hash value between 0 and m-1

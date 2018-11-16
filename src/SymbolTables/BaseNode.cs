@@ -1,8 +1,9 @@
-﻿namespace SedgewickWayne.Algorithms
-{
+﻿using System;
 
+namespace SedgewickWayne.Algorithms
+{
     /// <summary>
-    /// inner node class
+    /// base node class with size & height
     /// </summary>
     /// <remarks>better as struct? No can't do because of variable size.</remarks>
     public class BaseNode<TKey, TValue>
@@ -23,6 +24,8 @@
             this.size = size;
         }
 
+        #region size
+
         /// <summary>
         /// update size only on explicit request
         /// </summary>
@@ -33,10 +36,26 @@
         private int ConsistentSize => 1 + LeftSize + RightSize;
         internal int LeftSize => (left == null) ? 0 : left.size;
         internal int RightSize => (right == null) ? 0 : right.size;
-        
+
         internal void UpdateSize() => size = ConsistentSize;
 
         internal void SetSize(int newSize) => size = newSize;
+
+        #endregion
+
+        #region height
+
+        /// <summary>
+        /// height of tree (1-node tree has height 0)
+        /// </summary>
+        internal int Height => 1 + Math.Max(LeftHeight, RightHeight);
+
+        internal int LeftHeight => (left == null) ? -1 : left.Height;
+        internal int RightHeight => (right == null) ? 0 : right.size;
+
+        #endregion
+
+        public override string ToString() => $"{key} {val} {size}";
     }
 
     public enum NodeColor { RED, BLACK }
@@ -45,11 +64,11 @@
         : BaseNode<TKey, TValue>
     {
         internal NodeColor color;     // color of parent link
-        
+
         public RedBlackNode(TKey key, TValue val, NodeColor color, int size)
             : base(key, val, size)
         {
-           this.color = color;
+            this.color = color;
         }
 
         public bool IsRed => color == NodeColor.RED;

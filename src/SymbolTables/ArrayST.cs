@@ -3,17 +3,16 @@
 namespace SedgewickWayne.Algorithms
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
-    
+
     /// <summary>
     ///  Symbol table implementation with unordered array. 
     ///  Uses repeated doubling to resize the array.
     /// </summary>
     public class ArrayST<TKey, TValue>
-        : ISymbolTable<TKey, TValue>
+        : STBase<TKey, TValue>
         where TKey : IComparable<TKey>, IEquatable<TKey>
+        where TValue : IEquatable<TValue>
     {
         private const int INIT_SIZE = 8;
         
@@ -41,20 +40,13 @@ namespace SedgewickWayne.Algorithms
 
         #region symbol table
 
-        public bool IsEmpty { get { return N == 0; } }
-
-        public int Size { get { return N; } }
-
-        public bool Contains(TKey key)
-        {
-            return keys.Contains(key);
-        }
+        public override int Size => N;
 
         /// <summary>
         /// remove given key (and associated value)
         /// </summary>
         /// <param name="key"></param>
-        public void Delete(TKey key)
+        public override void Delete(TKey key)
         {
             for (int i = 0; i < N; i++)
             {
@@ -73,7 +65,7 @@ namespace SedgewickWayne.Algorithms
             }
         }
 
-        public TValue Get(TKey key)
+        public override TValue Get(TKey key)
         {
             for (int i = 0; i < N; i++)
                 if (keys[i].Equals(key)) return values[i];
@@ -91,14 +83,14 @@ namespace SedgewickWayne.Algorithms
         /// return queue;
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<TKey> GetEnumerator() => (keys as IEnumerable<TKey>).GetEnumerator();
+        public override IEnumerator<TKey> GetEnumerator() => (keys as IEnumerable<TKey>).GetEnumerator();
 
         /// <summary>
         /// insert the key-value pair into the symbol table
         /// </summary>
         /// <param name="key"></param>
         /// <param name="val"></param>
-        public void Put(TKey key, TValue val)
+        public override void Put(TKey key, TValue val)
         {
             // to deal with duplicates
             Delete(key);
@@ -111,8 +103,6 @@ namespace SedgewickWayne.Algorithms
             keys[N] = key;
             N++;
         }
-
-        IEnumerator IEnumerable.GetEnumerator() => keys.GetEnumerator();
 
         #endregion
 

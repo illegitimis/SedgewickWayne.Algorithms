@@ -2,301 +2,258 @@
 // http://algs4.cs.princeton.edu/33balanced/SplayBST.java.html
 // http://www.cs.cmu.edu/%7Esleator/papers/self-adjusting.pdf
 // http://yaikhom.com/2014/05/12/understanding-splay-tree-rotations.html
+// http://www.link.cs.cmu.edu/link/ftp-site/splaying/SplayTree.java
 
 namespace SedgewickWayne.Algorithms
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
 
     /// <summary>
     ///  Splay tree.
     ///  Supports splay-insert, search, and delete.
     ///  Splays on every operation, regardless of the presence of the associated key prior to that operation.
+    ///  It allows searching, insertion, deletion, deletemin, deletemax, splitting, joining, and many other operations, all with amortized logarithmic performance.
     /// </summary>
     /// <typeparam name="TKey">key type</typeparam>
     /// <typeparam name="TValue">store type</typeparam>
     public class SplayBST<TKey, TValue>
-       : ISymbolTable<TKey, TValue>
+       : STBase<TKey, TValue>
        where TKey : IComparable<TKey>, IEquatable<TKey>
        where TValue : IEquatable<TValue>
     {
         // root of the BST
-        private BaseNode<TKey, TValue> root;
+        // inherits outer parameters <TKey, TValue>
+        private Node root;
 
-        public int Size => root.Size;
-
-        public bool IsEmpty => root == null;
-
-        public bool Contains(TKey key)
+        /// <summary>
+        /// simple inner node class with links, key and value only, and no size
+        /// </summary>
+        private class Node
         {
-            throw new NotImplementedException();
+            internal TKey key;           // sorted by key
+            internal TValue val;         // associated data
+            internal Node left, right;  // links to left and right subtrees
+
+            public Node(TKey key, TValue val)
+            {
+                this.key = key;
+                this.val = val;
+            }
         }
 
-        public void Delete(TKey key)
+        public SplayBST()
         {
-            throw new NotImplementedException();
+            root = null;
         }
 
-        public TValue Get(TKey key)
+        public override int Size => NodeSize(root);
+
+        private int NodeSize(Node node)
         {
-            throw new NotImplementedException();
+            // stop condition
+            if (node == null) return 0;
+
+            return 1 + NodeSize(node.left) + NodeSize(node.right);
         }
 
-        public IEnumerator<TKey> GetEnumerator()
+        /// <summary>
+        /// Splay tree deletion.
+        /// </summary>
+        /// <remarks>
+        /// This splays the key, then does a slightly modified Hibbard deletion on the root.
+        /// if it is the node to be deleted; if it is not, the key was not in the tree.
+        /// The modification is that rather than swapping the root (call it node A) with its successor,
+        /// (call it Node B) is moved to the root position by splaying for the deletion key in A's right subtree.
+        /// Finally, A's right child is made the new root's right child.
+        /// </remarks>
+        /// <param name="key"></param>
+        public override void Delete(TKey key)
         {
-            throw new NotImplementedException();
+            // empty tree
+            if (root == null) return;
+
+            root = Splay(root, key);
+
+            int cmp = key.CompareTo(root.key);
+
+            if (cmp != 0)
+            {
+                // it wasn't in the tree to remove
+                // ItemNotFoundException
+                return;
+            }
+
+            // delete the root
+            if (root.left == null)
+            {
+                root = root.right;
+            }
+            else
+            {
+                Node x = root.right;
+                root = root.left;
+                Splay(root, key);
+                root.right = x;
+            }
         }
 
-        public void Put(TKey key, TValue val)
+        /// <summary>
+        /// return value associated with the given key, if no such value, return null
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public override TValue Get(TKey key)
         {
-            throw new NotImplementedException();
+            root = Splay(root, key);
+            int cmp = key.CompareTo(root.key);
+            return (cmp == 0) ? root.val : default(TValue);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+        /// <summary>
+        /// Splay tree function.
+        /// If a node with that key exists, it is splayed to the root of the tree.
+        /// If it does not, the last node along the search path for the key is splayed to the root.
+        /// </summary>
+        /// <param name="h">start node</param>
+        /// <param name="key">splay key in the tree rooted at Node h.</param>
+        /// <returns></returns>
+        private Node Splay(Node h, TKey key)
         {
-            throw new NotImplementedException();
+            if (h == null) return null;
+
+            int cmp1 = key.CompareTo(h.key);
+
+            if (cmp1 < 0)
+            {
+                // key not in tree, so we're done
+                if (h.left == null)
+                {
+                    return h;
+                }
+                int cmp2 = key.CompareTo(h.left.key);
+                if (cmp2 < 0)
+                {
+                    h.left.left = Splay(h.left.left, key);
+                    h = RotateRight(h);
+                }
+                else if (cmp2 > 0)
+                {
+                    h.left.right = Splay(h.left.right, key);
+                    if (h.left.right != null)
+                        h.left = RotateLeft(h.left);
+                }
+
+                if (h.left == null) return h;
+                else return RotateRight(h);
+            }
+
+            else if (cmp1 > 0)
+            {
+                // key not in tree, so we're done
+                if (h.right == null)
+                {
+                    return h;
+                }
+
+                int cmp2 = key.CompareTo(h.right.key);
+                if (cmp2 < 0)
+                {
+                    h.right.left = Splay(h.right.left, key);
+                    if (h.right.left != null)
+                        h.right = RotateRight(h.right);
+                }
+                else if (cmp2 > 0)
+                {
+                    h.right.right = Splay(h.right.right, key);
+                    h = RotateLeft(h);
+                }
+
+                if (h.right == null) return h;
+                else return RotateLeft(h);
+            }
+
+            else return h;
+        }
+
+        // print preorder traversal of the tree
+        public override IEnumerator<TKey> GetEnumerator()
+        {
+            var queue = new Queue<TKey>();
+            PreOrder(queue, root);
+            return queue.GetEnumerator();
+        }
+
+        private void PreOrder(Queue<TKey> queue, Node x)
+        {
+            if (x == null) return;
+            queue.Enqueue(x.key);
+            PreOrder(queue, x.left);
+            PreOrder(queue, x.right);
+        }
+
+        /// <summary>
+        /// Splay tree insertion.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        public override void Put(TKey key, TValue val)
+        {
+            // splay key to root
+            if (root == null)
+            {
+                root = new Node(key, val);
+                return;
+            }
+
+            root = Splay(root, key);
+
+            int cmp = key.CompareTo(root.key);
+ 
+            // It was a duplicate key. Simply replace the value
+            if (cmp == 0)
+            {
+                root.val = val;
+                return;
+            }
+
+            // Insert new node at root
+            var n = new Node(key, val);
+            
+            if (cmp < 0)
+            {
+                n.left = root.left;
+                n.right = root;
+                root.left = null;
+
+            }
+
+            else if (cmp > 0)
+            {
+                n.right = root.right;
+                n.left = root;
+                root.right = null;
+            }
+
+            root = n;            
+        }
+
+        // right rotate
+        private Node RotateRight(Node h)
+        {
+            Node x = h.left;
+            h.left = x.right;
+            x.right = h;
+            return x;
+        }
+
+        // left rotate
+        private Node RotateLeft(Node h)
+        {
+            Node x = h.right;
+            h.right = x.left;
+            x.left = h;
+            return x;
         }
     }
 }
-
-
-//    public class SplayBST<Key extends Comparable<Key>, Value>  {
-
-
-
-//    public boolean contains(Key key)
-//    {
-//        return 
-//    }
-
-//    // return value associated with the given key
-//    // if no such value, return null
-//    public Value get(Key key)
-//    {
-//        root = splay(root, key);
-//        int cmp = key.compareTo(root.key);
-//        if (cmp == 0) return root.value;
-//        else return null;
-//    }
-
-//    /***************************************************************************
-//     *  Splay tree insertion.
-//     ***************************************************************************/
-//    public void put(Key key, Value value)
-//    {
-//        // splay key to root
-//        if (root == null)
-//        {
-//            root = new Node(key, value);
-//            return;
-//        }
-
-//        root = splay(root, key);
-
-//        int cmp = key.compareTo(root.key);
-
-//        // Insert new node at root
-//        if (cmp < 0)
-//        {
-//            Node n = new Node(key, value);
-//            n.left = root.left;
-//            n.right = root;
-//            root.left = null;
-//            root = n;
-//        }
-
-//        // Insert new node at root
-//        else if (cmp > 0)
-//        {
-//            Node n = new Node(key, value);
-//            n.right = root.right;
-//            n.left = root;
-//            root.right = null;
-//            root = n;
-//        }
-
-//        // It was a duplicate key. Simply replace the value
-//        else
-//        {
-//            root.value = value;
-//        }
-
-//    }
-
-//    /***************************************************************************
-//     *  Splay tree deletion.
-//     ***************************************************************************/
-//    /* This splays the key, then does a slightly modified Hibbard deletion on
-//     * the root (if it is the node to be deleted; if it is not, the key was 
-//     * not in the tree). The modification is that rather than swapping the
-//     * root (call it node A) with its successor, it's successor (call it Node B)
-//     * is moved to the root position by splaying for the deletion key in A's 
-//     * right subtree. Finally, A's right child is made the new root's right 
-//     * child.
-//     */
-//    public void remove(Key key)
-//    {
-//        if (root == null) return; // empty tree
-
-//        root = splay(root, key);
-
-//        int cmp = key.compareTo(root.key);
-
-//        if (cmp == 0)
-//        {
-//            if (root.left == null)
-//            {
-//                root = root.right;
-//            }
-//            else
-//            {
-//                Node x = root.right;
-//                root = root.left;
-//                splay(root, key);
-//                root.right = x;
-//            }
-//        }
-
-//        // else: it wasn't in the tree to remove
-//    }
-
-
-//    /***************************************************************************
-//     * Splay tree function.
-//     * **********************************************************************/
-//    // splay key in the tree rooted at Node h. If a node with that key exists,
-//    //   it is splayed to the root of the tree. If it does not, the last node
-//    //   along the search path for the key is splayed to the root.
-//    private Node splay(Node h, Key key)
-//    {
-//        if (h == null) return null;
-
-//        int cmp1 = key.compareTo(h.key);
-
-//        if (cmp1 < 0)
-//        {
-//            // key not in tree, so we're done
-//            if (h.left == null)
-//            {
-//                return h;
-//            }
-//            int cmp2 = key.compareTo(h.left.key);
-//            if (cmp2 < 0)
-//            {
-//                h.left.left = splay(h.left.left, key);
-//                h = rotateRight(h);
-//            }
-//            else if (cmp2 > 0)
-//            {
-//                h.left.right = splay(h.left.right, key);
-//                if (h.left.right != null)
-//                    h.left = rotateLeft(h.left);
-//            }
-
-//            if (h.left == null) return h;
-//            else return rotateRight(h);
-//        }
-
-//        else if (cmp1 > 0)
-//        {
-//            // key not in tree, so we're done
-//            if (h.right == null)
-//            {
-//                return h;
-//            }
-
-//            int cmp2 = key.compareTo(h.right.key);
-//            if (cmp2 < 0)
-//            {
-//                h.right.left = splay(h.right.left, key);
-//                if (h.right.left != null)
-//                    h.right = rotateRight(h.right);
-//            }
-//            else if (cmp2 > 0)
-//            {
-//                h.right.right = splay(h.right.right, key);
-//                h = rotateLeft(h);
-//            }
-
-//            if (h.right == null) return h;
-//            else return rotateLeft(h);
-//        }
-
-//        else return h;
-//    }
-
-
-//    /***************************************************************************
-//     *  Helper functions.
-//     ***************************************************************************/
-
-//    // height of tree (1-node tree has height 0)
-//    public int height() { return height(root); }
-//    private int height(Node x)
-//    {
-//        if (x == null) return -1;
-//        return 1 + Math.max(height(x.left), height(x.right));
-//    }
-
-
-
-//    // right rotate
-//    private Node rotateRight(Node h)
-//    {
-//        Node x = h.left;
-//        h.left = x.right;
-//        x.right = h;
-//        return x;
-//    }
-
-//    // left rotate
-//    private Node rotateLeft(Node h)
-//    {
-//        Node x = h.right;
-//        h.right = x.left;
-//        x.left = h;
-//        return x;
-//    }
-
-//    // test client
-//    public static void main(String[] args)
-//    {
-//        SplayBST<Integer, Integer> st1 = new SplayBST<Integer, Integer>();
-//        st1.put(5, 5);
-//        st1.put(9, 9);
-//        st1.put(13, 13);
-//        st1.put(11, 11);
-//        st1.put(1, 1);
-
-
-//        SplayBST<String, String> st = new SplayBST<String, String>();
-//        st.put("www.cs.princeton.edu", "128.112.136.11");
-//        st.put("www.cs.princeton.edu", "128.112.136.12");
-//        st.put("www.cs.princeton.edu", "128.112.136.13");
-//        st.put("www.princeton.edu", "128.112.128.15");
-//        st.put("www.yale.edu", "130.132.143.21");
-//        st.put("www.simpsons.com", "209.052.165.60");
-//        StdOut.println("The size 0 is: " + st.size());
-//        st.remove("www.yale.edu");
-//        StdOut.println("The size 1 is: " + st.size());
-//        st.remove("www.princeton.edu");
-//        StdOut.println("The size 2 is: " + st.size());
-//        st.remove("non-member");
-//        StdOut.println("The size 3 is: " + st.size());
-//        StdOut.println(st.get("www.cs.princeton.edu"));
-//        StdOut.println("The size 4 is: " + st.size());
-//        StdOut.println(st.get("www.yale.com"));
-//        StdOut.println("The size 5 is: " + st.size());
-//        StdOut.println(st.get("www.simpsons.com"));
-//        StdOut.println("The size 6 is: " + st.size());
-//        StdOut.println();
-//    }
-
-//}
-
-
-//Copyright © 2002–2016, Robert Sedgewick and Kevin Wayne.
-//Last updated: Tue Aug 30 10:09:18 EDT 2016.
-
-//}

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public static class TestHelper
+    public static class SymbolTableFactory
     {
         internal const string LINKED_LIST = "linked list";
         internal const string UNORDERED_ARRAY = "unordered array";

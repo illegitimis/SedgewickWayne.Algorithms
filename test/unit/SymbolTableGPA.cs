@@ -37,7 +37,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
     using System.Collections.Generic;
     using System.Linq;
     using Xunit;
-    using static SedgewickWayne.Algorithms.UnitTests.TestHelper;
+    using static SedgewickWayne.Algorithms.UnitTests.SymbolTableFactory;
 
     
     public class SymbolTableBasic

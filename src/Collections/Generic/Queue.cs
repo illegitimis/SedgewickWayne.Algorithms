@@ -136,11 +136,7 @@ namespace SedgewickWayne.Algorithms
     /// <summary>
     /// Returns true if this queue is empty.
     /// </summary>
-    public bool IsEmpty {
-      get {
-        return this.first == null;
-      }
-    }
+    public bool IsEmpty => this.first == null;
 
     /// <summary>
     /// Removes and returns the item on this queue that was least recently added.
@@ -170,11 +166,7 @@ namespace SedgewickWayne.Algorithms
     /// <summary>
     /// Returns the number of items in this queue.
     /// </summary>
-    public int Size {
-      get {
-        return this.N;
-      }
-    }
+    public int Size => N;
 
     /// <summary>
     /// Returns the item least recently added to this queue.
@@ -208,18 +200,20 @@ namespace SedgewickWayne.Algorithms
     /// <returns>an iterator that iterates over the items in this queue in FIFO order</returns>
     public G.IEnumerator<TQueue> GetEnumerator()
     {
-      return new QueueEnumerator(this, this.first);
+        // return new QueueEnumerator(this, this.first);
+        return Items().GetEnumerator();    
+    }
+
+    private G.IEnumerable<TQueue> Items()
+    {
+        for (Node n = first; n != null; n = n.Next)
+            yield return n.Item;
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns></returns>
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-      return GetEnumerator();
-    }
-
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
   }
-
 }

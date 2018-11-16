@@ -12,45 +12,21 @@ namespace SedgewickWayne.Algorithms
     /// <typeparam name="TValue"></typeparam>
     /// <remarks>incomplete</remarks>
     public class NonrecursiveBST<TKey, TValue> :
-        ISymbolTable<TKey, TValue>
+        STBase<TKey, TValue>
         where TKey : IComparable<TKey>, IEquatable<TKey>
         where TValue : IEquatable<TValue>
     {
         // root of BST
-        private Node root;
-        private int size;
-
+        private BaseNode<TKey, TValue> root;
+                
         public NonrecursiveBST()
         {
-            size = 0;
             root = null;
         }
+                
+        public override int Size => root.Size;
 
-        private class Node
-        {
-            public TKey key;             // sorted by key
-            public TValue val;           // associated value
-            public Node left, right;    // left and right subtrees
-
-            public Node(TKey key, TValue val)
-            {
-                this.key = key;
-                this.val = val;
-            }
-        }
-
-
-        public bool IsEmpty => root == null;
-        
-        public int Size => size;
-
-        public bool Contains(TKey key)
-        {
-            if (key == null) throw new ArgumentNullException(nameof(key));
-            return !Get(key).Equals(default(TValue));
-        }
-
-        public void Delete(TKey key)
+        public override void Delete(TKey key)
         {
             throw new NotImplementedException();
         }
@@ -60,9 +36,9 @@ namespace SedgewickWayne.Algorithms
         /// </summary>
         /// <param name="key">key</param>
         /// <returns>Gets value for key</returns>
-        public TValue Get(TKey key)
+        public override TValue Get(TKey key)
         {
-            Node x = root;
+            BaseNode<TKey, TValue> x = root;
             while (x != null)
             {
                 int cmp = key.CompareTo(x.key);
@@ -79,18 +55,17 @@ namespace SedgewickWayne.Algorithms
         /// </summary>
         /// <param name="key">key to insert</param>
         /// <param name="val">value for key</param>
-        public void Put(TKey key, TValue val)
+        public override void Put(TKey key, TValue val)
         {
             int cmp = 0;
-            Node z = new Node(key, val);
+            var z = new BaseNode<TKey, TValue>(key, val, 1);
             if (root == null)
             {
                 root = z;
-                size = 1;
                 return;
             }
 
-            Node parent = null, x = root;
+            BaseNode<TKey, TValue> parent = null, x = root;
             while (x != null)
             {
                 parent = x;
@@ -107,7 +82,8 @@ namespace SedgewickWayne.Algorithms
             cmp = key.CompareTo(parent.key);
             if (cmp < 0) parent.left = z;
             else parent.right = z;
-            size++;
+
+            parent.UpdateSize();
         }
 
 
@@ -117,9 +93,9 @@ namespace SedgewickWayne.Algorithms
         /// <returns></returns>
         private IEnumerable<TKey> InorderTraversal()
         {
-            Stack<Node> stack = new Stack<Node>();
-            Queue<TKey> queue = new Queue<TKey>();
-            Node x = root;
+            var stack = new Stack<BaseNode<TKey, TValue>>();
+            var queue = new Queue<TKey>();
+            BaseNode<TKey, TValue> x = root;
             while (x != null || !stack.IsEmpty)
             {
                 if (x != null)
@@ -137,9 +113,6 @@ namespace SedgewickWayne.Algorithms
             return queue;
         }
 
-        public IEnumerator<TKey> GetEnumerator() => InorderTraversal().GetEnumerator();
-
-
-        IEnumerator IEnumerable.GetEnumerator() => InorderTraversal().GetEnumerator();
+        public override IEnumerator<TKey> GetEnumerator() => InorderTraversal().GetEnumerator();
     }
 }

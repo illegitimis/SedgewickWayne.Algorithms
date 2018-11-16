@@ -133,15 +133,11 @@
         internal abstract BaseNode<TKey, TValue> MaximumNode(BaseNode<TKey, TValue> node);
         internal abstract BaseNode<TKey, TValue> MinimumNode(BaseNode<TKey, TValue> node);
         #endregion
-        internal virtual void CheckBstDataStructure()
-        {
-        }
 
-        // internal abstract TKey MaximumKey(BaseNode<TKey, TValue> node);
+        internal virtual void CheckBstDataStructure() { }
+
         internal virtual TKey MaximumKey(BaseNode<TKey, TValue> node) => MaximumNode(node).key;
 
-        // internal abstract TKey MinimumKey(BaseNode<TKey, TValue> node);
         internal virtual TKey MinimumKey(BaseNode<TKey, TValue> node) => MinimumNode(node).key;
-
     }
 }

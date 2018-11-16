@@ -29,7 +29,7 @@ namespace SedgewickWayne.Algorithms
     /// Construction takes constant time.
     /// </remarks>
     public class LinearProbingHashST<TKey, TValue> :
-        ISymbolTable<TKey, TValue>
+        STBase<TKey, TValue>
         where TKey : IComparable<TKey>, IEquatable<TKey>
         where TValue : IEquatable<TValue>
     {
@@ -62,29 +62,13 @@ namespace SedgewickWayne.Algorithms
         /// <summary>
         /// Returns the number of key-value pairs in this symbol table.
         /// </summary>
-        public int Size => n;
-
-        /// <summary>
-        /// Returns true if this symbol table is empty.
-        /// </summary>
-        public bool IsEmpty => Size == 0;
-
-        /// <summary>
-        /// Returns true if this symbol table contains the specified key.
-        /// </summary>
-        /// <param name="key">the key</param>
-        /// <returns>True if this symbol table contains <paramref name="key"/>, false otherwise.</returns>
-        public bool Contains(TKey key)
-        {
-            AssertKey(key);
-            return !Get(key).Equals(default(TValue));
-        }
+        public override int Size => n;
 
         /// <summary>
         /// Removes the specified key and its associated value from this symbol table (if the key is in this symbol table).
         /// </summary>
         /// <param name="key">the key</param>
-        public void Delete(TKey key)
+        public override void Delete(TKey key)
         {
             if (!Contains(key)) { return; }
 
@@ -140,16 +124,13 @@ namespace SedgewickWayne.Algorithms
             keys = temp.keys;
             vals = temp.vals;
             m = temp.m;
-
-            // this = temp;
         }
 
         /// <summary>Returns the value associated with the specified key.</summary>
         /// <param name="key">the key</param>
         /// <returns>the value associated with {@code key}; {@code null} if no such value</returns>
-        public TValue Get(TKey key)
+        public override TValue Get(TKey key)
         {
-            AssertKey(key);
             for (int i = hash(key); keys[i] != null; i = (i + 1) % m)
                 if (keys[i].Equals(key))
                     return vals[i];
@@ -163,9 +144,9 @@ namespace SedgewickWayne.Algorithms
         /// </summary>
         /// <param name="key">the key</param>
         /// <param name="val">the value</param>
-        public void Put(TKey key, TValue val)
+        public override void Put(TKey key, TValue val)
         {
-            AssertKey(key);
+            KeyArgumentNull(key, nameof(Put));
 
             if (val == null)
             {
@@ -202,11 +183,6 @@ namespace SedgewickWayne.Algorithms
             return (key.GetHashCode() & 0x7fffffff) % m;
         }
 
-        private static void AssertKey(TKey key)
-        {
-            if (key == null) throw new ArgumentNullException(nameof(key));
-        }
-
         /// <summary>
         /// don't check after each put() because integrity not maintained during a delete()
         /// </summary>
@@ -232,9 +208,7 @@ namespace SedgewickWayne.Algorithms
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        public IEnumerator<TKey> GetEnumerator()
+        public override IEnumerator<TKey> GetEnumerator()
         {
             var queue = new Queue<TKey>();
             for (int i = 0; i < m; i++)
