@@ -1,4 +1,5 @@
 ﻿namespace SedgewickWayne.Algorithms.PerformanceTests;
+
 using System;
 using System.IO;
 using System.Linq;
