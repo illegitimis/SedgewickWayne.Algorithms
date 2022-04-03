@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <LangVersion>10</LangVersion>
+    <!--<Nullable>enable</Nullable>-->
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup Label="xunit test project">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.1.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Label="project reference">
+    <ProjectReference Include="..\..\src\SedgewickWayne.Algorithms.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <AssemblyTitle>SedgewickWayne.Algorithms.PerformanceTests</AssemblyTitle>
+    <AssemblyName>SedgewickWayne.Algorithms.PerformanceTests</AssemblyName>
+    <Product>SedgewickWayne.Algorithms.Net</Product>
+    <Description>Porting algorithms by Robert Sedgewick and Kevin Wayne in .NET.</Description>
+    <PackageTags>Algorithms;Robert Sedgewick;Kevin Wayne;Princeton University</PackageTags>
+    <Version>1.3.22</Version>
+    <AssemblyVersion>1.3.22</AssemblyVersion>
+  </PropertyGroup>
+
+</Project>
