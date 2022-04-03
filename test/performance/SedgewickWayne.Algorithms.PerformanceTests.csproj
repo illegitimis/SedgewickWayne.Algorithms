@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <AssemblyTitle>SedgewickWayne.Algorithms.UnitTests</AssemblyTitle>
-    <AssemblyName>SedgewickWayne.Algorithms.UnitTests</AssemblyName>
+    <AssemblyTitle>SedgewickWayne.Algorithms.PerformanceTests</AssemblyTitle>
+    <AssemblyName>SedgewickWayne.Algorithms.PerformanceTests</AssemblyName>
     <Product>SedgewickWayne.Algorithms.Net</Product>
     <Description>Porting algorithms by Robert Sedgewick and Kevin Wayne in .NET.</Description>
     <PackageTags>Algorithms;Robert Sedgewick;Kevin Wayne;Princeton University</PackageTags>

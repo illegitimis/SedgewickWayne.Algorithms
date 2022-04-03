@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms", "src\SedgewickWayne.Algorithms.csproj", "{B53D86FD-7548-4BFF-B388-11ACDF8D6083}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SedgewickWayne.Algorithms", "src\SedgewickWayne.Algorithms.csproj", "{B53D86FD-7548-4BFF-B388-11ACDF8D6083}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms.UnitTests", "test\unit\SedgewickWayne.Algorithms.UnitTests.csproj", "{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SedgewickWayne.Algorithms.UnitTests", "test\unit\SedgewickWayne.Algorithms.UnitTests.csproj", "{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SedgewickWayne.Algorithms.Performance", "test\performance\SedgewickWayne.Algorithms.Performance.csproj", "{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SedgewickWayne.Algorithms.PerformanceTests", "test\performance\SedgewickWayne.Algorithms.PerformanceTests.csproj", "{C60B5461-2CBF-4F06-B0FC-A41FDF93705B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADC577BB-7AD5-488E-BA8D-F89EAC47843C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C60B5461-2CBF-4F06-B0FC-A41FDF93705B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C60B5461-2CBF-4F06-B0FC-A41FDF93705B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C60B5461-2CBF-4F06-B0FC-A41FDF93705B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C60B5461-2CBF-4F06-B0FC-A41FDF93705B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

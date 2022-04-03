@@ -1,126 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B53D86FD-7548-4BFF-B388-11ACDF8D6083}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SedgewickWayne.Algorithms</RootNamespace>
-    <AssemblyName>SedgewickWayne.Algorithms</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Build">
+    <!-- <TargetFramework>net6.0</TargetFramework> -->
+    <!-- <TargetFrameworks>$(NetFrameworkVersion);$(NetStandardVersion)</TargetFrameworks> -->
+    <TargetFrameworks>net48;net471;net6.0;net5.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+    <!--<ImplicitUsings>enable</ImplicitUsings>-->
+    <!--<Nullable>enable</Nullable>-->
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Label="AssemblyInfo">
+    <AssemblyTitle>SedgewickWayne.Algorithms.Net</AssemblyTitle>
+    <AssemblyName>SedgewickWayne.Algorithms.Net</AssemblyName>
+    <Product>SedgewickWayne.Algorithms.Net</Product>
+    <Description>Porting algorithms by Robert Sedgewick and Kevin Wayne in .NET.</Description>
+    <PackageTags>Algorithms;Robert Sedgewick;Kevin Wayne;Princeton University</PackageTags>
+    <Version>1.3.22</Version>
+    <AssemblyVersion>1.3.22</AssemblyVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DynamicConnectivity\QuickUnionUF.cs" />
-    <Compile Include="DynamicConnectivity\WeightedQuickUnionByHeightUF.cs" />
-    <Compile Include="DynamicConnectivity\WeightedQuickUnionPathCompressionUF.cs" />
-    <Compile Include="DynamicConnectivity\WeightedQuickUnionUF.cs" />
-    <Compile Include="Fundamentals\3Sum.cs" />
-    <Compile Include="Fundamentals\3SumFast.cs" />
-    <Compile Include="SymbolTables\BaseNode.cs" />
-    <Compile Include="SymbolTables\OrderedSTBase.cs" />
-    <Compile Include="SymbolTables\RedBlackBST.cs" />
-    <Compile Include="Fundamentals\Parantheses.cs" />
-    <Compile Include="DynamicConnectivity\IUnionFind.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="MinimumSpanningTrees\BoruvkaMST.cs" />
-    <Compile Include="MinimumSpanningTrees\Constants.cs" />
-    <Compile Include="MinimumSpanningTrees\EagerPrimMST.cs" />
-    <Compile Include="MinimumSpanningTrees\Edge.cs" />
-    <Compile Include="MinimumSpanningTrees\EdgeWeightedGraph.cs" />
-    <Compile Include="MinimumSpanningTrees\IMinimumSpanningTreeAlgorithm.cs" />
-    <Compile Include="MinimumSpanningTrees\KruskalMST.cs" />
-    <Compile Include="MinimumSpanningTrees\LazyPrimMST.cs" />
-    <Compile Include="PriorityQueues\ArrayPQBase.cs" />
-    <Compile Include="PriorityQueues\MaxPQ.cs" />
-    <Compile Include="PriorityQueues\MinPQ.cs" />
-    <Compile Include="PriorityQueues\OrderedArrayMaxPQ.cs" />
-    <Compile Include="PriorityQueues\UnorderedArrayMaxPQ.cs" />
-    <Compile Include="SymbolTables\ArrayST.cs" />
-    <Compile Include="SymbolTables\BinarySearchST.cs" />
-    <Compile Include="Fundamentals\StaticSETofInts.cs" />
-    <Compile Include="SymbolTables\SeparateChainingHashST.cs" />
-    <Compile Include="SymbolTables\BST.cs" />
-    <Compile Include="SymbolTables\IOrderedSymbolTable.cs" />
-    <Compile Include="SymbolTables\LinearProbingHashST.cs" />
-    <Compile Include="SymbolTables\NonrecursiveBST.cs" />
-    <Compile Include="SymbolTables\RandomizedBST.cs" />
-    <Compile Include="SymbolTables\SequentialSearchST.cs" />
-    <Compile Include="Fundamentals\BinarySearch.cs" />
-    <Compile Include="SymbolTables\ISymbolTable.cs" />
-    <Compile Include="Sorting\Heap.cs" />
-    <Compile Include="Sorting\Quick3Way.cs" />
-    <Compile Include="Sorting\Quick.cs" />
-    <Compile Include="Sorting\MergeX.cs" />
-    <Compile Include="Sorting\MergeBU.cs" />
-    <Compile Include="Collections\Generic\Bag.cs" />
-    <Compile Include="Collections\Interfaces.cs" />
-    <Compile Include="Collections\NonGeneric\LinkedBag.cs" />
-    <Compile Include="Collections\NonGeneric\LinkedQueue.cs" />
-    <Compile Include="Collections\Generic\Queue.cs" />
-    <Compile Include="Collections\NonGeneric\ResizingArrayBag.cs" />
-    <Compile Include="Collections\NonGeneric\ResizingArrayQueue.cs" />
-    <Compile Include="Collections\Generic\Stack.cs" />
-    <Compile Include="Collections\NonGeneric\ResizingArrayStack.cs" />
-    <Compile Include="DynamicConnectivity\AbstractUFBase.cs" />
-    <Compile Include="DynamicConnectivity\QuickFindUF.cs" />
-    <Compile Include="DynamicConnectivity\UF.cs" />
-    <Compile Include="Collections\NonGeneric\LinkedStack.cs" />
-    <Compile Include="Sorting\QuickX.cs" />
-    <Compile Include="StdRandom.cs" />
-    <Compile Include="SymbolTables\SplayBST.cs" />
-    <Compile Include="SymbolTables\STBase.cs" />
-    <Compile Include="SymbolTables\TreeSTBase.cs" />
-    <Compile Include="SymbolTables\TrieST.cs" />
-    <Compile Include="Sorting\Merge.cs" />
-    <Compile Include="Sorting\BinaryInsertion.cs" />
-    <Compile Include="Sorting\InsertionX.cs" />
-    <Compile Include="Sorting\Selection.cs" />
-    <Compile Include="Sorting\Shell.cs" />
-    <Compile Include="Sorting\SortingHelperT.cs" />
-    <Compile Include="Sorting\Insertion.cs" />
-    <Compile Include="Sorting\InsertionT.cs" />
-    <Compile Include="PriorityQueues\IndexMaxPQ.cs" />
-    <Compile Include="PriorityQueues\IndexPQBase.cs" />
-    <Compile Include="PriorityQueues\IndexMinPQ.cs" />
-    <Compile Include="PriorityQueues\IPriorityQueue.cs" />
-    <Compile Include="PriorityQueues\HeapPQBase.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
