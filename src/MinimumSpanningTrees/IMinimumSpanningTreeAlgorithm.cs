@@ -1,11 +1,14 @@
 ﻿
 namespace SedgewickWayne.Algorithms
 {
-  using System.Collections.Generic;
+    using SedgewickWayne.Algorithms.Graphs;
+    using System;
+    using System.Collections.Generic;
 
-  public interface IMinimumSpanningTreeAlgorithm
-  {
-    IEnumerable<Edge> Edges { get; }
-    double Weight { get; }
-  }
+    public interface IMinimumSpanningTreeAlgorithm<TWeight>
+          where TWeight : IComparable<TWeight>
+    {
+        IEnumerable<WeightedEdge<TWeight>> Edges { get; }
+        TWeight Weight { get; }
+    }
 }

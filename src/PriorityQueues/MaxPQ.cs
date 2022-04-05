@@ -95,9 +95,9 @@ namespace SedgewickWayne.Algorithms
         /// <returns>less(i, j)</returns>
         public override bool ComparePredicate(int i, int j)
         {
-            return (comparator == null)
+            return (comparer == null)
                     ? pq[i].CompareTo(pq[j]) < 0
-                    : comparator.Compare(pq[i], pq[j]) < 0;
+                    : comparer.Compare(pq[i], pq[j]) < 0;
         }
 
         public override ArrayPQBase<TKey> Clone()
@@ -105,7 +105,7 @@ namespace SedgewickWayne.Algorithms
             // return new MaxPQ<TKey>(Size, comparator);
             TKey[] keys = new TKey[this.Size];
             Array.ConstrainedCopy(this.pq, 1, keys, 0, this.Size);
-            return new MaxPQ<TKey>(keys, comparator);
+            return new MaxPQ<TKey>(keys, comparer);
         }
 
 

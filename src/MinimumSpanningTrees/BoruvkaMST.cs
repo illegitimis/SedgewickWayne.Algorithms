@@ -1,5 +1,6 @@
 ﻿/******************************************************************************
 * Data files: http://algs4.cs.princeton.edu/43mst/BoruvkaMST.java     
+* Data files:   http://algs4.cs.princeton.edu/43mst/BoruvkaMST.java
 * Compute a minimum spanning forest using Boruvka's algorithm.
 ******************************************************************************/
 
@@ -22,11 +23,11 @@ namespace SedgewickWayne.Algorithms
    
    *  This implementation uses <em>Boruvka's algorithm</em> and the union-Find
    *  data type.
-   *  The constructor takes time proportional to <em>E</em> log <em>V</em>
-   *  and extra space (not including the graph) proportional to <em>V</em>,
-   *  where <em>V</em> is the number of vertices and <em>E</em> is the number of edges.
+   *  The constructor takes time proportional to E log V
+   *  and extra space (not including the graph) proportional to V,
+   *  where V is the number of vertices and E is the number of edges.
    *  Afterwards, the {@code weight()} method takes constant time
-   *  and the {@code edges()} method takes time proportional to <em>V</em>.
+   *  and the {@code edges()} method takes time proportional to V.
    
    *  For additional documentation,
    *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
