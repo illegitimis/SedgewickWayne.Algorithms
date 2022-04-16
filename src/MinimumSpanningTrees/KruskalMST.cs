@@ -32,21 +32,21 @@ namespace SedgewickWayne.Algorithms
 
   /**
    *  The {@code KruskalMST} class represents a data type for computing a
-   *  <em>minimum spanning tree</em> in an edge-weighted graph.
+   *  minimum spanning tree in an edge-weighted graph.
    *  The edge weights can be positive, zero, or negative and need not
-   *  be distinct. If the graph is not connected, it computes a <em>minimum
-   *  spanning forest</em>, which is the union of minimum spanning trees
+   *  be distinct. If the graph is not connected, it computes a minimum
+   *  spanning forest, which is the union of minimum spanning trees
    *  in each connected component. The {@code Weight} method returns the 
    *  weight of a minimum spanning tree and the {@code Edges} method
    *  returns its edges.
    
-   *  This implementation uses <em>Krusal's algorithm</em> and the
+   *  This implementation uses Krusal's algorithm and the
    *  union-Find data type.
-   *  The constructor takes time proportional to <em>E</em> log <em>E</em>
-   *  and extra space (not including the graph) proportional to <em>V</em>,
-   *  where <em>V</em> is the number of vertices and <em>E</em> is the number of edges.
+   *  The constructor takes time proportional to E log E
+   *  and extra space (not including the graph) proportional to V,
+   *  where V is the number of vertices and E is the number of edges.
    *  Afterwards, the {@code Weight} method takes constant time
-   *  and the {@code Edges} method takes time proportional to <em>V</em>.
+   *  and the {@code Edges} method takes time proportional to V.
    
    *  For additional documentation,
    *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of

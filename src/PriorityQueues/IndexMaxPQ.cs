@@ -5,8 +5,8 @@ namespace SedgewickWayne.Algorithms
 
     /******************************************************************************
      *  The {@code IndexMaxPQ} class represents an indexed priority queue of generic keys.
-     *  It supports the usual <em>insert</em> and <em>delete-the-maximum</em>
-     *  operations, along with <em>delete</em> and <em>change-the-key</em> 
+     *  It supports the usual insert and delete-the-maximum
+     *  operations, along with delete and change-the-key 
      *  methods. In order to let the client refer to items on the priority queue,
      *  an integer between 0 and <see cref="maxN" /> - 1
      *  is associated with each key—the client
@@ -17,11 +17,11 @@ namespace SedgewickWayne.Algorithms
      
      *  This implementation uses a binary heap along with an array to associate
      *  keys with integers in the given range.
-     *  The <em>insert</em>, <em>delete-the-maximum</em>, <em>delete</em>,
-     *  <em>change-key</em>, <em>decrease-key</em>, and <em>increase-key</em>
+     *  The insert, delete-the-maximum, delete,
+     *  change-key, decrease-key, and increase-key
      *  operations take logarithmic time.
-     *  The <em>is-empty</em>, <em>size</em>, <em>max-index</em>, <em>max-key</em>,
-     *  and <em>key-of</em> operations take constant time.
+     *  The is-empty, size, max-index, max-key,
+     *  and key-of operations take constant time.
      *  Construction takes time proportional to the specified capacity.
      
      <a href="http://algs4.cs.princeton.edu/24pq">Section 2.4</a> 

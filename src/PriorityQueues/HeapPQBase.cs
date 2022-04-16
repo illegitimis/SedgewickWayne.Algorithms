@@ -16,8 +16,8 @@ namespace SedgewickWayne.Algorithms
     /// </remarks>
     /// </summary>
     /// <typeparam name="TKey">comparable key generic type</typeparam>
-    public abstract class HeapPQBase<TKey> 
-        : ArrayPQBase<TKey>
+    public abstract class HeapPQBase<TKey> :
+        ArrayPQBase<TKey>
         where TKey : IComparable<TKey>
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace SedgewickWayne.Algorithms
         {
             pq = new TKey[1 + capacity];
             n = 0;
-            this.comparator = comparator;
+            this.comparer = comparator;
         }
 
         /// <summary>

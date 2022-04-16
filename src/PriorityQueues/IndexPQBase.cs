@@ -23,10 +23,10 @@ namespace SedgewickWayne.Algorithms
     /// operations take constant time.
     /// </remarks>
     /// <typeparam name="Key">the generic type of key on this priority queue</typeparam>
-    public abstract class IndexPQBase<TKey>
-        : IIndexedPriorityQueue<TKey>
-        , ICloneable<IndexPQBase<TKey>>
-        where TKey : System.IComparable<TKey>
+    public abstract class IndexPQBase<TKey> :
+        IIndexedPriorityQueue<TKey>,
+        ICloneable<IndexPQBase<TKey>>
+        where TKey : IComparable<TKey>
     {
         protected int maxN;        // maximum number of elements on PQ
         protected int n;           // number of elements on PQ

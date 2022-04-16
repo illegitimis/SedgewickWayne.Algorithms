@@ -1,9 +1,7 @@
 ﻿namespace SedgewickWayne.Algorithms
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
 
     /// <summary>
     /// A minimum priority queue of generic keys using a binary heap.
@@ -21,8 +19,9 @@
     /// </remarks>
     /// <typeparam name="Key">the generic type of key on this priority queue</typeparam>
     /// <see href="http://algs4.cs.princeton.edu/24pq/MinPQ.java"/>
-    public class MinPQ<TKey>
-        : HeapPQBase<TKey>, IMinPriorityQueue<TKey>
+    public class MinPQ<TKey> :
+        HeapPQBase<TKey>,
+        IMinPriorityQueue<TKey>
         where TKey : IComparable<TKey>
     {
         /// <summary>
@@ -49,9 +48,9 @@
         /// Takes time proportional to the number of keys, using sink-based heap construction.
         /// </summary>
         /// <param name="keys">the array of keys</param>
-        /// <param name="comparator"></param>
-        public MinPQ(TKey[] keys, IComparer<TKey> comparator = null)
-            : base(keys, comparator) { }
+        /// <param name="comparer">custom comapre two keys</param>
+        public MinPQ(TKey[] keys, IComparer<TKey> comparer = null)
+            : base(keys, comparer) { }
 
         /// <summary>
         /// Returns the smallest key on this priority queue.
@@ -71,7 +70,6 @@
         /// /// <remarks>Throws <see cref="InvalidOperationException" /> if this priority queue is empty</remarks>
         public TKey DeleteMin() => Delete();
 
-
         protected override TKey DeleteStep()
         {
             exch(1, n);
@@ -86,13 +84,10 @@
         /// <param name="i">first index</param>
         /// <param name="j">second index</param>
         /// <returns>greater than</returns>
-        public override bool ComparePredicate(int i, int j)
-        {
-            //return greater(i, j);
-            return (comparator == null)
+        public override bool ComparePredicate(int i, int j) =>
+            (comparer is null)
                 ? pq[i].CompareTo(pq[j]) > 0
-                : comparator.Compare(pq[i], pq[j]) > 0;
-        }
+                : comparer.Compare(pq[i], pq[j]) > 0;
 
         public override ArrayPQBase<TKey> Clone()
         {
@@ -100,7 +95,7 @@
             var clone = new MinPQ<TKey>(this.pq.Length);
             clone.n = this.n;
             clone.pq = this.pq;
-            clone.comparator = this.comparator;
+            clone.comparer = this.comparer;
             return clone;
         }
     }

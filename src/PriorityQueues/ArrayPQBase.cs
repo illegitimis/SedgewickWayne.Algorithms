@@ -12,14 +12,14 @@ namespace SedgewickWayne.Algorithms
     /// insert or the remove top operation takes linear time in the worst case.
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    public abstract class ArrayPQBase<TKey>
-      : IPriorityQueue<TKey>
-      , ICloneable<ArrayPQBase<TKey>>
-      where TKey : IComparable<TKey>
+    public abstract class ArrayPQBase<TKey> :
+        IPriorityQueue<TKey>,
+        ICloneable<ArrayPQBase<TKey>>
+        where TKey : IComparable<TKey>
     {
         protected TKey[] pq;                    // store items at indices 1 to n
         protected int n;                        // number of items on priority queue
-        protected IComparer<TKey> comparator;   // optional comparator
+        protected IComparer<TKey> comparer;   // optional comparator
 
         /// <summary>
         /// use a zero-based array
@@ -30,14 +30,14 @@ namespace SedgewickWayne.Algorithms
         {
             pq = new TKey[capacity];
             n = 0;
-            this.comparator = comparator;
+            comparer = comparator;
         }
 
         public ArrayPQBase(TKey[] keys, IComparer<TKey> comparator = null)
         {
             pq = keys;
             n = pq.Length;
-            this.comparator = comparator;
+            comparer = comparator;
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace SedgewickWayne.Algorithms
 
             public ArrayPQEnumerator(ArrayPQBase<TKey> source)
             {
-                this._clone = source.Clone();
+                _clone = source.Clone();
             }
 
             public TKey Current {
@@ -93,7 +93,7 @@ namespace SedgewickWayne.Algorithms
                 }
             }
 
-            object IEnumerator.Current => this.Current;
+            object IEnumerator.Current => Current;
 
             public void Dispose() { }
 

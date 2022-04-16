@@ -1,0 +1,45 @@
+﻿namespace SedgewickWayne.Algorithms.UnitTests
+{
+    using SedgewickWayne.Algorithms.Graphs;
+    using Xunit;
+    using static SedgewickWayne.Algorithms.UnitTests.Constants;
+
+    public class MinimumSpanningTreesTests
+    {
+        [Theory]
+        [InlineData("LazyPrimMST")]
+        [InlineData("EagerPrimMST")]
+        public void Tiny(string algo)
+        {
+            var tinyewg = EdgeWeightedGraphBuilder.Tiny();
+            var sut = Sut(algo, tinyewg);
+            Assert.NotNull(sut);
+            Assert.Equal(expectedWeight, sut.Weight, THREE_DECIMAL_PLACES_PRECISION);
+
+            var edges = sut.Edges.ToArray();
+            Assert.Equal(7, edges.Length);
+            Assert.Equal(expectedWeight, edges.Sum(e => e.Weight), THREE_DECIMAL_PLACES_PRECISION);
+            Assert.All(TinyEwgMstEdges, expectedEdge => edges.Contains(expectedEdge));
+        }
+
+        private IMinimumSpanningTreeAlgorithm<double> Sut(string s, EdgeWeightedGraph<double> edgeWeightedGraph) => s switch
+        {
+            "LazyPrimMST" => new LazyPrimMST<double>(edgeWeightedGraph),
+            "EagerPrimMST" => new EagerPrimMST<double>(edgeWeightedGraph, double.MaxValue, double.MinValue),
+            _ => null
+        };
+
+        const double expectedWeight = 1.81d;
+
+        private static readonly WeightedEdge<double>[] TinyEwgMstEdges = new WeightedEdge<double>[]
+        {
+            new (0,7,0.16),
+            new (2,3,0.17),
+            new (1,7,0.19),
+            new (0,2,0.26),
+            new (5,7,0.28),
+            new (4,5,0.35),
+            new (6,2,0.40)
+        };
+    }
+}

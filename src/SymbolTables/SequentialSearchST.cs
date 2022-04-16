@@ -20,10 +20,10 @@ namespace SedgewickWayne.Algorithms
 
     /**
      *  The {@code SequentialSearchST} class represents an (unordered) symbol table of generic key-value pairs.
-     *  It supports the usual <em>put</em>, <em>get</em>, <em>contains</em>,
-     *  <em>delete</em>, <em>size</em>, and <em>is-empty</em> methods.
-     *  It also provides a <em>keys</em> method for iterating over all of the keys.
-     *  A symbol table implements the <em>associative array</em> abstraction:
+     *  It supports the usual put, get, contains,
+     *  delete, size, and is-empty methods.
+     *  It also provides a keys method for iterating over all of the keys.
+     *  A symbol table implements the associative array abstraction:
      *  when associating a value with a key that is already in the symbol table,
      *  the convention is to replace the old value with the new value.
      *  The class also uses the convention that values cannot be {@code null}. 
@@ -31,9 +31,9 @@ namespace SedgewickWayne.Algorithms
      *  This implementation uses a singly-linked list and sequential search.
      *  It relies on the {@code equals()} method to test whether two keys are equal. 
      *  It does not call either the {@code compareTo()} or {@code hashCode()} method. 
-     *  The <em>put</em> and <em>delete</em> operations take linear time; 
-     *  the <em>get</em> and <em>contains</em> operations takes linear time in the worst case.
-     *  The <em>size</em>, and <em>is-empty</em> operations take constant time.
+     *  The put and delete operations take linear time; 
+     *  the get and contains operations takes linear time in the worst case.
+     *  The size, and is-empty operations take constant time.
      *  Construction takes constant time.    
      **/
     public class SequentialSearchST<TKey, TValue> 

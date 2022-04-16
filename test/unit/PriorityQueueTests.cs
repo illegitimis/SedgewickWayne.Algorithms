@@ -6,77 +6,92 @@ namespace SedgewickWayne.Algorithms.UnitTests
     using Xunit;
     using System.Collections.Generic;
     using System.Linq;
+    using static PriorityQueueDefines;
 
-    
+    public class MinMaxPriorityQueueTests
+    {
+        [Fact]
+        public void TopDownBottomUp() => Assert.Equal(BottomUp, TopDown.Reverse().ToArray());
+
+        [Fact]
+        public void InsertAll_DeleteAll_MaxPQ_TopDown() => InsertAllAndDeleteAll(
+                () => new MaxPQ<string>(),
+                PriorityQueueDefines.Array,
+                TopDown);
+
+        [Fact]
+        public void InsertAll_DeleteAll_MinPQ_BottomUp() => InsertAllAndDeleteAll(
+                () => new MinPQ<string>(),
+                PriorityQueueDefines.Array,
+                BottomUp);
+
+        [Fact]
+        public void ConstructFromArray_Iterate_MaxPQ_TopDown() => ConstructFromArrayAndIterate(
+                () => new MaxPQ<string>(PriorityQueueDefines.Array),
+                TopDown);
+
+        [Fact]
+        public void ConstructFromArray_Iterate_MinPQ_BottomUp() => ConstructFromArrayAndIterate(
+                () => new MinPQ<string>(PriorityQueueDefines.Array),
+                BottomUp);
+
+        void InsertAllAndDeleteAll(
+            Func<ArrayPQBase<string>> pqCtor,
+            string[] sourceArray,
+            string[] expectedEnumeration)
+        {
+            // default ctor
+            var pq = pqCtor();
+            Assert.True(pq.IsEmpty);
+
+            // insert a bunch of values
+            foreach (var s in sourceArray) pq.Insert(s);
+            /* pq string[16]}
+		        [0]	null
+		        [1]	"best"
+		        [2]	"it"
+		        [3]	"it"
+		        [4]	"the"
+		        [5]	"of"
+		        [6]	"times"
+		        [7]	"the"
+		        [8]	"was"
+		        [9]	"was"
+		        [10]	"worst"
+		        [11]	null
+		        [12]	null
+		        [13]	null
+		        [14]	null
+		        [15]	null
+             */
+
+            // then delete all and save order
+            var actual = DeleteEnumerable(pq).ToArray();
+            Assert.Equal(expectedEnumeration, actual);
+
+            IEnumerable<string> DeleteEnumerable(ArrayPQBase<string> pq)
+            {
+                while (!pq.IsEmpty) yield return pq.Delete();
+            }
+        }
+
+        void ConstructFromArrayAndIterate(Func<ArrayPQBase<string>> pqCtor, string[] expected)
+        {
+            var pq = pqCtor();
+            Assert.False(pq.IsEmpty);
+            Assert.Equal(expected, pq.ToArray());
+        }
+    }
+
+
     public class PriorityQueueTests
     {
-        #region defines
-
-        static readonly string[] array = new string[]
-        {
-            "it",
-            "was",
-            "the",
-            "best",
-            "of",
-            "times",
-            "it",
-            "was",
-            "the",
-            "worst"
-        };
-
-        static readonly string[] topDown = new string[]
-        {
-            "worst",
-            "was",
-            "was",
-            "times",
-            "the",
-            "the",
-            "of",
-            "it",
-            "it",
-            "best"
-        };
-
-        static readonly string[] indexedMax = new string[]
-        {
-            "9", "worst",
-            "1", "was",
-            "7", "was",
-            "5", "times",
-            "8", "the",
-            "2", "the",
-            "4", "of",
-            "6", "it",
-            "0", "it",
-            "3", "best"
-        };
-
-        static readonly string[] indexedMin = new string[] {
-            "3" , "best" ,
-            "0" , "it" ,
-            "6" , "it" ,
-            "4" , "of" ,
-            "8" , "the" ,
-            "2" , "the" ,
-            "5" , "times" ,
-            "7" , "was" ,
-            "1" , "was" ,
-            "9" , "worst"
-        };
-
-       
-
-        #endregion
-        
         // increase or decrease the key
         [Fact]
         public void IndexedMaxPQIncreaseKeyTest()
         {
             // arrange 
-            var pq = new IndexMaxPQ<string>(array);
+            var pq = new IndexMaxPQ<string>(PriorityQueueDefines.Array);
 
             // act + assert initial
             Assert.False(pq.IsEmpty);
@@ -107,7 +122,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
         public void IndexedMinPQDecreaseKeyTest()
         {
             // arrange 
-            var pq = new IndexMinPQ<string>(array);
+            var pq = new IndexMinPQ<string>(PriorityQueueDefines.Array);
 
             // act + assert initial
             Assert.False(pq.IsEmpty);
@@ -159,7 +174,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
         [Fact]
         public void IndexPQDeleteAtIndexTest()
         {
-            var pq = new IndexMaxPQ<String>(array);
+            var pq = new IndexMaxPQ<string>(PriorityQueueDefines.Array);
             Assert.True(pq.Contains(5));
             pq.Delete(5);
             Assert.False(pq.Contains(5));
@@ -179,26 +194,27 @@ namespace SedgewickWayne.Algorithms.UnitTests
         [Fact]
         public void IndexMaxPQIteratorTest()
         {
-            var pq = new IndexMaxPQ<String>(array);
+            var pq = new IndexMaxPQ<string>(PriorityQueueDefines.Array);
             var actual = Strings(pq).ToList();
-            Assert.Equal(indexedMax, actual);            
+            Assert.Equal(IndexedMax, actual);            
         }        
 
         [Fact]
         public void IndexMinPQIteratorTest()
         {
-            var pq = new IndexMinPQ<String>(array);
+            var pq = new IndexMinPQ<string>(PriorityQueueDefines.Array);
             var actual = Strings(pq).ToList();
-            Assert.Equal(indexedMin, actual);
+            Assert.Equal(IndexedMin, actual);
         }
 
         IEnumerable<Tuple<int,string>> Tuples (IndexPQBase<string> pq)
         {
             foreach (int i in pq)
             {
-                yield return new Tuple<int, string>(i, pq.KeyOf(i));                
+                yield return new Tuple<int, string>(i, pq.KeyOf(i));
             }
         }
+
         IEnumerable<string> Strings(IndexPQBase<string> pq)
         {
             foreach (int i in pq)
@@ -216,52 +232,6 @@ namespace SedgewickWayne.Algorithms.UnitTests
         * delete and print each key
         * print each key using the iterator
         */
-        [Fact]
-        public void InsertAllAndDeleteAllMaxPQTest()
-        {
-            InsertAllAndDeleteAll(new MaxPQ<string>(), topDown);
-        }
-
-        [Fact]
-        public void InsertAllAndDeleteAllMinPQTest()
-        {
-            InsertAllAndDeleteAll(new MinPQ<string>(), topDown.Reverse().ToArray());
-        }
-
-        [Fact]
-        public void ConstructFromArrayMaxPQTest()
-        {
-            ConstructFromArrayAndIterate(new MaxPQ<string>(array), topDown);
-        }
-
-        [Fact]
-        public void ConstructFromArrayMinPQTest()
-        {
-            ConstructFromArrayAndIterate(new MinPQ<string>(array), topDown.Reverse().ToArray());
-        }
-
-
-        void InsertAllAndDeleteAll(ArrayPQBase<string> pq, string[] expected)
-        {
-            // default ctor, insert a bunch of values, then delete all
-            Assert.True(pq.IsEmpty);
-            var actual = Strings(pq).ToList();
-            Assert.Equal(expected, actual);
-        }
-
-        void ConstructFromArrayAndIterate (ArrayPQBase<string> pq, string[] expected)
-        {
-            Assert.False(pq.IsEmpty);
-            Assert.Equal(expected, pq.ToList());
-        }
-
-
-        IEnumerable<string> Strings(ArrayPQBase<string> pq)
-        {
-            foreach (var s in array) pq.Insert(s);
-
-            while (!pq.IsEmpty) yield return pq.Delete();
-        }
 
         #region hamlet
 
