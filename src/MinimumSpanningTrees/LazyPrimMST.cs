@@ -141,7 +141,7 @@ namespace SedgewickWayne.Algorithms
             //}
 
             // check that it is a minimal spanning forest (cut optimality conditions)
-            //foreach (Edge e in Edges) {
+            foreach (var e in G.Edges) {
 
             //    // all edges in MST except e
             //    uf = new UF(G.V);
@@ -159,7 +159,7 @@ namespace SedgewickWayne.Algorithms
             //            return false;
             //        }
             //    }
-            //}
+            }
 
             return true;
         }
