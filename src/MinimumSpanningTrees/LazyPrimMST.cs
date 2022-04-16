@@ -28,7 +28,7 @@ namespace SedgewickWayne.Algorithms
     /// and extra space (not including the graph) proportional to E,
     /// where V is the number of vertices and E is the number of edges.
     /// 
-    /// Afterwards, the {@code weight()} method takes constant time and the {@code Edges} method takes time proportional to V.
+    /// Afterwards, the {@code weight()} method takes constant time and the <see cref="Edges"/> method takes time proportional to V.
     /// </remarks>
     public class LazyPrimMST<TWeight> :
         IMinimumSpanningTreeAlgorithm<TWeight>

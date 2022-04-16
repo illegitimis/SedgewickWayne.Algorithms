@@ -62,7 +62,7 @@ namespace SedgewickWayne.Algorithms
          */
         public override void decreaseKey(int i, TKey key)
         {
-            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
+            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i));
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             if (keys[i].CompareTo(key) <= 0)
                 throw new ArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
@@ -81,7 +81,7 @@ namespace SedgewickWayne.Algorithms
          */
         public override void increaseKey(int i, TKey key)
         {
-            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
+            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i));
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             if (keys[i].CompareTo(key) >= 0)
                 throw new ArgumentException("Calling increaseKey() with given argument would not strictly increase the key");

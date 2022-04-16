@@ -50,14 +50,13 @@ namespace SedgewickWayne.Algorithms
         where TWeight : IComparable<TWeight>
     {
         // edgeTo[v] = shortest edge from tree vertex to non-tree vertex
-        private WeightedEdge<TWeight>[] edgeTo;
+        private readonly WeightedEdge<TWeight>[] edgeTo;
         // distTo[v] = weight of shortest such edge
-        private TWeight[] distTo;
+        private readonly TWeight[] distTo;
         // marked[v] = true if v on tree, false otherwise
-        private bool[] marked;
+        private readonly bool[] marked;
 
-        // private MinPQ<WeightedEdge<TWeight>> pq;
-        private IndexMinPQ<TWeight> pq;
+        private readonly IndexMinPQ<TWeight> pq;
 
         /// <summary>
         /// Compute a minimum spanning tree (or forest) of an edge-weighted graph.

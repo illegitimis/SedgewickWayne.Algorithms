@@ -4,6 +4,7 @@
   *                http://algs4.cs.princeton.edu/43mst/largeEWG.txt
   *
   *  % java EagerPrimMST mediumEWG.txt
+  *  % java KruskalMST mediumEWG.txt
   *  1-72   0.06506
   *  2-86   0.05980
   *  3-67   0.09725
@@ -11,31 +12,23 @@
   *  5-102  0.03834
   *  6-129  0.05363
   *  7-157  0.00516
+  *  0-225   0.02383
+  *  49-225  0.03314
+  *  44-49   0.02107
+  *  44-204  0.01774
+  *  49-97   0.03121
+  *  202-204 0.04207
+  *  176-202 0.04299
+  *  176-191 0.02089
+  *  68-176  0.04396
+  *  58-68   0.04795
   *  ...
   *  10.46351
   *
   *  % java EagerPrimMST largeEWG.txt
+  *  % java LazyPrimMST largeEWG.txt
   *  ...
   *  647.66307
-  *  
-  *   *
-    *  % java LazyPrimMST mediumEWG.txt
-    *  0-225   0.02383
-    *  49-225  0.03314
-    *  44-49   0.02107
-    *  44-204  0.01774
-    *  49-97   0.03121
-    *  202-204 0.04207
-    *  176-202 0.04299
-    *  176-191 0.02089
-    *  68-176  0.04396
-    *  58-68   0.04795
-    *  10.46351
-    *
-    *  % java LazyPrimMST largeEWG.txt
-    *  ...
-    *  647.66307
-    *
   *
   * Compilation:  javac EdgeWeightedGraph.java
   * Execution:    java EdgeWeightedGraph filename.txt
