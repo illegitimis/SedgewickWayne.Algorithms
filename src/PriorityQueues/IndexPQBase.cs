@@ -152,16 +152,17 @@ namespace SedgewickWayne.Algorithms
             sink(1);
 
             Contract.Assert(min == pq[n + 1]);
-            qp[min] = -1;               // delete
-            keys[min] = default(TKey);  // to help with garbage collection
-            pq[n + 1] = -1;             // not needed?        
+            // delete
+            qp[min] = -1;
+            // to help with garbage collection
+            keys[min] = default;
+            // not needed?
+            pq[n + 1] = -1;
 
             return min;
         }
 
-        /// <summary>
-        /// .
-        /// </summary>
+        /// <summary> </summary>
         /// <returns>Key that got removed.</returns>
         public virtual TKey DeleteKey()
         {
@@ -173,10 +174,10 @@ namespace SedgewickWayne.Algorithms
 
             Contract.Assert(min == pq[n + 1]);
 
-            qp[min] = -1;               // delete
-            var key = keys[min];        // memo
-            keys[min] = default(TKey);  // GC
-            pq[n + 1] = -1;             // not needed?
+            qp[min] = -1;
+            var key = keys[min];
+            keys[min] = default;
+            pq[n + 1] = -1;
 
             return key;
         }
@@ -246,7 +247,7 @@ namespace SedgewickWayne.Algorithms
             swim(index);
             sink(index);
             //keys[i] = null;
-            keys[i] = default(TKey);
+            keys[i] = default;
             qp[i] = -1;
         }
 
