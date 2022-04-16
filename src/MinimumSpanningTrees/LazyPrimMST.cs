@@ -107,7 +107,7 @@ namespace SedgewickWayne.Algorithms
 
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private bool check(EdgeWeightedGraph<TWeight> G)
+        private static bool check(EdgeWeightedGraph<TWeight> G)
         {
 
             // check weight
