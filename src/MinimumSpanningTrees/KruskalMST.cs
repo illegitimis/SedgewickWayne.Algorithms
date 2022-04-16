@@ -64,7 +64,7 @@ namespace SedgewickWayne.Algorithms
             }
 
             // check optimality conditions
-            Contract.Assert(KruskalMST<TWeight>.Check(G));
+            Contract.Assert(Check(G));
         }
 
         /// <summary>

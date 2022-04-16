@@ -6,7 +6,6 @@ namespace SedgewickWayne.Algorithms
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
 
-
     /// <summary>
     /// Indexed priority queue of generic keys.
     /// This implementation uses a binary heap along with an array 
