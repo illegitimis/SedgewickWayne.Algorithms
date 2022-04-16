@@ -75,16 +75,16 @@ namespace SedgewickWayne.Algorithms
             {
                 if (marked[v]) continue;
                 // minimum spanning forest
-                prim(G, v, zero);
+                Prim(G, v, zero);
             }
 
             // check optimality conditions
             // assert check(G);
-            Contract.Assert(check(G));
+            Contract.Assert(Check(G));
         }
 
         // run Prim's algorithm in graph G, starting from vertex s
-        private void prim(EdgeWeightedGraph<TWeight> G, int s, TWeight zero)
+        private void Prim(EdgeWeightedGraph<TWeight> G, int s, TWeight zero)
         {
             // distTo[s] = 0.0;
             distTo[s] = zero;
@@ -94,12 +94,12 @@ namespace SedgewickWayne.Algorithms
                 // int v = pq.DeleteMin();
                 int idx = pq.DeleteIndex();
                 //scan(G, v);
-                scan(G, idx);
+                Scan(G, idx);
             }
         }
 
         // scan vertex v
-        private void scan(EdgeWeightedGraph<TWeight> G, int v)
+        private void Scan(EdgeWeightedGraph<TWeight> G, int v)
         {
             marked[v] = true;
             foreach (WeightedEdge<TWeight> e in G.Adjacency(v))
@@ -112,7 +112,7 @@ namespace SedgewickWayne.Algorithms
                 {
                     distTo[w] = e.Weight;
                     edgeTo[w] = e;
-                    if (pq.Contains(w)) pq.decreaseKey(w, distTo[w]);
+                    if (pq.Contains(w)) pq.DecreaseKey(w, distTo[w]);
                     else pq.Insert(w, distTo[w]);
                 }
             }
@@ -152,7 +152,7 @@ namespace SedgewickWayne.Algorithms
         }
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private bool check(EdgeWeightedGraph<TWeight> G)
+        private bool Check(EdgeWeightedGraph<TWeight> G)
         {
 
             // check weight

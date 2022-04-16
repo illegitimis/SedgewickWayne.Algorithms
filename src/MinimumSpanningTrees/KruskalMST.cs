@@ -64,7 +64,7 @@ namespace SedgewickWayne.Algorithms
             }
 
             // check optimality conditions
-            Contract.Assert(check(G));
+            Contract.Assert(Check(G));
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace SedgewickWayne.Algorithms
         public TWeight Weight { get; }
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private bool check(EdgeWeightedGraph<TWeight> G)
+        private bool Check(EdgeWeightedGraph<TWeight> G)
         {
 
             // check total weight

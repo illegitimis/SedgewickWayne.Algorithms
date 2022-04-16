@@ -60,14 +60,14 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="ArgumentException" /> if {@code key >= keyOf(i)}
          * Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>
          */
-        public override void decreaseKey(int i, TKey key)
+        public override void DecreaseKey(int i, TKey key)
         {
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i));
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             if (keys[i].CompareTo(key) <= 0)
                 throw new ArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
             keys[i] = key;
-            swim(qp[i]);
+            Swim(qp[i]);
         }
 
         /**
@@ -79,14 +79,14 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="ArgumentException" /> if {@code key <= keyOf(i)}
          * Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>
          */
-        public override void increaseKey(int i, TKey key)
+        public override void IncreaseKey(int i, TKey key)
         {
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i));
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             if (keys[i].CompareTo(key) >= 0)
                 throw new ArgumentException("Calling increaseKey() with given argument would not strictly increase the key");
             keys[i] = key;
-            sink(qp[i]);
+            Sink(qp[i]);
         }
 
 
@@ -94,11 +94,8 @@ namespace SedgewickWayne.Algorithms
         /***************************************************************************
          * General helper functions.
          ***************************************************************************/
-        protected override bool Predicate(int i, int j) { return greater(i, j); }
-        private bool greater(int i, int j)
-        {
-            return keys[pq[i]].CompareTo(keys[pq[j]]) > 0;
-        }
+        protected override bool Predicate(int i, int j) { return Greater(i, j); }
+        private bool Greater(int i, int j) => keys[pq[i]].CompareTo(keys[pq[j]]) > 0;
 
         public override IndexPQBase<TKey> Clone()
         {

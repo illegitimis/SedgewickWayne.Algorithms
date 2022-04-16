@@ -16,8 +16,8 @@ namespace SedgewickWayne.Algorithms
     /// It also supports methods for peeking at the minimum key, 
     /// testing if the priority queue is empty, and iterating through the keys.
     /// The <see cref="Insert(int, TKey)"/>, <see cref="DeleteKey"/>, 
-    /// <see cref="Delete(int)"/>, <see cref="decreaseKey(int, TKey)"/> and 
-    /// <see cref="increaseKey(int, TKey)"/> operations take logarithmic time.
+    /// <see cref="Delete(int)"/>, <see cref="DecreaseKey(int, TKey)"/> and 
+    /// <see cref="IncreaseKey(int, TKey)"/> operations take logarithmic time.
     /// The <see cref="IsEmpty"/>, <seealso cref="Size"/>, <see cref="Index"/>, 
     /// <see cref="KeyOf(int)"/> and <see cref="TopKey"/> 
     /// operations take constant time.
@@ -108,7 +108,7 @@ namespace SedgewickWayne.Algorithms
             qp[i] = n;
             pq[n] = i;
             keys[i] = key;
-            swim(n);
+            Swim(n);
         }
 
         /// <summary>
@@ -148,8 +148,8 @@ namespace SedgewickWayne.Algorithms
         {
             if (n == 0) throw new InvalidOperationException("Priority queue underflow");
             int min = pq[1];
-            exch(1, n--);
-            sink(1);
+            Exchange(1, n--);
+            Sink(1);
 
             Contract.Assert(min == pq[n + 1]);
             // delete
@@ -169,8 +169,8 @@ namespace SedgewickWayne.Algorithms
             if (n == 0) throw new InvalidOperationException("Priority queue underflow");
 
             int min = pq[1];
-            exch(1, n--);
-            sink(1);
+            Exchange(1, n--);
+            Sink(1);
 
             Contract.Assert(min == pq[n + 1]);
 
@@ -212,8 +212,8 @@ namespace SedgewickWayne.Algorithms
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i), i, $"[0, {maxN})");
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             keys[i] = key;
-            swim(qp[i]);
-            sink(qp[i]);
+            Swim(qp[i]);
+            Sink(qp[i]);
         }
 
         /// <summary>
@@ -221,14 +221,14 @@ namespace SedgewickWayne.Algorithms
         /// </summary>
         /// <param name="i"></param>
         /// <param name="key"></param>
-        public abstract void decreaseKey(int i, TKey key);
+        public abstract void DecreaseKey(int i, TKey key);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="i"></param>
         /// <param name="key"></param>
-        public abstract void increaseKey(int i, TKey key);
+        public abstract void IncreaseKey(int i, TKey key);
      
             /// <summary>
             /// Remove the key associated with index <paramref name="i"/>.
@@ -243,9 +243,9 @@ namespace SedgewickWayne.Algorithms
             if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i), i, $"[0, {maxN})");
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             int index = qp[i];
-            exch(index, n--);
-            swim(index);
-            sink(index);
+            Exchange(index, n--);
+            Swim(index);
+            Sink(index);
             //keys[i] = null;
             keys[i] = default;
             qp[i] = -1;
@@ -264,7 +264,7 @@ namespace SedgewickWayne.Algorithms
         /***************************************************************************
          * General helper functions.
          ***************************************************************************/
-        protected void exch(int i, int j)
+        protected void Exchange(int i, int j)
         {
             int swap = pq[i];
             pq[i] = pq[j];
@@ -277,23 +277,23 @@ namespace SedgewickWayne.Algorithms
         /***************************************************************************
          * Heap helper functions.
          ***************************************************************************/
-        protected void swim(int k)
+        protected void Swim(int k)
         {
             while (k > 1 && Predicate(k / 2, k))
             {
-                exch(k, k / 2);
+                Exchange(k, k / 2);
                 k = k / 2;
             }
         }
 
-        protected void sink(int k)
+        protected void Sink(int k)
         {
             while (2 * k <= n)
             {
                 int j = 2 * k;
                 if (j < n && Predicate(j, j + 1)) j++;
                 if (!Predicate(k, j)) break;
-                exch(k, j);
+                Exchange(k, j);
                 k = j;
             }
         }

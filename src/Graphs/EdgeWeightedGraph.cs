@@ -75,10 +75,10 @@
         public void AddEdge(WeightedEdge<TWeight> edge)
         {
             int either = edge.Either();
-            validateVertex(either);
+            ValidateVertex(either);
 
             int other = edge.Other(either);
-            validateVertex(other);
+            ValidateVertex(other);
 
             adj[either].Add(edge);
             adj[other].Add(edge);
@@ -98,7 +98,7 @@
         /// </returns>
         public IEnumerable<WeightedEdge<TWeight>> Adjacency(int v)
         {
-            validateVertex(v);
+            ValidateVertex(v);
             return adj[v];
         }
 
@@ -109,7 +109,7 @@
         /// <returns>the degree of vertex {@code v}</returns>
         public int Degree(int v)
         {
-            validateVertex(v);
+            ValidateVertex(v);
             return adj[v].Size;
         }
 
@@ -162,7 +162,7 @@
         }
 
         // throw an ArgumentException unless {@code 0 <= v < V}
-        void validateVertex(int i)
+        void ValidateVertex(int i)
         {
             if (i < 0 || i >= V)
                 throw new ArgumentException("vertex " + i + " is not between 0 and " + (V - 1));

@@ -88,14 +88,14 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="ArgumentException" /> if {@code key <= keyOf(i)}
          * Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>
          */
-        public override void increaseKey(int i, Key key)
+        public override void IncreaseKey(int i, Key key)
         {
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             if (keys[i].CompareTo(key) >= 0)
                 throw new ArgumentException("Calling increaseKey() with given argument would not strictly increase the key");
 
             keys[i] = key;
-            swim(qp[i]);
+            Swim(qp[i]);
         }
 
         /**
@@ -107,14 +107,14 @@ namespace SedgewickWayne.Algorithms
          * Throws <see cref="ArgumentException" /> if {@code key >= keyOf(i)}
          * Throws <see cref="InvalidOperationException" /> no key is associated with index <paramref name="i"/>
          */
-        public override void decreaseKey(int i, Key key)
+        public override void DecreaseKey(int i, Key key)
         {
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             if (keys[i].CompareTo(key) <= 0)
                 throw new ArgumentException("Calling decreaseKey() with given argument would not strictly decrease the key");
 
             keys[i] = key;
-            sink(qp[i]);
+            Sink(qp[i]);
         }
 
            
