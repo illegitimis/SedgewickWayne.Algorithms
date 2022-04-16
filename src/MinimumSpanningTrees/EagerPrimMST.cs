@@ -50,14 +50,13 @@ namespace SedgewickWayne.Algorithms
         where TWeight : IComparable<TWeight>
     {
         // edgeTo[v] = shortest edge from tree vertex to non-tree vertex
-        private WeightedEdge<TWeight>[] edgeTo;
+        private readonly WeightedEdge<TWeight>[] edgeTo;
         // distTo[v] = weight of shortest such edge
-        private TWeight[] distTo;
+        private readonly TWeight[] distTo;
         // marked[v] = true if v on tree, false otherwise
-        private bool[] marked;
+        private readonly bool[] marked;
 
-        // private MinPQ<WeightedEdge<TWeight>> pq;
-        private IndexMinPQ<TWeight> pq;
+        private readonly IndexMinPQ<TWeight> pq;
 
         /// <summary>
         /// Compute a minimum spanning tree (or forest) of an edge-weighted graph.
@@ -76,16 +75,16 @@ namespace SedgewickWayne.Algorithms
             {
                 if (marked[v]) continue;
                 // minimum spanning forest
-                prim(G, v, zero);
+                Prim(G, v, zero);
             }
 
             // check optimality conditions
             // assert check(G);
-            Contract.Assert(check(G));
+            Contract.Assert(EagerPrimMST<TWeight>.Check(G));
         }
 
         // run Prim's algorithm in graph G, starting from vertex s
-        private void prim(EdgeWeightedGraph<TWeight> G, int s, TWeight zero)
+        private void Prim(EdgeWeightedGraph<TWeight> G, int s, TWeight zero)
         {
             // distTo[s] = 0.0;
             distTo[s] = zero;
@@ -95,12 +94,12 @@ namespace SedgewickWayne.Algorithms
                 // int v = pq.DeleteMin();
                 int idx = pq.DeleteIndex();
                 //scan(G, v);
-                scan(G, idx);
+                Scan(G, idx);
             }
         }
 
         // scan vertex v
-        private void scan(EdgeWeightedGraph<TWeight> G, int v)
+        private void Scan(EdgeWeightedGraph<TWeight> G, int v)
         {
             marked[v] = true;
             foreach (WeightedEdge<TWeight> e in G.Adjacency(v))
@@ -113,7 +112,7 @@ namespace SedgewickWayne.Algorithms
                 {
                     distTo[w] = e.Weight;
                     edgeTo[w] = e;
-                    if (pq.Contains(w)) pq.decreaseKey(w, distTo[w]);
+                    if (pq.Contains(w)) pq.DecreaseKey(w, distTo[w]);
                     else pq.Insert(w, distTo[w]);
                 }
             }
@@ -153,7 +152,7 @@ namespace SedgewickWayne.Algorithms
         }
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private bool check(EdgeWeightedGraph<TWeight> G)
+        private static bool Check(EdgeWeightedGraph<TWeight> G)
         {
 
             // check weight
@@ -187,7 +186,8 @@ namespace SedgewickWayne.Algorithms
             //}
 
             // check that it is a minimal spanning forest (cut optimality conditions)
-            foreach (WeightedEdge<TWeight> e in Edges)
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            foreach (var e in G.Edges)
             {
 
                 // all edges in MST except e
@@ -209,6 +209,7 @@ namespace SedgewickWayne.Algorithms
                 //}
 
             }
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
             return true;
         }

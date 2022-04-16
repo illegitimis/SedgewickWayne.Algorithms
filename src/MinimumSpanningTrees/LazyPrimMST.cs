@@ -28,18 +28,18 @@ namespace SedgewickWayne.Algorithms
     /// and extra space (not including the graph) proportional to E,
     /// where V is the number of vertices and E is the number of edges.
     /// 
-    /// Afterwards, the {@code weight()} method takes constant time and the {@code Edges} method takes time proportional to V.
+    /// Afterwards, the {@code weight()} method takes constant time and the <see cref="Edges"/> method takes time proportional to V.
     /// </remarks>
     public class LazyPrimMST<TWeight> :
         IMinimumSpanningTreeAlgorithm<TWeight>
         where TWeight : IComparable<TWeight>
     {
         // edges in the MST
-        private Queue<WeightedEdge<TWeight>> mst;
+        private readonly Queue<WeightedEdge<TWeight>> mst;
         // marked[v] = true if v on tree
-        private bool[] marked;
+        private readonly bool[] marked;
         // edges with one endpoint in tree
-        private MinPQ<WeightedEdge<TWeight>> pq;
+        private readonly MinPQ<WeightedEdge<TWeight>> pq;
 
         /**
          * Compute a minimum spanning tree (or forest) of an edge-weighted graph.
@@ -51,16 +51,16 @@ namespace SedgewickWayne.Algorithms
             pq = new MinPQ<WeightedEdge<TWeight>>();
             marked = new bool[G.V];
             for (int v = 0; v < G.V; v++)     // run Prim from all vertices to
-                if (!marked[v]) prim(G, v);     // get a minimum spanning forest
+                if (!marked[v]) Prim(G, v);     // get a minimum spanning forest
 
             // check optimality conditions
-            //Contracts.Assert (G);
+            Contract.Assert(Check(G));
         }
 
         // run Prim's algorithm
-        private void prim(EdgeWeightedGraph<TWeight> G, int s)
+        private void Prim(EdgeWeightedGraph<TWeight> G, int s)
         {
-            scan(G, s);
+            Scan(G, s);
             // better to stop when mst has V-1 edges
             while (!pq.IsEmpty)
             {
@@ -80,13 +80,13 @@ namespace SedgewickWayne.Algorithms
                 Weight = GenericOperators<TWeight>.Add(Weight, e.Weight);
 
                 // v & w become part of tree
-                if (!marked[v]) scan(G, v);
-                if (!marked[w]) scan(G, w);
+                if (!marked[v]) Scan(G, v);
+                if (!marked[w]) Scan(G, w);
             }
         }
 
         // add all edges e incident to v onto pq if the other endpoint has not yet been scanned
-        private void scan(EdgeWeightedGraph<TWeight> G, int v)
+        private void Scan(EdgeWeightedGraph<TWeight> G, int v)
         {
             Contract.Assert(!marked[v]);
             marked[v] = true;
@@ -107,7 +107,7 @@ namespace SedgewickWayne.Algorithms
 
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private bool check(EdgeWeightedGraph<TWeight> G)
+        private static bool Check(EdgeWeightedGraph<TWeight> G)
         {
 
             // check weight
@@ -141,7 +141,8 @@ namespace SedgewickWayne.Algorithms
             //}
 
             // check that it is a minimal spanning forest (cut optimality conditions)
-            //foreach (Edge e in Edges) {
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            foreach (var e in G.Edges) {
 
             //    // all edges in MST except e
             //    uf = new UF(G.V);
@@ -159,7 +160,8 @@ namespace SedgewickWayne.Algorithms
             //            return false;
             //        }
             //    }
-            //}
+            }
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
             return true;
         }

@@ -104,7 +104,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
             // act + assert ex
             try
             {
-                pq.increaseKey(9, "exception");
+                pq.IncreaseKey(9, "exception");
             }
             catch (Exception ex)
             {
@@ -113,7 +113,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
             }
 
             // act + assert increase
-            pq.increaseKey(9, "worst even");
+            pq.IncreaseKey(9, "worst even");
             Assert.Equal("worst even", pq.Max);
             Assert.Equal("worst even", pq.TopKey);
         }
@@ -135,7 +135,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
             // act + assert ex
             try
             {
-                pq.decreaseKey(int.MaxValue-1, null);
+                pq.DecreaseKey(int.MaxValue-1, null);
             }
             catch (Exception ex)
             {
@@ -144,7 +144,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
 
             try
             {
-                pq.decreaseKey(10, null);
+                pq.DecreaseKey(10, null);
             }
             catch (Exception ex)
             {
@@ -154,7 +154,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
             // act + assert decrease
             try
             {
-                pq.decreaseKey(5, "zzz");
+                pq.DecreaseKey(5, "zzz");
             }
             catch (Exception ex)
             {
@@ -162,7 +162,7 @@ namespace SedgewickWayne.Algorithms.UnitTests
                 Assert.Equal("Calling decreaseKey() with given argument would not strictly decrease the key", ex.Message);
             }
 
-            pq.decreaseKey(5, "aaa");
+            pq.DecreaseKey(5, "aaa");
             Assert.Equal("aaa", pq.Min);
             Assert.Equal("aaa", pq.TopKey);
             Assert.Equal(5, pq.Index);

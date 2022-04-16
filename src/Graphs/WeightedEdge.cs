@@ -44,7 +44,7 @@
             Weight = weight;
         }
 
-        private void ThrowArgumentException(string param, int idx) =>
+        private static void ThrowArgumentException(string param, int idx) =>
             throw new ArgumentException($"vertex index {idx} must be a non-negative integer", param);
 
         /// <summary>
