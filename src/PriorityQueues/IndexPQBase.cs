@@ -264,6 +264,8 @@ namespace SedgewickWayne.Algorithms
         /***************************************************************************
          * General helper functions.
          ***************************************************************************/
+
+#pragma warning disable IDE0180 // Use tuple to swap values
         protected void Exchange(int i, int j)
         {
             int swap = pq[i];
@@ -272,6 +274,7 @@ namespace SedgewickWayne.Algorithms
             qp[pq[i]] = i;
             qp[pq[j]] = j;
         }
+#pragma warning restore IDE0180 // Use tuple to swap values
 
 
         /***************************************************************************
@@ -282,7 +285,7 @@ namespace SedgewickWayne.Algorithms
             while (k > 1 && Predicate(k / 2, k))
             {
                 Exchange(k, k / 2);
-                k = k / 2;
+                k /= 2;
             }
         }
 
