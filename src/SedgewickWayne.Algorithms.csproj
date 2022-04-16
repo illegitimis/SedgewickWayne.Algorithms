@@ -15,8 +15,8 @@
     <Product>SedgewickWayne.Algorithms.Net</Product>
     <Description>Porting algorithms by Robert Sedgewick and Kevin Wayne in .NET.</Description>
     <PackageTags>Algorithms;Robert Sedgewick;Kevin Wayne;Princeton University</PackageTags>
-    <Version>1.3.22</Version>
-    <AssemblyVersion>1.3.22</AssemblyVersion>
+    <Version>1.4</Version>
+    <AssemblyVersion>1.4.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
