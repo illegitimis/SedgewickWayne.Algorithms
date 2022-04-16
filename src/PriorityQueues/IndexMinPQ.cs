@@ -49,8 +49,7 @@ namespace SedgewickWayne.Algorithms
          */
         public TKey Min { get { return TopKey; } }
 
-       
-        public TKey DeleteMin() { return DeleteKey(); }
+        public TKey DeleteMin() => DeleteKey();
 
         /**
          * Decrease the key associated with index <paramref name="i"/> to the specified value.

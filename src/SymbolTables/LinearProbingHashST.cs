@@ -25,7 +25,7 @@ namespace SedgewickWayne.Algorithms
     /// <see cref="IEquatable{TKey}.Equals(TKey)"/> and <see cref="object.GetHashCode()"/> methods. 
     /// 
     /// The expected time per put, contains or remove is constant, subject to the uniform hashing assumption.
-    /// The size and is-empty</em> operations take constant time.
+    /// The size and is-empty operations take constant time.
     /// Construction takes constant time.
     /// </remarks>
     public class LinearProbingHashST<TKey, TValue> :

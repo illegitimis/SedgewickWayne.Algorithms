@@ -1,4 +1,10 @@
-﻿
+﻿/******************************************************************************
+*  Compilation:  javac LazyPrimMST.java
+*  Execution:    java LazyPrimMST filename.txt
+*  Dependencies: EdgeWeightedGraph.java Edge.java Queue.java
+* MinPQ.java UF.java In.java StdOut.java
+* For alternate implementations, see {@link PrimMST}, {@link KruskalMST}, and {@link BoruvkaMST}.
+******************************************************************************/
 
 namespace SedgewickWayne.Algorithms
 {
@@ -8,43 +14,22 @@ namespace SedgewickWayne.Algorithms
     using System.Diagnostics.Contracts;
     using System.Linq.Expressions;
 
-    /******************************************************************************
-     *  Compilation:  javac LazyPrimMST.java
-     *  Execution:    java LazyPrimMST filename.txt
-     *  Dependencies: EdgeWeightedGraph.java Edge.java Queue.java
-     * MinPQ.java UF.java In.java StdOut.java
-     ******************************************************************************/
-
-
-
-    /**
-     *  The {@code LazyPrimMST} class represents a data type for computing a
-     *  <em>minimum spanning tree</em> in an edge-weighted graph.
-     *  The edge weights can be positive, zero, or negative and need not
-     *  be distinct. If the graph is not connected, it computes a <em>minimum
-     *  spanning forest</em>, which is the union of minimum spanning trees
-     *  in each connected component. The {@code weight()} method returns the 
-     *  weight of a minimum spanning tree and the {@code Edges} method
-     *  returns its edges.
-     
-     *  This implementation uses a LAZY version of <em>Prim's algorithm</em> with a BINARY HEAP OF EDGES.
-     *  The constructor takes time proportional to E log E
-     *  and extra space (not including the graph) proportional to E,
-     *  where V is the number of vertices and E is the number of edges.
-     *  Afterwards, the {@code weight()} method takes constant time
-     *  and the {@code Edges} method takes time proportional to V.
-     
-     *  For additional documentation,
-     *  see <a href="http://algs4.cs.princeton.edu/43mst">Section 4.3</a> of
-     
-     *  For alternate implementations, see {@link PrimMST}, {@link KruskalMST},
-     *  and {@link BoruvkaMST}.
-     *
-     
-    
-     */
-
-    /* Compute a minimum spanning forest using a lazy version of Prim's algorithm. */
+    /// <summary>
+    ///Compute a minimum spanning forest using a lazy version of Prim's algorithm. 
+    /// </summary>
+    /// <typeparam name="TWeight">edge weight class type</typeparam>
+    /// <remarks>
+    /// Represents a data type for computing a minimum spanning tree in an edge-weighted graph.
+    /// The edge weights can be positive, zero, or negative and need not be distinct.
+    /// If the graph is not connected, it computes a minimum spanning forest, which is the union of minimum spanning trees in each connected component.
+    /// 
+    /// This implementation uses a LAZY version of Prim's algorithm with a BINARY HEAP OF EDGES.
+    /// The constructor takes time proportional to E log E
+    /// and extra space (not including the graph) proportional to E,
+    /// where V is the number of vertices and E is the number of edges.
+    /// 
+    /// Afterwards, the {@code weight()} method takes constant time and the {@code Edges} method takes time proportional to V.
+    /// </remarks>
     public class LazyPrimMST<TWeight> :
         IMinimumSpanningTreeAlgorithm<TWeight>
         where TWeight : IComparable<TWeight>
@@ -92,26 +77,12 @@ namespace SedgewickWayne.Algorithms
                 // add e to MST
                 mst.Enqueue(e);
                 // Weight += e.Weight;
-                Weight = Add(Weight, e.Weight);
+                Weight = GenericOperators<TWeight>.Add(Weight, e.Weight);
 
                 // v & w become part of tree
                 if (!marked[v]) scan(G, v);
                 if (!marked[w]) scan(G, w);
             }
-        }
-
-        // https://jonskeet.uk/csharp/miscutil/usage/genericoperators.html
-        static T Add<T>(T a, T b)
-        {
-            //TODO: re-use delegate!
-            // declare the parameters
-            ParameterExpression paramA = Expression.Parameter(typeof(T), "a"), paramB = Expression.Parameter(typeof(T), "b");
-            // add the parameters together
-            BinaryExpression body = Expression.Add(paramA, paramB);
-            // compile it
-            Func<T, T, T> add = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
-            // call it
-            return add(a, b);
         }
 
         // add all edges e incident to v onto pq if the other endpoint has not yet been scanned

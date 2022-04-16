@@ -15,5 +15,6 @@
          ******************************************************************************/
         public const double FLOATING_POINT_EPSILON = 1E-12;
         public const int DOUBLE_PRECISION_NO_DECIMAL_PLACES = 12;
+        public const int THREE_DECIMAL_PLACES_PRECISION = 3;
     }
 }

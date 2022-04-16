@@ -21,13 +21,11 @@
 
   <ItemGroup>
     <Compile Remove="MinimumSpanningTrees\BoruvkaMST.cs" />
-    <Compile Remove="MinimumSpanningTrees\EagerPrimMST.cs" />
     <Compile Remove="MinimumSpanningTrees\KruskalMST.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="MinimumSpanningTrees\BoruvkaMST.cs" />
-    <Content Include="MinimumSpanningTrees\EagerPrimMST.cs" />
     <Content Include="MinimumSpanningTrees\KruskalMST.cs" />
   </ItemGroup>
 

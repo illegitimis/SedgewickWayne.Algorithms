@@ -19,8 +19,8 @@
     /// iterate over all of the edges incident to a vertex.
     /// 
     /// It also provides methods for returning:
-    /// the number of vertices<em> V</em>
-    /// and the number of edges<em> E</em>.
+    /// the number of vertices V
+    /// and the number of edges E.
     /// Parallel edges and self-loops are permitted.
     /// 
     /// This implementation uses an adjacency-lists representation,
