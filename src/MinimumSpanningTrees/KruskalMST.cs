@@ -64,7 +64,7 @@ namespace SedgewickWayne.Algorithms
             }
 
             // check optimality conditions
-            Contract.Assert(Check(G));
+            Contract.Assert(KruskalMST<TWeight>.Check(G));
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace SedgewickWayne.Algorithms
         public TWeight Weight { get; }
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private bool Check(EdgeWeightedGraph<TWeight> G)
+        private static bool Check(EdgeWeightedGraph<TWeight> G)
         {
 
             // check total weight
@@ -112,6 +112,7 @@ namespace SedgewickWayne.Algorithms
             //}
 
             // check that it is a minimal spanning forest (cut optimality conditions)
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             foreach (var e in G.Edges)
             {
 
@@ -134,6 +135,7 @@ namespace SedgewickWayne.Algorithms
                 //}
 
             }
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
             return true;
         }

@@ -141,6 +141,7 @@ namespace SedgewickWayne.Algorithms
             //}
 
             // check that it is a minimal spanning forest (cut optimality conditions)
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             foreach (var e in G.Edges) {
 
             //    // all edges in MST except e
@@ -160,6 +161,7 @@ namespace SedgewickWayne.Algorithms
             //        }
             //    }
             }
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
             return true;
         }
