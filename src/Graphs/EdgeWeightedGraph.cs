@@ -33,7 +33,7 @@
     public class EdgeWeightedGraph<TWeight> : AbstractGraph
          where TWeight : IComparable<TWeight>
     {
-        private Bag<WeightedEdge<TWeight>>[] adj;
+        private readonly Bag<WeightedEdge<TWeight>>[] adj;
 
 
         public EdgeWeightedGraph(int numberOfVertices) :

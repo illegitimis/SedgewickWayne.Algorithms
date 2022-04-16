@@ -7,7 +7,6 @@ namespace SedgewickWayne.Algorithms
     using System.Diagnostics.Contracts;
     using UF = SedgewickWayne.Algorithms.DynamicConnectivity.UF;
 
-
     /// <summary>
     /// Compute a minimum spanning forest in an edge-weighted graph using Kruskal's algorithm.
     /// </summary>
@@ -25,7 +24,7 @@ namespace SedgewickWayne.Algorithms
         IMinimumSpanningTreeAlgorithm<TWeight>
         where TWeight : IComparable<TWeight>
     {
-        private Queue<WeightedEdge<TWeight>> _mst = new Queue<WeightedEdge<TWeight>>();
+        private readonly Queue<WeightedEdge<TWeight>> _mst = new Queue<WeightedEdge<TWeight>>();
 
         public KruskalMST(EdgeWeightedGraph<TWeight> G)
         {
