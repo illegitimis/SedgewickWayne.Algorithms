@@ -328,14 +328,12 @@ namespace SedgewickWayne.Algorithms
 
             object IEnumerator.Current { get { return this.Current; } }
 
-            // add all elements to copy of heap
-            // takes linear time since already in heap order so no keys move
-            public HeapEnumerator(IndexPQBase<TKey> src)
-            {
-                int n = src.pq.Length;
-                copy = src.Clone();
-            }
-
+            /// <summary>
+            /// add all elements to copy of heap
+            /// takes linear time since already in heap order so no keys move
+            /// </summary>
+            /// <param name="src">source</param>
+            public HeapEnumerator(IndexPQBase<TKey> src) => copy = src.Clone();
 
             public void Dispose() { }
 
@@ -349,6 +347,4 @@ namespace SedgewickWayne.Algorithms
 
         #endregion
     }
-
-    
 }

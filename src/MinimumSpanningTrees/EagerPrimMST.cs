@@ -80,7 +80,7 @@ namespace SedgewickWayne.Algorithms
 
             // check optimality conditions
             // assert check(G);
-            Contract.Assert(Check(G));
+            Contract.Assert(EagerPrimMST<TWeight>.Check(G));
         }
 
         // run Prim's algorithm in graph G, starting from vertex s
@@ -152,7 +152,7 @@ namespace SedgewickWayne.Algorithms
         }
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private bool Check(EdgeWeightedGraph<TWeight> G)
+        private static bool Check(EdgeWeightedGraph<TWeight> G)
         {
 
             // check weight
@@ -186,7 +186,8 @@ namespace SedgewickWayne.Algorithms
             //}
 
             // check that it is a minimal spanning forest (cut optimality conditions)
-            foreach (WeightedEdge<TWeight> e in G.Edges)
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            foreach (var e in G.Edges)
             {
 
                 // all edges in MST except e
@@ -208,6 +209,7 @@ namespace SedgewickWayne.Algorithms
                 //}
 
             }
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
             return true;
         }
