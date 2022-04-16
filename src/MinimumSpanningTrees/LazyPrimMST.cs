@@ -35,11 +35,11 @@ namespace SedgewickWayne.Algorithms
         where TWeight : IComparable<TWeight>
     {
         // edges in the MST
-        private Queue<WeightedEdge<TWeight>> mst;
+        private readonly Queue<WeightedEdge<TWeight>> mst;
         // marked[v] = true if v on tree
-        private bool[] marked;
+        private readonly bool[] marked;
         // edges with one endpoint in tree
-        private MinPQ<WeightedEdge<TWeight>> pq;
+        private readonly MinPQ<WeightedEdge<TWeight>> pq;
 
         /**
          * Compute a minimum spanning tree (or forest) of an edge-weighted graph.

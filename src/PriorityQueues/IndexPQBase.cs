@@ -314,7 +314,7 @@ namespace SedgewickWayne.Algorithms
         private class HeapEnumerator : IEnumerator<int>
         {
             // create a new pq
-            private IndexPQBase<TKey> copy;
+            private readonly IndexPQBase<TKey> copy;
 
             // public int next()
             public int Current { get {
