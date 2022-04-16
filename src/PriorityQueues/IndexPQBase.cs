@@ -43,7 +43,7 @@ namespace SedgewickWayne.Algorithms
         /// <param name="maxN">maimum index</param>
         public IndexPQBase(int maxN)
         {
-            if (maxN < 0) throw new ArgumentException();
+            if (maxN < 0) throw new ArgumentOutOfRangeException(nameof(maxN), maxN, "non-negative");
             this.maxN = maxN;
             n = 0;
 
@@ -82,7 +82,7 @@ namespace SedgewickWayne.Algorithms
         /// <returns>True if <paramref name="i"/> is an index on this priority queue</returns>
         public bool Contains(int i)
         {
-            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
+            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i), i, $"[0, {maxN})");
             return qp[i] != -1;
         }
 
@@ -102,7 +102,7 @@ namespace SedgewickWayne.Algorithms
         /// <param name="key">the key to associate with index <paramref name="i"/>.</param>
         public void Insert(int i, TKey key)
         {
-            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
+            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i), i, $"[0, {maxN})");
             if (Contains(i)) throw new ArgumentException("index is already in the priority queue");
             n++;
             qp[i] = n;
@@ -192,7 +192,7 @@ namespace SedgewickWayne.Algorithms
         /// <returns>the key associated with index <paramref name="i"/>.</returns>
         public TKey KeyOf(int i)
         {
-            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
+            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i), i, $"[0, {maxN})");
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             else return keys[i];
         }
@@ -208,7 +208,7 @@ namespace SedgewickWayne.Algorithms
         /// <param name="key">change the key associated with index <paramref name="i"/> to this key</param>
         public void ChangeKey(int i, TKey key)
         {
-            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
+            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i), i, $"[0, {maxN})");
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             keys[i] = key;
             swim(qp[i]);
@@ -227,7 +227,7 @@ namespace SedgewickWayne.Algorithms
         /// </summary>
         /// <param name="i"></param>
         /// <param name="key"></param>
-        public abstract void increaseKey(int i, TKey key);        
+        public abstract void increaseKey(int i, TKey key);
      
             /// <summary>
             /// Remove the key associated with index <paramref name="i"/>.
@@ -239,7 +239,7 @@ namespace SedgewickWayne.Algorithms
             /// <param name="i">the index of the key to remove</param>
         public void Delete(int i)
         {
-            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException();
+            if (i < 0 || i >= maxN) throw new ArgumentOutOfRangeException(nameof(i), i, $"[0, {maxN})");
             if (!Contains(i)) throw new InvalidOperationException("index is not in the priority queue");
             int index = qp[i];
             exch(index, n--);
