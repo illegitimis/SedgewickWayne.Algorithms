@@ -186,7 +186,7 @@ namespace SedgewickWayne.Algorithms
             //}
 
             // check that it is a minimal spanning forest (cut optimality conditions)
-            foreach (WeightedEdge<TWeight> e in Edges)
+            foreach (WeightedEdge<TWeight> e in G.Edges)
             {
 
                 // all edges in MST except e
