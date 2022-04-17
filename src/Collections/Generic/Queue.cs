@@ -189,7 +189,7 @@ namespace SedgewickWayne.Algorithms
 
       while (iterator.MoveNext())
       {
-        stringBuilder.Append(iterator.Current).Append(" ");
+        stringBuilder.Append(iterator.Current).Append(Space);
       }
       return stringBuilder.Remove(stringBuilder.Length - 1, 1).ToString();
     }
@@ -215,5 +215,7 @@ namespace SedgewickWayne.Algorithms
     /// </summary>
     /// <returns></returns>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        private const char Space = ' ';
   }
 }

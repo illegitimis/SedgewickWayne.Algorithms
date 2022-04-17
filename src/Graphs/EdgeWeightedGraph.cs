@@ -35,7 +35,6 @@
     {
         private readonly Bag<WeightedEdge<TWeight>>[] adj;
 
-
         public EdgeWeightedGraph(int numberOfVertices) :
             base(numberOfVertices)
         {
@@ -159,13 +158,6 @@
                 sb.AppendLine();
             }
             return sb.ToString();
-        }
-
-        // throw an ArgumentException unless {@code 0 <= v < V}
-        void ValidateVertex(int i)
-        {
-            if (i < 0 || i >= V)
-                throw new ArgumentException("vertex " + i + " is not between 0 and " + (V - 1));
         }
     }
 }

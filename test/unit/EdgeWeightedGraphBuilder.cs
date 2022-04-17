@@ -40,7 +40,7 @@ using SedgewickWayne.Algorithms.Graphs;
 
 namespace SedgewickWayne.Algorithms.UnitTests
 {
-   public static class EdgeWeightedGraphBuilder
+    public static class EdgeWeightedGraphBuilder
     {
         /*
         *  % java EdgeWeightedGraph tinyEWG.txt 

@@ -1,19 +1,15 @@
-﻿/*
- Graph.java
-Copyright © 2000–2019, Robert Sedgewick and Kevin Wayne.
-Last updated: Wed Jan 20 05:27:29 EST 2021.
-Below is the syntax highlighted version of Graph.java from §4.1 Undirected Graphs. 
-For additional documentation, see <a href="https://algs4.cs.princeton.edu/41graph">Section 4.1</a> of <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
-
-https://algs4.cs.princeton.edu/40graphs/
-https://algs4.cs.princeton.edu/43mst/
-*/
-
-using System;
-using System.Text;
+﻿using System;
 
 namespace SedgewickWayne.Algorithms.Graphs
 {
+    /// <summary>
+    /// Common abstraction for weighted edge graphs and digraphs.
+    /// </summary>
+    /// <remarks>
+    /// <see href="https://algs4.cs.princeton.edu/41graph"/>
+    /// <see href="https://algs4.cs.princeton.edu/43mst/"/>
+    /// <see href="https://algs4.cs.princeton.edu/40graphs/"/>
+    /// </remarks>
     public abstract class AbstractGraph
     {
         /// <summary>
@@ -59,21 +55,12 @@ namespace SedgewickWayne.Algorithms.Graphs
             E = abstractGraph.E;
         }
 
-        public override string ToString()
+        public override string ToString() => $"{V} {E}";
+
+        protected void ValidateVertex(int i)
         {
-            return $"{V} {E}";
-            /*
-            var sb = new StringBuilder();
-            sb.AppendLine($"{V} {E}");
-            
-            for (int v = 0; v < V; v++)
-            {
-                sb.AppendFormat("{0}: ", v);
-                foreach (var edge in adj[v]) s.AppendFormat("{0} ", e);
-                s.Append(Environment.NewLine);
-            }
-            return s.ToString();
-            */
+            if (i < 0 || i >= V)
+                throw new ArgumentException("vertex " + i + " is not between 0 and " + (V - 1));
         }
     }
 }
