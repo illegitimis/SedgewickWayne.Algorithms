@@ -22,6 +22,7 @@ Each page below should contain references to java source and ported .NET impleme
 + [Priority Queues](./doc/pq.md)
 + [Symbol tables](./doc/st.md). Currently **in progress**.
 + [Minimum Spanning Trees](./doc/mst.md) Currently **in progress**.
++ [Shortest Paths](./doc/sp.md). Currently **in progress**. 
 + [Todo](./doc/todo.md)
 
 ## Resources
