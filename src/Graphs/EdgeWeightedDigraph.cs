@@ -26,80 +26,39 @@ namespace SedgewickWayne.Algorithms.Graphs
     /// Constructing an empty edge-weighted digraph with V vertices takes Theta (V) time;
     /// constructing an edge-weighted digraph  with E edges and V vertices takes  Theta (E + V) time.
     /// </remarks>
-    public class EdgeWeightedDigraph<TWeight> : AbstractGraph
+    public class EdgeWeightedDigraph<TWeight> :
+        AdjacencyListGraph<DirectedEdge<TWeight>>
          where TWeight : IComparable<TWeight>
     {
-        public EdgeWeightedDigraph(int numberOfVertices) : base(numberOfVertices)
-        {
-            indegree = new int[V];
-            adj = new Bag<DirectedEdge<TWeight>>[V];
-            for (int v = 0; v < V; v++)
-                adj[v] = new Bag<DirectedEdge<TWeight>>();
-        }
-
-        // adj[v] = adjacency list for vertex v
-        private readonly Bag<DirectedEdge<TWeight>>[] adj;
+        public EdgeWeightedDigraph(int numberOfVertices) :
+            base(numberOfVertices) =>
+            _indegree = new int[V];
 
         // indegree[v] = indegree of vertex v
-        private readonly int[] indegree;
-
-        /**
-    * Initializes a new edge-weighted digraph that is a deep copy of {@code G}.
-    *
-    * @param  G the edge-weighted digraph to copy
-    */
-
-        /*
-        public EdgeWeightedDigraph(EdgeWeightedDigraph G)
-        {
-            this(G.V());
-            this.E = G.E();
-            for (int v = 0; v < G.V(); v++)
-                this.indegree[v] = G.indegree(v);
-            for (int v = 0; v < G.V(); v++)
-            {
-                // reverse so that adjacency list is in same order as original
-                Stack<DirectedEdge> reverse = new Stack<DirectedEdge>();
-                for (DirectedEdge e : G.adj[v])
-                {
-                    reverse.push(e);
-                }
-                for (DirectedEdge e : reverse)
-                {
-                    adj[v].add(e);
-                }
-            }
-        }
-        */
+        private readonly int[] _indegree;
 
         public void AddEdge(DirectedEdge<TWeight> edge)
         {
             ValidateVertex(edge.From);
             ValidateVertex(edge.To);
-            adj[edge.From].Add(edge);
-            indegree[edge.To]++;
+            _adjacencyList[edge.From].Add(edge);
+            _indegree[edge.To]++;
             E++;
         }
 
         public void AddEdge(int from, int to, TWeight weight) =>
             AddEdge(new DirectedEdge<TWeight>(from, to, weight));
 
-        public IEnumerable<DirectedEdge<TWeight>> Adjacency(int v)
-        {
-            ValidateVertex(v);
-            return adj[v];
-        }
-
         public int OutDegree(int v)
         {
             ValidateVertex(v);
-            return adj[v].Size;
+            return _adjacencyList[v].Size;
         }
 
         public int InDegree(int v)
         {
             ValidateVertex(v);
-            return indegree[v];
+            return _indegree[v];
         }
 
         /// <summary>

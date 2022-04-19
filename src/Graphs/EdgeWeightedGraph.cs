@@ -30,40 +30,21 @@
     /// except iterating over the edges incident to a given vertex,
     /// which takes time proportional to the number of such edges.
     /// </remarks>
-    public class EdgeWeightedGraph<TWeight> : AbstractGraph
+    public class EdgeWeightedGraph<TWeight> :
+        AdjacencyListGraph<WeightedEdge<TWeight>>
          where TWeight : IComparable<TWeight>
     {
-        private readonly Bag<WeightedEdge<TWeight>>[] adj;
-
         public EdgeWeightedGraph(int numberOfVertices) :
             base(numberOfVertices)
         {
-            adj = new Bag<WeightedEdge<TWeight>>[numberOfVertices];
-            for (int v = 0; v < V; v++)
-            {
-                adj[v] = new Bag<WeightedEdge<TWeight>>();
-            }
         }
 
         /// <summary>
         /// Initializes a new edge-weighted graph that is a deep copy of {@code G}.
         /// </summary>
         /// <param name="abstractGraph">G the edge-weighted graph to copy</param>
-        public EdgeWeightedGraph(AbstractGraph abstractGraph) :
-            base(abstractGraph)
+        public EdgeWeightedGraph(AdjacencyListGraph<WeightedEdge<TWeight>> abstractGraph) : base(abstractGraph)
         {
-            /* TODO
-             * : this(G.V)
-             this.E = G.E;
-      for (int i = 0; i < G.V; i++)
-      {
-        // reverse so that adjacency list is in same order as original
-        Stack<Edge> reverse = new Stack<Edge>();
-        foreach (Edge edge in G.adj[i]) reverse.Push (edge);
-
-        foreach (Edge edge in reverse) adj[i].AddLast(edge);
-      }
-             */
         }
 
         /// <summary>
@@ -79,8 +60,8 @@
             int other = edge.Other(either);
             ValidateVertex(other);
 
-            adj[either].Add(edge);
-            adj[other].Add(edge);
+            _adjacencyList[either].Add(edge);
+            _adjacencyList[other].Add(edge);
 
             E++;
         }
@@ -88,29 +69,7 @@
         public void AddEdge(int a, int b, TWeight w) =>
             AddEdge(new WeightedEdge<TWeight>(a, b, w));
 
-        /// <summary>
-        /// Returns the edges incident on vertex {@code v}.
-        /// </summary>
-        /// <param name="v">v the vertex</param>
-        /// <returns>
-        /// the edges incident on vertex {@code v} as an Iterable
-        /// </returns>
-        public IEnumerable<WeightedEdge<TWeight>> Adjacency(int v)
-        {
-            ValidateVertex(v);
-            return adj[v];
-        }
-
-        /// <summary>
-        ///  Returns the degree of vertex {@code v}.
-        /// </summary>
-        /// <param name="v"> v the vertex</param>
-        /// <returns>the degree of vertex {@code v}</returns>
-        public int Degree(int v)
-        {
-            ValidateVertex(v);
-            return adj[v].Size;
-        }
+        
 
         /// <summary>
         /// Returns all edges in this edge-weighted graph.
@@ -154,7 +113,7 @@
             for (int v = 0; v < V; v++)
             {
                 sb.AppendFormat("{0}: ", v);
-                foreach (var edge in adj[v]) sb.AppendFormat("{0} ", edge);
+                foreach (var edge in _adjacencyList[v]) sb.AppendFormat("{0} ", edge);
                 sb.AppendLine();
             }
             return sb.ToString();

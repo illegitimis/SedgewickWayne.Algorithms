@@ -1,6 +1,7 @@
 ﻿namespace SedgewickWayne.Algorithms.UnitTests
 {
     using SedgewickWayne.Algorithms.Graphs;
+    using System;
     using Xunit;
     using static SedgewickWayne.Algorithms.UnitTests.Constants;
 
