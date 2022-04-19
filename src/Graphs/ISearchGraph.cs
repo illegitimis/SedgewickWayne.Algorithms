@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SedgewickWayne.Algorithms.Graphs
 {
@@ -24,5 +20,26 @@ namespace SedgewickWayne.Algorithms.Graphs
         /// reference vertex (from / either)
         /// </summary>
         int S { get; }
+    }
+
+    /// <summary>
+    /// find vertices connected to a source vertex s
+    /// </summary>
+    /// <typeparam name="TInfo"></typeparam>
+    public abstract class AbstractGraphSearch<TInfo> : ISearchGraph
+    {
+        protected AbstractGraphSearch(AdjacencyListGraph<TInfo> G, int s) => S = s;
+
+        public int S { get; }
+
+        public abstract int Count();
+
+        public abstract bool Marked(int v);
+
+        protected void ValidateVertex(int i, int noVertices)
+        {
+            if (i < 0 || i >= noVertices)
+                throw new ArgumentException("vertex " + i + " is not between 0 and " + (noVertices - 1));
+        }
     }
 }

@@ -66,5 +66,21 @@ namespace SedgewickWayne.Algorithms.UnitTests
 
             return g;
         }
+
+        // https://algs4.cs.princeton.edu/41graph/tinyCG.txt
+        public static UndirectedGraphOfVertices TinyCg()
+        {
+            var g = new UndirectedGraphOfVertices(6, 8);
+            g.AddEdge(0,5);
+            g.AddEdge(2,4);
+            g.AddEdge(2,3);
+            g.AddEdge(1,2);
+            g.AddEdge(0,1);
+            g.AddEdge(3,4);
+            g.AddEdge(3,5);
+            g.AddEdge(0,2);
+            return g;
+        }
+
     }
 }
