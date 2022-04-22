@@ -8,14 +8,15 @@ namespace SedgewickWayne.Algorithms.Graphs
     /// (e.g. weighted edge graphs and digraphs).
     /// </summary>
     /// <remarks>
+    /// <see href="https://algs4.cs.princeton.edu/40graphs/"/>
     /// <see href="https://algs4.cs.princeton.edu/41graph"/>
     /// <see href="https://algs4.cs.princeton.edu/43mst/"/>
-    /// <see href="https://algs4.cs.princeton.edu/40graphs/"/>
     /// </remarks>
-    public abstract class AdjacencyListGraph<TInfo>
+    public abstract class AdjacencyListGraph<TEdge>
+        where TEdge : AbstractEdge
     {
         // adj[v] = adjacency list for vertex v
-        protected Bag<TInfo>[] _adjacencyList;
+        protected Bag<TEdge>[] _adjacencyList;
 
         /// <summary>
         /// Returns the number of vertices in this graph.
@@ -59,7 +60,7 @@ namespace SedgewickWayne.Algorithms.Graphs
         /// </summary>
         /// <param name="abstractGraph"></param>
         /// <exception cref="ArgumentException"></exception>
-        protected AdjacencyListGraph(AdjacencyListGraph<TInfo> abstractGraph)
+        protected AdjacencyListGraph(AdjacencyListGraph<TEdge> abstractGraph)
         {
             if (V < 0) throw new ArgumentException("Number of vertices must be non-negative");
             V = abstractGraph.V;
@@ -70,10 +71,10 @@ namespace SedgewickWayne.Algorithms.Graphs
             for (int v = 0; v < abstractGraph.V; v++)
             {
                 // reverse so that adjacency list is in same order as original
-                var reverse = new Stack<TInfo>();
-                foreach (var info in abstractGraph._adjacencyList[v])
+                var reverse = new Stack<TEdge>();
+                foreach (var edge in abstractGraph._adjacencyList[v])
                 {
-                    reverse.Push(info);
+                    reverse.Push(edge);
                 }
                 foreach (var item in reverse)
                 {
@@ -85,9 +86,9 @@ namespace SedgewickWayne.Algorithms.Graphs
         private void AllocateAdjacencyLists()
         {
             //  for every vertex // update adjacency lists
-            _adjacencyList = new Bag<TInfo>[V];
+            _adjacencyList = new Bag<TEdge>[V];
             for (int v = 0; v < V; v++)
-                _adjacencyList[v] = new Bag<TInfo>();
+                _adjacencyList[v] = new Bag<TEdge>();
         }
 
         public override string ToString() => $"{V} {E}";
@@ -100,7 +101,7 @@ namespace SedgewickWayne.Algorithms.Graphs
         /// <returns>
         /// the edges incident on vertex <paramref name="v"/> as an <see cref="IEnumerable{TInfo}"/>
         /// </returns>
-        public IEnumerable<TInfo> Adjacency(int v)
+        public IEnumerable<TEdge> Adjacency(int v)
         {
             ValidateVertex(v);
             return _adjacencyList[v];

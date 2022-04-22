@@ -31,9 +31,9 @@ namespace SedgewickWayne.Algorithms.UnitTests
         /// <returns>
         /// tinyG
         /// </returns>
-        public static UndirectedGraphOfVertices Tiny()
+        public static Graph Tiny()
         {
-            var g = new UndirectedGraphOfVertices(13,13);
+            var g = new Graph(13,13);
             /*  % java Graph tinyG.txt
              *  13 vertices, 13 edges
              *  0: 6 2 1 5 
@@ -68,9 +68,9 @@ namespace SedgewickWayne.Algorithms.UnitTests
         }
 
         // https://algs4.cs.princeton.edu/41graph/tinyCG.txt
-        public static UndirectedGraphOfVertices TinyCg()
+        public static Graph TinyCg()
         {
-            var g = new UndirectedGraphOfVertices(6, 8);
+            var g = new Graph(6, 8);
             g.AddEdge(0,5);
             g.AddEdge(2,4);
             g.AddEdge(2,3);

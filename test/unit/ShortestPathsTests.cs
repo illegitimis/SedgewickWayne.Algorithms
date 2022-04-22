@@ -52,12 +52,12 @@
         private void AssertEqualDistanceToVertex(double expected, int vertex) =>
             Assert.Equal(expected, _sut.DistTo(vertex), DOUBLE_PRECISION_NO_DECIMAL_PLACES);
 
-        private static readonly DirectedEdge<double> e02 = new(0, 2, 0.26);
-        private static readonly DirectedEdge<double> e27 = new(2, 7, 0.34);
-        private static readonly DirectedEdge<double> e36 = new(3, 6, 0.52);
-        private static readonly DirectedEdge<double> e45 = new(4, 5, 0.35);
-        private static readonly DirectedEdge<double> e51 = new(5, 1, 0.32);
-        private static readonly DirectedEdge<double> e64 = new(6, 4, -1.25);
-        private static readonly DirectedEdge<double> e73 = new(7, 3, 0.39);
+        private static readonly WeightedDirectedEdge<double> e02 = new(0, 2, 0.26);
+        private static readonly WeightedDirectedEdge<double> e27 = new(2, 7, 0.34);
+        private static readonly WeightedDirectedEdge<double> e36 = new(3, 6, 0.52);
+        private static readonly WeightedDirectedEdge<double> e45 = new(4, 5, 0.35);
+        private static readonly WeightedDirectedEdge<double> e51 = new(5, 1, 0.32);
+        private static readonly WeightedDirectedEdge<double> e64 = new(6, 4, -1.25);
+        private static readonly WeightedDirectedEdge<double> e73 = new(7, 3, 0.39);
     }
 }

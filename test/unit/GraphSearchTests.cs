@@ -5,7 +5,7 @@
 
     public class GraphSearchTests
     {
-        private static readonly UndirectedGraphOfVertices TinyG = GraphBuilder.Tiny();
+        private static readonly Graph TinyG = GraphBuilder.Tiny();
 
         [Fact]
         public void TinyG0() => Internal(0, new int[] { 1, 2, 3, 4, 5, 6 }, new int[] { 7, 8, 9, 10, 11, 12 });

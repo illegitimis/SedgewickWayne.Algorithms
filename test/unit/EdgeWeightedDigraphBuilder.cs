@@ -80,9 +80,9 @@ namespace SedgewickWayne.Algorithms.UnitTests
         /// <returns>
         /// tinyEWDn
         /// </returns>
-        public static EdgeWeightedDigraph<double> Tiny()
+        public static WeightedDigraph<double> Tiny()
         {
-            var ewd = new EdgeWeightedDigraph<double>(8 /*, 15*/);
+            var ewd = new WeightedDigraph<double>(8 /*, 15*/);
 
             ewd.AddEdge(4, 5,  0.35);
             ewd.AddEdge(5, 4,  0.35);

@@ -40,7 +40,7 @@ using SedgewickWayne.Algorithms.Graphs;
 
 namespace SedgewickWayne.Algorithms.UnitTests
 {
-    public static class EdgeWeightedGraphBuilder
+    public static class WeightedGraphBuilder
     {
         /*
         *  % java EdgeWeightedGraph tinyEWG.txt 
@@ -54,9 +54,9 @@ namespace SedgewickWayne.Algorithms.UnitTests
         *  6: 6-4 0.93000  6-0 0.58000  3-6 0.52000  6-2 0.40000
         *  7: 2-7 0.34000  1-7 0.19000  0-7 0.16000  5-7 0.28000  4-7 0.37000
          */
-        public static EdgeWeightedGraph<double> Tiny()
+        public static WeightedGraph<double> Tiny()
         {
-            var ewg = new EdgeWeightedGraph<double>(8 /*, 16*/);
+            var ewg = new WeightedGraph<double>(8 /*, 16*/);
             ewg.AddEdge(4, 5, 0.35);
             ewg.AddEdge(4, 7, 0.37);
             ewg.AddEdge(5, 7, 0.28);

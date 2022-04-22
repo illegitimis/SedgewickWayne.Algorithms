@@ -9,7 +9,7 @@ namespace SedgewickWayne.Algorithms
          where TWeight : IComparable<TWeight>
     {
         TWeight DistTo(int v);
-        IEnumerable<DirectedEdge<TWeight>> PathTo(int v);
+        IEnumerable<WeightedDirectedEdge<TWeight>> PathTo(int v);
         bool HasPathTo(int v);
     }
 }

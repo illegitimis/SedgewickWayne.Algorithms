@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SedgewickWayne.Algorithms.Graphs
 {
@@ -26,10 +25,10 @@ namespace SedgewickWayne.Algorithms.Graphs
         IEnumerable<int> PathTo(int v);
     }
 
-
-    public abstract class AbstractFindPath<TInfo> : IFindPath
+    public abstract class AbstractFindPath<TUndirectedEdge> : IFindPath
+        where TUndirectedEdge : UndirectedEdge
     {
-        protected AbstractFindPath(AdjacencyListGraph<TInfo> G, int s) => S = s;
+        protected AbstractFindPath(Graph<TUndirectedEdge> G, int s) => S = s;
 
         /// <summary>
         /// source vertex
@@ -39,6 +38,13 @@ namespace SedgewickWayne.Algorithms.Graphs
         public abstract bool HasPathTo(int v);
 
         public abstract IEnumerable<int> PathTo(int v);
+    }
+
+    public abstract class AbstractFindPath : AbstractFindPath<UndirectedEdge>
+    {
+        protected AbstractFindPath(Graph G, int s) : base(G, s)
+        {
+        }
     }
 
     internal static class GraphUtility

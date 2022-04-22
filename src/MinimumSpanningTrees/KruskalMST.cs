@@ -12,7 +12,7 @@ namespace SedgewickWayne.Algorithms
     /// </summary>
     /// <typeparam name="TWeight">weigh type</typeparam>
     /// <remarks>
-    /// Dependencies: <see cref="EdgeWeightedGraph{TWeight}"/>, <see cref="WeightedEdge{TWeight}"/>, <see cref="UF"/>.
+    /// Dependencies: <see cref="EdgeWeightedGraph{TWeight}"/>, <see cref="WeightedUndirectedEdge{TWeight}"/>, <see cref="UF"/>.
     ///
     /// The edge weights can be positive, zero, or negative and need not be distinct.
     /// If the graph is not connected, it computes a minimum spanning forest, which is the union of minimum spanning trees in each connected component.
@@ -24,12 +24,12 @@ namespace SedgewickWayne.Algorithms
         IMinimumSpanningTreeAlgorithm<TWeight>
         where TWeight : IComparable<TWeight>
     {
-        private readonly Queue<WeightedEdge<TWeight>> _mst = new Queue<WeightedEdge<TWeight>>();
+        private readonly Queue<WeightedUndirectedEdge<TWeight>> _mst = new Queue<WeightedUndirectedEdge<TWeight>>();
 
-        public KruskalMST(EdgeWeightedGraph<TWeight> G)
+        public KruskalMST(WeightedGraph<TWeight> G)
         {
             // more efficient to build heap by passing array of edges
-            var pq = new MinPQ<WeightedEdge<TWeight>>();
+            var pq = new MinPQ<WeightedUndirectedEdge<TWeight>>();
             foreach (var e in G.Edges)
             {
                 pq.Insert(e);
@@ -70,7 +70,7 @@ namespace SedgewickWayne.Algorithms
         /// <summary>
         /// edges in MST
         /// </summary>
-        public IEnumerable<WeightedEdge<TWeight>> Edges => _mst;
+        public IEnumerable<WeightedUndirectedEdge<TWeight>> Edges => _mst;
 
         /// <summary>
         /// Returns the sum of the edge weights in a minimum spanning tree (or forest).
@@ -78,7 +78,7 @@ namespace SedgewickWayne.Algorithms
         public TWeight Weight { get; }
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private static bool Check(EdgeWeightedGraph<TWeight> G)
+        private static bool Check(WeightedGraph<TWeight> G)
         {
 
             // check total weight

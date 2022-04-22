@@ -2,9 +2,10 @@
 {
     using static SedgewickWayne.Algorithms.Graphs.GraphUtility;
 
-    public interface IConnectedComponents<TInfo>
+    public interface IConnectedComponents<TUndirectedEdge>
+        where TUndirectedEdge : UndirectedEdge
     {
-        AdjacencyListGraph<TInfo> G { get; }
+        Graph<TUndirectedEdge> G { get; }
 
         /// <summary>
         /// are v and w connected?
@@ -33,15 +34,16 @@
     /// <see cref="https://algs4.cs.princeton.edu/41graph/CC.java.html"/>
     /// </summary>
     /// <typeparam name="TInfo"></typeparam>
-    public class CC : IConnectedComponents<int>
+    public class CC<TUndirectedEdge> : IConnectedComponents<TUndirectedEdge>
+        where TUndirectedEdge : UndirectedEdge
     {
-        private readonly AdjacencyListGraph<int> g;
+        private readonly Graph<TUndirectedEdge> g;
         private bool[] marked;   // marked[v] = has vertex v been marked?
         private int[] id;           // id[v] = id of connected component containing v
         private int[] size;         // size[id] = number of vertices in given component
         private int count;          // number of connected components
 
-        public CC(AdjacencyListGraph<int> g)
+        public CC(Graph<TUndirectedEdge> g)
         {
             this.g = g;
             marked = new bool[g.V];
@@ -62,15 +64,16 @@
             id[v] = count;
             size[count]++;
 
-            foreach (var w in g.Adjacency(v))
+            foreach (var undirectedEdge in g.Adjacency(v))
             {
+                int w = undirectedEdge.Other(v);
                 if (marked[w]) continue;
                 Dfs(w);
                 // count++;
             }
         }
 
-        public AdjacencyListGraph<int> G => g;
+        public Graph<TUndirectedEdge> G => g;
 
         public bool Connected(int v, int w)
         {

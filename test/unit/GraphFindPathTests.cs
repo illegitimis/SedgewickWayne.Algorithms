@@ -5,7 +5,7 @@
 
     public class GraphFindPathTests
     {
-        private static readonly UndirectedGraphOfVertices TinyCg = GraphBuilder.TinyCg();
+        private static readonly Graph TinyCg = GraphBuilder.TinyCg();
 
         [Fact]
         public void TinyCg0Dfs()

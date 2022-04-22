@@ -6,12 +6,12 @@
     /// Runs in O(E + V) time.
     /// </summary>
     /// <typeparam name="TInfo"></typeparam>
-    public class Dfs : AbstractGraphSearch<int>
+    public class Dfs : AbstractGraphSearch
     {
         private readonly bool[] marked;    // marked[v] = is there an s-v path?
         private int count;           // number of vertices connected to s
 
-        public Dfs(AdjacencyListGraph<int> G, int s) : base(G, s)
+        public Dfs(Graph G, int s) : base(G, s)
         {
             marked = new bool[G.V];
             ValidateVertex(s, G.V);
@@ -23,12 +23,13 @@
         public override bool Marked(int v) => marked[v];
 
         // depth first search from v
-        private void DepthFirstSearch(AdjacencyListGraph<int> G, int v)
+        private void DepthFirstSearch(Graph G, int v)
         {
             count++;
             marked[v] = true;
-            foreach (var w in G.Adjacency(v))
+            foreach (var undirectedEdge in G.Adjacency(v))
             {
+                var w = undirectedEdge.Other(v);
                 if (marked[w]) continue;
                 DepthFirstSearch(G, w);
             }

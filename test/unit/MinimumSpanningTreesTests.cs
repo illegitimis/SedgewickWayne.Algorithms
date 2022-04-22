@@ -13,7 +13,7 @@
         [InlineData("KruskalMST")]
         public void Tiny(string algo)
         {
-            var tinyewg = EdgeWeightedGraphBuilder.Tiny();
+            var tinyewg = WeightedGraphBuilder.Tiny();
             var sut = Sut(algo, tinyewg);
             Assert.NotNull(sut);
             Assert.Equal(expectedWeight, sut.Weight, THREE_DECIMAL_PLACES_PRECISION);
@@ -24,7 +24,7 @@
             Assert.All(TinyEwgMstEdges, expectedEdge => Assert.Contains(expectedEdge, edges));
         }
 
-        private static IMinimumSpanningTreeAlgorithm<double> Sut(string s, EdgeWeightedGraph<double> edgeWeightedGraph) => s switch
+        private static IMinimumSpanningTreeAlgorithm<double> Sut(string s, WeightedGraph<double> edgeWeightedGraph) => s switch
         {
             "LazyPrimMST" => new LazyPrimMST<double>(edgeWeightedGraph),
             "EagerPrimMST" => new EagerPrimMST<double>(edgeWeightedGraph, double.MaxValue, double.MinValue),
@@ -34,7 +34,7 @@
 
         const double expectedWeight = 1.81d;
 
-        private static readonly WeightedEdge<double>[] TinyEwgMstEdges = new WeightedEdge<double>[]
+        private static readonly WeightedUndirectedEdge<double>[] TinyEwgMstEdges = new WeightedUndirectedEdge<double>[]
         {
             new (0,7,0.16),
             new (2,3,0.17),

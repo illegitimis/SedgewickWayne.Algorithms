@@ -5,13 +5,13 @@ using static SedgewickWayne.Algorithms.Graphs.GraphUtility;
 namespace SedgewickWayne.Algorithms.Graphs
 {
     // https://algs4.cs.princeton.edu/41graph/DepthFirstPaths.java.html
-    public class DepthFirstPaths : AbstractFindPath<int>
+    public class DepthFirstPaths : AbstractFindPath
     {
         private bool[] marked;    // marked[v] = is there an s-v path?
         private int[] edgeTo;     // edgeTo[v] = last edge on s-v path
-        AdjacencyListGraph<int> g;
+        Graph g;
 
-        public DepthFirstPaths(AdjacencyListGraph<int> G, int s) : base(G, s)
+        public DepthFirstPaths(Graph G, int s) : base(G, s)
         {
             marked = new bool[G.V];
             edgeTo = new int[G.V];
@@ -24,8 +24,9 @@ namespace SedgewickWayne.Algorithms.Graphs
         private void Dfs(int v)
         {
             marked[v] = true;
-            foreach(var w in g.Adjacency(v))
+            foreach(var undirectedEdge in g.Adjacency(v))
             {
+                var w = undirectedEdge.Other(v);
                 if (marked[w]) continue;
                 edgeTo[w] = v;
                 Dfs(w);

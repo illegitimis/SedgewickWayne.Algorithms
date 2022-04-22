@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SedgewickWayne.Algorithms.Graphs
 {
@@ -26,55 +25,12 @@ namespace SedgewickWayne.Algorithms.Graphs
     /// Constructing an empty edge-weighted digraph with V vertices takes Theta (V) time;
     /// constructing an edge-weighted digraph  with E edges and V vertices takes  Theta (E + V) time.
     /// </remarks>
-    public class EdgeWeightedDigraph<TWeight> :
-        AdjacencyListGraph<DirectedEdge<TWeight>>
+    public class WeightedDigraph<TWeight> : 
+        Digraph<WeightedDirectedEdge<TWeight>>
          where TWeight : IComparable<TWeight>
     {
-        public EdgeWeightedDigraph(int numberOfVertices) :
-            base(numberOfVertices) =>
-            _indegree = new int[V];
+        public WeightedDigraph(int numberOfVertices) : base(numberOfVertices) { }
 
-        // indegree[v] = indegree of vertex v
-        private readonly int[] _indegree;
-
-        public void AddEdge(DirectedEdge<TWeight> edge)
-        {
-            ValidateVertex(edge.From);
-            ValidateVertex(edge.To);
-            _adjacencyList[edge.From].Add(edge);
-            _indegree[edge.To]++;
-            E++;
-        }
-
-        public void AddEdge(int from, int to, TWeight weight) =>
-            AddEdge(new DirectedEdge<TWeight>(from, to, weight));
-
-        public int OutDegree(int v)
-        {
-            ValidateVertex(v);
-            return _adjacencyList[v].Size;
-        }
-
-        public int InDegree(int v)
-        {
-            ValidateVertex(v);
-            return _indegree[v];
-        }
-
-        /// <summary>
-        /// all directed edges in this edge-weighted digraph.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<DirectedEdge<TWeight>> Edges()
-        {
-            for (int v = 0; v < V; v++)
-            {
-                foreach (var edge in Adjacency(v))
-                {
-                    if (edge is null) continue;
-                    yield return edge;
-                }
-            }
-        }
+        public void AddEdge(int from, int to, TWeight weight) => AddEdge(new WeightedDirectedEdge<TWeight>(from, to, weight));
     }
 }

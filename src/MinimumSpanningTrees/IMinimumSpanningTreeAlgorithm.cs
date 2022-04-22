@@ -11,7 +11,7 @@ namespace SedgewickWayne.Algorithms
         /// <summary>
         /// Returns the edges in a minimum spanning tree (or forest).
         /// </summary>
-        IEnumerable<WeightedEdge<TWeight>> Edges { get; }
+        IEnumerable<WeightedUndirectedEdge<TWeight>> Edges { get; }
 
         /// <summary>
         /// weight of a minimum spanning tree

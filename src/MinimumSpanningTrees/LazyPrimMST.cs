@@ -35,20 +35,20 @@ namespace SedgewickWayne.Algorithms
         where TWeight : IComparable<TWeight>
     {
         // edges in the MST
-        private readonly Queue<WeightedEdge<TWeight>> mst;
+        private readonly Queue<WeightedUndirectedEdge<TWeight>> mst;
         // marked[v] = true if v on tree
         private readonly bool[] marked;
         // edges with one endpoint in tree
-        private readonly MinPQ<WeightedEdge<TWeight>> pq;
+        private readonly MinPQ<WeightedUndirectedEdge<TWeight>> pq;
 
         /**
          * Compute a minimum spanning tree (or forest) of an edge-weighted graph.
          * @param G the edge-weighted graph
          */
-        public LazyPrimMST(EdgeWeightedGraph<TWeight> G)
+        public LazyPrimMST(WeightedGraph<TWeight> G)
         {
-            mst = new Queue<WeightedEdge<TWeight>>();
-            pq = new MinPQ<WeightedEdge<TWeight>>();
+            mst = new Queue<WeightedUndirectedEdge<TWeight>>();
+            pq = new MinPQ<WeightedUndirectedEdge<TWeight>>();
             marked = new bool[G.V];
             for (int v = 0; v < G.V; v++)     // run Prim from all vertices to
                 if (!marked[v]) Prim(G, v);     // get a minimum spanning forest
@@ -58,7 +58,7 @@ namespace SedgewickWayne.Algorithms
         }
 
         // run Prim's algorithm
-        private void Prim(EdgeWeightedGraph<TWeight> G, int s)
+        private void Prim(WeightedGraph<TWeight> G, int s)
         {
             Scan(G, s);
             // better to stop when mst has V-1 edges
@@ -86,7 +86,7 @@ namespace SedgewickWayne.Algorithms
         }
 
         // add all edges e incident to v onto pq if the other endpoint has not yet been scanned
-        private void Scan(EdgeWeightedGraph<TWeight> G, int v)
+        private void Scan(WeightedGraph<TWeight> G, int v)
         {
             Contract.Assert(!marked[v]);
             marked[v] = true;
@@ -97,7 +97,7 @@ namespace SedgewickWayne.Algorithms
         /// <summary>
         /// Returns the edges in a minimum spanning tree (or forest) as an iterable of edges
         /// </summary>
-        public IEnumerable<WeightedEdge<TWeight>> Edges => mst;
+        public IEnumerable<WeightedUndirectedEdge<TWeight>> Edges => mst;
 
         /// <summary>
         /// Returns the total weight of MST.
@@ -107,7 +107,7 @@ namespace SedgewickWayne.Algorithms
 
 
         // check optimality conditions (takes time proportional to E V lg* V)
-        private static bool Check(EdgeWeightedGraph<TWeight> G)
+        private static bool Check(WeightedGraph<TWeight> G)
         {
 
             // check weight

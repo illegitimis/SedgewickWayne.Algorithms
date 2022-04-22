@@ -14,12 +14,12 @@ namespace SedgewickWayne.Algorithms.ShortestPaths
         where TWeight : IComparable<TWeight>
     {
         private readonly TWeight[] distTo;                  // distTo[v] = distance  of shortest s->v path
-        private readonly DirectedEdge<TWeight>[] edgeTo;    // edgeTo[v] = last edge on shortest s->v path
+        private readonly WeightedDirectedEdge<TWeight>[] edgeTo;    // edgeTo[v] = last edge on shortest s->v path
         private readonly bool[] onQueue;                    // onQueue[v] = is v currently on the queue?
         private readonly IntQueue queue;                    // queue of vertices to relax
         private int cost;                                   // number of calls to relax()
         
-        private readonly IEnumerable<DirectedEdge<TWeight>> cycle = null;  // negative cycle (or null if no such cycle)
+        private readonly IEnumerable<WeightedDirectedEdge<TWeight>> cycle = null;  // negative cycle (or null if no such cycle)
         private readonly TWeight positiveInfinity;
 
         /// <summary>
@@ -30,10 +30,10 @@ namespace SedgewickWayne.Algorithms.ShortestPaths
         /// <param name="s">vertex s</param>
         /// <param name="initialMaxValue">positive infinity</param>
         /// <param name="zero">smallest non-negative value of <typeparamref name="TWeight"/></param>
-        public BellmanFordSP(EdgeWeightedDigraph<TWeight> G, int s, TWeight initialMaxValue, TWeight zero)
+        public BellmanFordSP(WeightedDigraph<TWeight> G, int s, TWeight initialMaxValue, TWeight zero)
         {
             distTo = new TWeight[G.V];
-            edgeTo = new DirectedEdge<TWeight>[G.V];
+            edgeTo = new WeightedDirectedEdge<TWeight>[G.V];
             onQueue = new bool[G.V];
             for (int v = 0; v < G.V; v++) distTo[v] = initialMaxValue;
             distTo[s] = zero;
@@ -68,12 +68,12 @@ namespace SedgewickWayne.Algorithms.ShortestPaths
      *         from the source vertex {@code s}
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
-        public IEnumerable<DirectedEdge<TWeight>> PathTo(int v)
+        public IEnumerable<WeightedDirectedEdge<TWeight>> PathTo(int v)
         {
             ValidateVertex(v);
             // if (!hasPathTo(v)) return null;
             // foreach(var edge in edgeTo)
-            var stack = new Stack<DirectedEdge<TWeight>>();
+            var stack = new Stack<WeightedDirectedEdge<TWeight>>();
             var edge = edgeTo[v];
             while(edge != null)
             {
@@ -92,7 +92,7 @@ namespace SedgewickWayne.Algorithms.ShortestPaths
         }
 
         // relax vertex v and put other endpoints on queue if changed
-        private void Relax(EdgeWeightedDigraph<TWeight> g, int v)
+        private void Relax(WeightedDigraph<TWeight> g, int v)
         {
             foreach (var edge in g.Adjacency(v))
             {
@@ -124,7 +124,7 @@ namespace SedgewickWayne.Algorithms.ShortestPaths
         {
 #if TODO
             int V = edgeTo.Length;
-            var spt = new EdgeWeightedDigraph<TWeight>(V);
+            var spt = new WeightedDigraph<TWeight>(V);
             for (int v = 0; v < V; v++)
                 if (edgeTo[v] != null)
                     spt.AddEdge(edgeTo[v]);

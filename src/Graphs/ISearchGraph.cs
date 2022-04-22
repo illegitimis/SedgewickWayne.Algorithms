@@ -26,9 +26,10 @@ namespace SedgewickWayne.Algorithms.Graphs
     /// find vertices connected to a source vertex s
     /// </summary>
     /// <typeparam name="TInfo"></typeparam>
-    public abstract class AbstractGraphSearch<TInfo> : ISearchGraph
+    public abstract class AbstractGraphSearch<TUndirectedEdge> : ISearchGraph
+        where TUndirectedEdge : UndirectedEdge
     {
-        protected AbstractGraphSearch(AdjacencyListGraph<TInfo> G, int s) => S = s;
+        protected AbstractGraphSearch(Graph<TUndirectedEdge> G, int s) => S = s;
 
         public int S { get; }
 
@@ -40,6 +41,13 @@ namespace SedgewickWayne.Algorithms.Graphs
         {
             if (i < 0 || i >= noVertices)
                 throw new ArgumentException("vertex " + i + " is not between 0 and " + (noVertices - 1));
+        }
+    }
+
+    public abstract class AbstractGraphSearch : AbstractGraphSearch<UndirectedEdge>
+    {
+        protected AbstractGraphSearch(Graph G, int s) : base(G, s)
+        {
         }
     }
 }
