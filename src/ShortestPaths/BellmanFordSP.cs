@@ -13,11 +13,12 @@ namespace SedgewickWayne.Algorithms.ShortestPaths
         IShortestPathAlgorithm<TWeight>
         where TWeight : IComparable<TWeight>
     {
-        private readonly TWeight[] distTo;               // distTo[v] = distance  of shortest s->v path
-        private readonly DirectedEdge<TWeight>[] edgeTo;         // edgeTo[v] = last edge on shortest s->v path
-        private readonly bool[] onQueue;             // onQueue[v] = is v currently on the queue?
-        private readonly IntQueue queue;          // queue of vertices to relax
-        private int cost;                      // number of calls to relax()
+        private readonly TWeight[] distTo;                  // distTo[v] = distance  of shortest s->v path
+        private readonly DirectedEdge<TWeight>[] edgeTo;    // edgeTo[v] = last edge on shortest s->v path
+        private readonly bool[] onQueue;                    // onQueue[v] = is v currently on the queue?
+        private readonly IntQueue queue;                    // queue of vertices to relax
+        private int cost;                                   // number of calls to relax()
+        
         private readonly IEnumerable<DirectedEdge<TWeight>> cycle = null;  // negative cycle (or null if no such cycle)
         private readonly TWeight positiveInfinity;
 
